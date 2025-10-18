@@ -1,0 +1,23 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/gstReturnsReport/gstReturnReportGenerate?pramFromdate=06/02/2024&paramToDate=07/02/2024&gstrValue=1&paramId=2&paramOutlet=%27%27' \
+  -X 'POST' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-length: 0' \
+  -H 'content-type: text' \
+  -H 'cookie: JSESSIONID=BB7A0BB4D0BB5B050C7B08D7D999BAE5; mocProcesStatus=Completed; processLastUpdatedTime=0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-02-06T18:09:23.159Z","openedTabs":["Login","Sales Register","Goods & Service Tax (GST) Returns"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6ImY0YWY2NzFkMmU1NjdjNzkiLCJ0ciI6IjkzZjg4ZTQwNDE1OTljN2Y4ZjM4YmVlMWNmMTI0MzNmIiwidGkiOjE3MDcyNTIzMzgyMDcsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/gstReturnsReport' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-93f88e4041599c7f8f38bee1cf12433f-f4af671d2e567c79-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-f4af671d2e567c79----1707252338207' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --compressed

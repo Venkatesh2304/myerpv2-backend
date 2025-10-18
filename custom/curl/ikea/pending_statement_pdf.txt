@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/commonPdfRptContrl/pdfRptGeneration' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=01429C6F3C69921620B626438EA26912; JSESSIONID=29B5B52230FEA82BC0E98F2A50C331BC; mocProcesStatus=Completed; isUserLoggedOut=No; processLastUpdatedTime=0; maitabOpened=Yes; _ga=GA1.1.1412548196.1729854402; _ga_HG3QRT1TP7=GS1.1.1729854401.1.1.1729855219.60.0.0; tabsOpened={"date":"2024-10-25T05:58:45.208Z","openedTabs":["Login","Sales Register","Pending statement","Pending Bill"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjAyYTlhOWM5NDdiZjM3NzUiLCJ0ciI6IjEzNzA3MTdlZWNhMTQzYWNiNTUwOGNmOTVlOGIzMzlkIiwidGkiOjE3Mjk4NTk5Mjg4NTYsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/pendingbill' \
+  -H 'sec-ch-ua: "Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-1370717eeca143acb5508cf95e8b339d-02a9a9c947bf3775-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-02a9a9c947bf3775----1729859928856' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'strJsonParams=%7B%22groupBy%22%3A%22Party%22%2C%22vehiclesVal%22%3A%22%22%2C%22divisionVal%22%3A%22%22%2C%22partyVal%22%3A%22%22%2C%22beatVal%22%3A%22%22%2C%22salesVal%22%3A%22%22%2C%22partyHdr%22%3A%22List+of+Parties%22%2C%22beatHdr%22%3A%22List+of+Beats%22%2C%22salesHdr%22%3A%22List+of+Salesperson%22%2C%22vehiclesHdr%22%3A%22List+of+Vehicles%22%2C%22divisionHdr%22%3A%22List+of+Divisions%22%2C%22beatTypeselectionHdr%22%3A%22List+of+Days%22%2C%22colFromDate%22%3A%222024-04-01%22%2C%22colToDate%22%3A%222024-10-23%22%2C%22colFromDateHdr%22%3A%2201%2F04%2F2024%22%2C%22colToDateHdr%22%3A%2223%2F10%2F2024%22%2C%22fromBillNo%22%3A%22%22%2C%22toBillNo%22%3A%22%22%2C%22billFrm%22%3A%22All%22%2C%22billTo%22%3A%22All%22%2C%22tob%22%3A%22ALL%22%2C%22rptTypOpt%22%3A%22PDF%22%2C%22singleLineSpaceFlag%22%3Afalse%2C%22beatType%22%3A%22%22%2C%22CollectioncodeHdr%22%3A%22List+of+Collection+Codes%22%2C%22collCode%22%3A%22%22%2C%22reptName%22%3A%22pendingBills%22%2C%22RptId%22%3A%2286122%22%2C%22RptClassName%22%3A%22PENDING_BILLS_Report%22%2C%22groupByHdr%22%3A%22Party%22%7D' \
+  --compressed

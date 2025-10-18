@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=5C051B71529522B788AB58A4E8B3E708; mocProcesStatus=Completed; processLastUpdatedTime=0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-02-07T06:02:46.190Z","openedTabs":["Login","Stock Ledger","Current Stock","Outstanding Report","Damage/Shortage Proposal Status Report"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6ImI3ODRlNWE5YWI5ZjNhZDMiLCJ0ciI6ImY1YWI5OWVhYTEyOTVmMjkzYWU1OGI4YjFmZTU4NWM0IiwidGkiOjE3MDcyODc5MzM1NDgsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/damageshortageproposalstatusReport' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-f5ab99eaa1295f293ae58b8b1fe585c4-b784e5a9ab9f3ad3-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-b784e5a9ab9f3ad3----1707287933548' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%5B%5D&jsonObjforheaders=%5B%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Damage%2FShortage+Proposal+Status+Report%2C+TRANSACTION+ENTRY%2C+TRANSACTION+DETAILS%2CPROPOSAL+DETAILS%2CSTOCK+OUT+WITHOUT+CLAIM%2CSTOCK+OUT+WITH+CLAIM%22%2C%22reportfilename%22%3A%22Damage-Shortage+Proposal+Status+Report%22%2C%22viewpage%22%3A%22report%2FdamageshortageproposalstatusReport%22%2C%22viewname%22%3A%22Damage_ShortageProposalStatusReport%22%2C%22querycount%22%3A5%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%2210%2F2023%22%7D&orderBy=%5BTSO+PLG%5D%2C%5BTRANS+REF+NO%5D%2C%5BPRODUCT+CODE%5D+ASC%3A%5BPROP+REF+NO%5D%2C%5BPRODUCT+CODE%5D%2C%5BPROP+TYPE%5D%3A%5BPROP+REF+NO%5D%2C%5BPRODUCT+CODE%5D%2C%5BTRANS+REF+NO%5D+ASC%3A%5BPROP+REF+NO%5D%2C%5BPRODUCT+CODE%5D%2C%5BTRANS+REF+NO%5D%3A&sheetNameWithNoteMsg=%7B%22STOCK+OUT+WITHOUT+CLAIM%22%3A%22Note%3A-+TOT+STOCK+SUBTRACTED+QTY+is+inclusive+of+RS+SUBTRACTION+QTY%2BTSO+SUBTRACTION+QTY+or+NO+CLAIM+PRODUCT+QTY%22%2C%22TRANSACTION+ENTRY%22%3A%22RECEIVED++++%3A+Trade+DSE+request+received+from+iSqaure%2FShikhar+app.+%5CnPENDING+++++%3A+Trade+DSE+request+imported+and+temporary+DSE+entries+created%2C+kindly+confirm%2Faccept+basis+physical+stock+acceptance.+%5CnDISCARDED+++%3A+Trade+DSE+request+discarded.+%5CnACCEPTED++++%3A+Temporary+DSE+entries+accepted+as+final+DSE+entry.+%5CnREJECTED++++%3A+Temporary+DSE+entries+rejected.+%5CnDELETED+++++%3A+Line+deleted+from+Temporary+DSE+entries.+%5CnPURGED++++++%3A+Trade+DSE+request+purged%22%7D' \
+  --compressed

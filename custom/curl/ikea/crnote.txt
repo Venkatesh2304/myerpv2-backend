@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=BB7A0BB4D0BB5B050C7B08D7D999BAE5; mocProcesStatus=Completed; processLastUpdatedTime=0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-02-06T18:09:23.159Z","openedTabs":["Login","Sales Register","Goods & Service Tax (GST) Returns","Collection Summary","Credit Debit Note Adjustments"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6ImI4OTc3ZjAxYzJhYzQ1M2QiLCJ0ciI6IjA3NDY4NTEwOTcyMGQyZGNhYTM1OTRiNDIzMzRlYjBmIiwidGkiOjE3MDcyNTMzNDUzNzIsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/CreditDebitNoteController/creditDebitNoteAdjustmentRpt' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-074685109720d2dcaa3594b42334eb0f-b8977f01c2ac453d-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-b8977f01c2ac453d----1707253345372' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%7B%22viewName%22%3A%22RS_INFORMATION%22%7D&jsonObjforheaders=%5B%7B%221%22%3A%22Distributor+++%3A+%22%2C%222%22%3A%22From+Date+%3A%22%2C%223%22%3A%22Doc+Refr+++%3A+%22%2C%224%22%3A%22To+Date+++%3A%22%2C%225%22%3A%22Accounts+%3A%22%2C%226%22%3A%22Status+%3A%22%2C%227%22%3A%22Party++%3A%22%2C%228%22%3A%22Order+By+%3A%22%2C%229%22%3A%22Type+%3A%22%2C%22val1%22%3A%22DEVAKI+ENTERPRISES%22%2C%22val2%22%3A%2201%2F04%2F2023%22%2C%22val3%22%3A%22List+of+Refr%22%2C%22val4%22%3A%2201%2F06%2F2023%22%2C%22val5%22%3A%22List+of+Mode+of+Adjusted%22%2C%22val6%22%3A%22All%22%2C%22val7%22%3A%22List+of+Parties%22%2C%22val8%22%3A%22Doc+No%22%2C%22val9%22%3A%22Credit+Note%22%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Credit+Debit+Note+Pending%2FAdjustments+Report%2CCredit+Debit+Note+Pending+or+Adjustments+Report%22%2C%22reportfilename%22%3A%22CreditDebitNoteRptAdj+%22%2C%22viewpage%22%3A%22report%2FcreditDebitNoteRptAdj%22%2C%22viewname%22%3A%22SP_CREDIT_DEBIT_NOTE_DETAILS%22%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A1%2C%22%3Aval2%22%3A%22%22%2C%22%3Aval3%22%3A%2201%2F04%2F2023%22%2C%22%3Aval4%22%3A%2201%2F06%2F2023%22%2C%22%3Aval5%22%3A%22%22%2C%22%3Aval6%22%3A%22%22%2C%22%3Aval7%22%3A%22%22%2C%22%3Aval8%22%3A%22All%22%2C%22%3Aval9%22%3A%22%22%2C%22%3Aval10%22%3A%22Doc+No%22%2C%22%3Aval11%22%3A%22Excel%22%7D' \
+  --compressed

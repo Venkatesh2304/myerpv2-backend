@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=6149F532E6425294075EDDCFB4FBA371; mocProcesStatus=Completed; processLastUpdatedTime=0; _ga=GA1.1.1560147661.1708583756; _ga_HG3QRT1TP7=GS1.1.1708620916.2.1.1708622122.60.0.0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-07-30T14:55:03.435Z","openedTabs":["Login","Pending Bill"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjU1YzFhOTJiYTY0MmYzNjgiLCJ0ciI6ImMxNWUyODZjMzg0OTM2YzE5MmVjNmYxYWY4MjJkYWM1IiwidGkiOjE3MjIzNTEzNTYxNDYsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/pendingbill' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-c15e286c384936c192ec6f1af822dac5-55c1a92ba642f368-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-55c1a92ba642f368----1722351356146' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%5B%5D&jsonObjforheaders=%5B%7B%221%22%3A%22RS+Name%3A%22%2C%222%22%3A%22%22%2C%223%22%3A%22Party%3A%22%2C%224%22%3A%22Salesperson%3A%22%2C%225%22%3A%22From+Date%3A%22%2C%226%22%3A%22Beat%3A%22%2C%227%22%3A%22To+Date%3A%22%2C%228%22%3A%22Bill+No+From%3A%22%2C%229%22%3A%22Group%3A%22%2C%2210%22%3A%22Bill+No+To%3A%22%2C%2211%22%3A%22Beat+Day+Selection%3A%22%2C%2212%22%3A%22Vehicle%3A%22%2C%2213%22%3A%22Collection+Code%22%2C%22val1%22%3A%22DEVAKI+ENTERPRISES%22%2C%22val2%22%3A%22+%22%2C%22val3%22%3A%22List+of+Parties%22%2C%22val4%22%3A%22List+of+Salesperson%22%2C%22val5%22%3A%2201%2F04%2F2023%22%2C%22val6%22%3A%22List+of+Beats%22%2C%22val7%22%3A%2230%2F07%2F2024%22%2C%22val8%22%3A%22All%22%2C%22val9%22%3A%22Date%22%2C%22val10%22%3A%22All%22%2C%22val11%22%3A%22List+of+Days%22%2C%22val12%22%3A%22List+of+Vehicles%22%2C%22val13%22%3A%22List+of+Collection+Codes%22%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Pending+Bills+Report%2CPending+Bills+Report%22%2C%22reportfilename%22%3A%22Pending+Bill%22%2C%22viewpage%22%3A%22report%2Fpendingbill%22%2C%22viewname%22%3A%22PENDING_BILL%22%2C%22querycount%22%3A1%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%22Date%22%2C%22%3Aval2%22%3A%22%22%2C%22%3Aval3%22%3A%22%22%2C%22%3Aval4%22%3A%22%22%2C%22%3Aval5%22%3A%22%22%2C%22%3Aval6%22%3A%22%22%2C%22%3Aval7%22%3A%222023-04-01%22%2C%22%3Aval8%22%3A%222024-07-30%22%2C%22%3Aval9%22%3A%22%22%2C%22%3Aval10%22%3A%22%22%2C%22%3Aval11%22%3A%22ALL%22%2C%22%3Aval12%22%3A%22Excel%22%2C%22%3Aval13%22%3A%22%22%2C%22%3Aval14%22%3A%22%22%7D' \
+  --compressed

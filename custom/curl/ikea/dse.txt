@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=B2491EFCF41D8507AA6399648BEF8CF3; mocProcesStatus=Completed; processLastUpdatedTime=0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-02-15T06:48:53.475Z","openedTabs":["Login","DSE/Truck Acknowledgement Report"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6Ijk0NmQxNTBjMDk1N2RjNTciLCJ0ciI6Ijc3MWQyNWU0NGJjOGViMTU0Y2Y4MGNlNzIwYmRiNDgwIiwidGkiOjE3MDc5Nzk3OTA1MjEsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/dsetTruckaAcknowledgementReport' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-771d25e44bc8eb154cf80ce720bdb480-946d150c0957dc57-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-946d150c0957dc57----1707979790521' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%5B%5D&jsonObjforheaders=%5B%7B%7D%2C%7B%221%22%3A%22RS+Code%3A%22%2C%222%22%3A%22RS+Name%3A%22%2C%223%22%3A%22%22%2C%224%22%3A%22%22%2C%225%22%3A%22Inv+From+Date%3A%22%2C%226%22%3A%22%22%2C%227%22%3A%22Inv+To+Date%3A%22%2C%228%22%3A%22%22%2C%22val1%22%3A%2241A392%22%2C%22val2%22%3A%22DEVAKI+ENTERPRISES%22%2C%22val3%22%3A%22%22%2C%22val4%22%3A%22%22%2C%22val5%22%3A%2201%2F04%2F2023%22%2C%22val6%22%3A%22%22%2C%22val7%22%3A%2230%2F06%2F2023%22%2C%22val8%22%3A%22%22%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Truck+Acknowledgement+Report%2CTruck+Acknowledgement%2CDSE%22%2C%22reportfilename%22%3A%22DSEAndTruckAcknowledgementReport%22%2C%22viewpage%22%3A%22report%2FdsetTruckaAcknowledgementReport%22%2C%22viewname%22%3A%22DSE_TRUCK_ACKNOWLEDGE_REPORT%22%2C%22querycount%22%3A2%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%2201%2F04%2F2023%22%2C%22%3Aval2%22%3A%2230%2F06%2F2023%22%7D' \
+  --compressed

@@ -1,0 +1,155 @@
+
+                               Tax Invoice           E-Way bill no :                Page :       1 of 1    
+                                                     To                                                    
+  DEVAKI ENTERPRISES                                 Invoice No      :  A30959                             
+  F2/4,INDUSTRIAL ESTATE                             Invoice Date    :  29/07/2024                         
+  ARIYAMANGALAM                                      Retailer Name   :  ISMAILSTORE-D-D-D-D                
+  TRICHY-620010                                      Address         :  39,KUTHAPPAR,THIRUVERUMBUR         
+  PHONE NO         :9944951444                                          TRICHY-620013                      
+  GSTIN No         :33AAPFD1365C1ZR                                     TRICHY                             
+  RS PAN No        :AAPFD1365C                       Phone No        :   7339157767                        
+  Salesperson Name :KANAGARAJR                       Retailer PAN No :                                     
+  Beat Name        :D-THIRUVARAMBUR 4S               GSTIN NO        :                                     
+  Region-State Code:33-TAMIL NADU                    Region-StateCode:   33-TAMIL NADU                     
+  HUL STORE ID     :HUL-411321D-P570                 Time of Billing :   29/07/2024 15:55:24               
+  Vehicle Name     :VECHILE-1                                                                              
+  FSSAI No         :12420028000204                  FSSAI No        :                                      
+  Salesperson Ph NO:8015487403                                                                             
+  -------------------------------------------------------------------------------------------------------- 
+  SL  HSN   Item Name             MRPQTY  QTY Free   BaseDisc 1Disc 2  TaxableCGST Amt S/UTGST  Net Amount 
+  NO                                  CS  PCS  Qty   Rate                  Amt             Amt             
+  -------------------------------------------------------------------------------------------------------- 
+  01  340250FRONT LOAD RS 10    10.00  1             7.85 84.74         856.90   77.12   77.12     1011.14 
+  02        --Adjustments-                                                                                 
+  03        CREDIT-From Market                                                                       -0.09 
+  Total :                              1    0    0        84.74  0.00   856.90   77.12   77.12     1011.05 
+  -------------------------------------------------------------------------------------------------------- 
+                                                                              Other Disc :         0.00    
+                                                                              Credit Adj :         0.00    
+                                                                              Debit Adj  :         0.00    
+  One Thousand Eleven Rupees Only                                            Bill Amount :      1011.00    
+  GST Tax Summary                                                                                          
+  -------------------------------------------------------------------------------------------------------- 
+   CGST %   CGST ValueSGST/UTGST %   SGST/UTGST Value    GST Taxable Value                                 
+  -------------------------------------------------------------------------------------------------------- 
+     9.00%       77.12        9.00%             77.12               856.90                                 
+  Total  :       77.12                          77.12               856.90                                 
+  Channel Program :   Grocer Next                                                                          
+  U1-HUL - Start Date : 21-07-2024 End Date : 20-08-2024                                                   
+  Component                CPM TARGET     Target(100%)        Achieved          BalanceToDo (100%)         
+  -------------------------------------------------------------------------------------------------------- 
+  DETS                       26239.00         24988.94         1351.81                    23637.12         
+  FNB+HFD                    17870.00         17018.13         2200.03                    14818.10         
+  OTC                            0.00             0.00            0.00                        0.00         
+  PP                          7102.00          6763.77         2162.70                     4601.08         
+  GTchennai                                                                                                
+  Total Discount/Schemes amt passed to you from HUL for the Period 21/07/2024 to 29/07/2024:136.22         
+  Secondary Levercare number : 18001232105. Monday to Saturday : 9:00 A.M. to 9:00P.M.                     
+  "I / We hereby certify that articles of food mentioned in the invoice are warranted to be of the         
+  nature and quality which they purport to be as per the Food Safety and Standards Act & Rules."           
+  This is a computer generated or electronic invoice as per IT Act 2000 and not required to bear a         
+  signature or digital signature as per GST Notification No. 74/2018-Central tax dated 31st December       
+  2018.                                                                                                    
+  New MRP Otrivin Paed(10ml) Rs.41.88 Crocin 120(60ml) Rs.36.28 Crocin Adv(20 tab) Rs.17.92 Crocin         
+  650 (15 tab) Rs.29.90. Ref: NPPA S.O. No.s: 484 (E) dt.2-2-23, 194(E) dt.11-1-23 & 5938(E)               
+  dt.19-12-22.                                                                                             
+  .                                                                                                        
+  DEVAKI ENTERPRISES                                                                                       
+                                                                                                           
+                               Tax Invoice           E-Way bill no :                Page :       1 of 2    
+                                                     To                                                    
+  DEVAKI ENTERPRISES                                 Invoice No      :  A30960                             
+  F2/4,INDUSTRIAL ESTATE                             Invoice Date    :  29/07/2024                         
+  ARIYAMANGALAM                                      Retailer Name   :  SIVARAM STORE-D  SVS 1-D-D         
+  TRICHY-620010                                      Address         :  FG THILLAI NAGAR                   
+  PHONE NO         :9944951444                                          C-14.3 CROSS.VIJAYARAJ COMPLEX,    
+  GSTIN No         :33AAPFD1365C1ZR                                     THILLAINAGAR,TRICHY                
+  RS PAN No        :AAPFD1365C                       Phone No        :   9443398884                        
+  Salesperson Name :Rengar M                         Retailer PAN No :                                     
+  Beat Name        :D-Thillai Nagar 4S               GSTIN NO        :                                     
+  Region-State Code:33-TAMIL NADU                    Region-StateCode:   33-TAMIL NADU                     
+  HUL STORE ID     :TN62001861748                    Time of Billing :   29/07/2024 15:55:26               
+  Vehicle Name     :VECHILE-1                                                                              
+  FSSAI No         :12420028000204                  FSSAI No        :                                      
+  Salesperson Ph NO:7358858822                                                                             
+  -------------------------------------------------------------------------------------------------------- 
+  SL  HSN   Item Name             MRPQTY  QTY Free   BaseDisc 1Disc 2  TaxableCGST Amt S/UTGST  Net Amount 
+  NO                                  CS  PCS  Qty   Rate                  Amt             Amt             
+  -------------------------------------------------------------------------------------------------------- 
+  01  340250COM.BLUE RS 58      58.00       3       44.12  1.32         131.03   11.79   11.79      154.62 
+  02  340250COM.BLUE RS4         4.00      30        3.01                90.21    8.12    8.12      106.45 
+  03  380894DMX TLT CLNR OCEAN  44.00       2       33.29  3.33          63.26    5.69    5.69       74.64 
+  04  380894DOMEX DISINFECTANT  114.0       1       86.26  2.59          83.67    7.53    7.53       98.73 
+  05  380894DOMEX OCEAN RS 102  102.0       1       77.18                77.18    6.95    6.95       91.07 
+  06  380894DOMEX THICK TOILET  102.0       1       77.18                77.18    6.95    6.95       91.07 
+  07  340130LB HW TOTAL10 PROTE 99.00       1       76.27                76.27    6.86    6.86       90.00 
+  08  340250Q.W.RS 10           10.00      12        7.36                88.30    7.95    7.95      104.19 
+  09  340250RAP ANTI BAC NEEM 1 126.0       1       96.89  0.97          95.92    8.63    8.63      113.19 
+  10  340250RAP ANTI BAC NEEM 5 64.00       1       49.22  0.49          48.72    4.39    4.39       57.50 
+  11  340250RAP NORMAL BOLT 1KG 122.0       1       93.82                93.82    8.44    8.44      110.70 
+  12  340250RAP NORMAL BOLT 500 62.00       1       47.68                47.68    4.29    4.29       56.26 
+  13  340250RAP REFRESH BOLT 1K 122.0       1       93.82                93.82    8.44    8.44      110.70 
+  14  340250RAP REFRESH BOLT 50 62.00       1       47.68                47.68    4.29    4.29       56.26 
+  15  340119RIN BAR RS 10       10.00       1        7.77                 7.77    0.70    0.70        9.17 
+  16  340250RIN FAB WHTNR ALA B 89.00       3       69.84               209.51   18.86   18.86      247.22 
+  17  340250RIN POWDER 95G      10.00       6        7.72  1.25          45.06    4.06    4.06       53.18 
+  18  340119SUNLIGHT LAUNDRY SO 30.00       6       23.54               141.25   12.71   12.71      166.67 
+  19  340250SURF EXCEL EW 1KG C 178.0       3      137.69               413.08   37.18   37.18      487.43 
+  20  340250SURF EXCEL EW 500G  89.00       6       68.85               413.08   37.18   37.18      487.44 
+  21  340250SURF EXL MTC LIQ FL 250.0       2      188.25  3.77         372.73   33.55   33.55      439.81 
+  22  340250SURF EXL MTC LIQ TL 220.0       3      165.66  4.97         492.00   44.28   44.28      580.56 
+  23  340250SURF EXL QW POWDER  110.0       2       86.31               172.63   15.54   15.54      203.70 
+  24  340250SURF XL MTC LIQ TL  170.0       2      127.82 21.29         234.34   21.09   21.09      276.53 
+  25  340250TOP LOAD RS 10      10.00      10        7.85  3.92          74.55    6.71    6.71       87.97 
+  26  340540VIM BAR 110G+20G NE 10.00      12        7.81  0.94          92.75    8.35    8.35      109.44 
+  27  340540VIM BAR FW 300G     30.00      12       23.54               282.49   25.42   25.42      333.34 
+  28  340540VIM BAR FW 60G       5.00      36        3.88               139.82   12.58   12.58      164.99 
+  29  340540VIM BAR TUB FW 500G 60.00       3       45.20               135.59   12.20   12.20      160.00 
+  30  340250VIM DRP DW LMN ACT  15.00      12       11.65  4.19         135.57   12.20   12.20      159.98 
+  31  340250WHEEL LMN & JAS PWD 78.00       3       58.88               176.64   15.90   15.90      208.44 
+  32  340250WHEEL LMN & JAS PWD 39.00       6       29.61               177.68   15.99   15.99      209.66 
+  33        --Adjustments-                                                                                 
+  34        BTPR-2% Additional                                                                      -26.65 
+  35        BTPR-2% additional                                                                       -1.06 
+  Total :                              0  185    0        49.03  0.00  4831.28  434.81  434.81     5673.19 
+  -------------------------------------------------------------------------------------------------------- 
+                                                                              Other Disc :         0.00    
+                                                                              Credit Adj :         0.00    
+                                                                              Debit Adj  :         0.00    
+  Five Thousand Six Hundred Seventy-Three Rupees Only                        Bill Amount :      5673.00    
+                                                                                                           
+                               Tax Invoice                                          Page :       2 of 2    
+  To                                                                   Invoice No  :A30960                 
+  Retailer Name : SIVARAM STORE-D  SVS 1-D-D                                                               
+  -------------------------------------------------------------------------------------------------------- 
+  SL  HSN   Item Name             MRPQTY  QTY Free   BaseDisc 1Disc 2  TaxableCGST Amt S/UTGST  Net Amount 
+  NO                                  CS  PCS  Qty   Rate                  Amt             Amt             
+  -------------------------------------------------------------------------------------------------------- 
+  GST Tax Summary                                                                                          
+  -------------------------------------------------------------------------------------------------------- 
+   CGST %   CGST ValueSGST/UTGST %   SGST/UTGST Value    GST Taxable Value                                 
+  -------------------------------------------------------------------------------------------------------- 
+     9.00%      434.81        9.00%            434.81              4831.27                                 
+  Total  :      434.81                         434.81              4831.27                                 
+  Channel Program :   Grocer Next                                                                          
+  U1-HUL - Start Date : 21-07-2024 End Date : 20-08-2024                                                   
+  Component                CPM TARGET     Target(100%)        Achieved          BalanceToDo (100%)         
+  -------------------------------------------------------------------------------------------------------- 
+  DETS                       22468.00         21397.98         5978.68                    15419.29         
+  FNB+HFD                    10478.00          9978.36         3400.34                     6578.02         
+  OTC                            0.00             0.00            0.00                        0.00         
+  PP                          2919.00          2779.61          322.20                     2457.41         
+  GTchennai                                                                                                
+  Total Discount/Schemes amt passed to you from HUL for the Period 21/07/2024 to 29/07/2024:330.17         
+  Secondary Levercare number : 18001232105. Monday to Saturday : 9:00 A.M. to 9:00P.M.                     
+  "I / We hereby certify that articles of food mentioned in the invoice are warranted to be of the         
+  nature and quality which they purport to be as per the Food Safety and Standards Act & Rules."           
+  This is a computer generated or electronic invoice as per IT Act 2000 and not required to bear a         
+  signature or digital signature as per GST Notification No. 74/2018-Central tax dated 31st December       
+  2018.                                                                                                    
+  New MRP Otrivin Paed(10ml) Rs.41.88 Crocin 120(60ml) Rs.36.28 Crocin Adv(20 tab) Rs.17.92 Crocin         
+  650 (15 tab) Rs.29.90. Ref: NPPA S.O. No.s: 484 (E) dt.2-2-23, 194(E) dt.11-1-23 & 5938(E)               
+  dt.19-12-22.                                                                                             
+  .                                                                                                        
+  DEVAKI ENTERPRISES                                                                                       
+

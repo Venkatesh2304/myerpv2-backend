@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=B2491EFCF41D8507AA6399648BEF8CF3; mocProcesStatus=Completed; processLastUpdatedTime=0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-02-15T06:48:53.475Z","openedTabs":["Login","Damage - Debit Note Report"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjY4NGNkZmM3MTY2MzY4MDEiLCJ0ciI6ImY0MGExYWJlODBmYmMxMjQ2ZmE1NzhlZjJmNzE0YTZlIiwidGkiOjE3MDc5ODAwNTE3ODUsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/damageDebiteNoteReport' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-f40a1abe80fbc1246fa578ef2f714a6e-684cdfc716636801-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-684cdfc716636801----1707980051785' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%5B%5D&jsonObjforheaders=%5B%7B%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Damage+Debite+Note+Report%2CDamage+Debite+Note+Report%22%2C%22reportfilename%22%3A%22Damage_Debite_Note_Report%22%2C%22viewpage%22%3A%22report%2FdamageDebiteNoteReport%22%2C%22viewname%22%3A%22PR_DAMAEG_DEBITE_NOTE_REPORT%22%2C%22querycount%22%3A1%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%22042023%22%7D&sheetNameWithNoteMsg=%7B%22SUMMARY%22%3A%22*+Some+of+the+Activities+are+Pending+for+Verification.+Hence+report+is+incomplete%2C+please+wait+till+confirmation+comes++%5Cn%5Cn*+VERIFICATION+IN+PROGRESS%2FPENDING+%3A+Approval+in+Progress++%5Cn%5Cn*+PASSED%2FCLOSED+%3A+The+claim+is+cleared.+Once+credited+to+account+will+appear+in+Detail+sheets++%5Cn%5Cn*+FAILED+%3A+Kindly+refer+the+Remarks+column+for+physical+documents+to+be+sent++%5Cn%5Cn*+ON+HOLD+%3A+Temporarily+corresponding+activity+is+on+hold+from+processing++%5Cn%5Cn*+REJECTED+%3A+The+claim+is+rejected+and+will+not+be+processed+%22%7D' \
+  --compressed

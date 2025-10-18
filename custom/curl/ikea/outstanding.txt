@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=5C051B71529522B788AB58A4E8B3E708; mocProcesStatus=Completed; processLastUpdatedTime=0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-02-07T06:02:46.190Z","openedTabs":["Login","Stock Ledger","Current Stock","Outstanding Report"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjFkZDgyNWI0ZDFkNDFkN2YiLCJ0ciI6ImUyOWFjOThmODc2MDZiZTQ3ZDZiMDc3OGY4ZDVkYTJjIiwidGkiOjE3MDcyODcwNjU2MjgsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/outstanding' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-e29ac98f87606be47d6b0778f8d5da2c-1dd825b4d1d41d7f-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-1dd825b4d1d41d7f----1707287065628' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%5B%5D&jsonObjforheaders=%5B%7B%221%22%3A%22RS+Name%3A%22%2C%222%22%3A%22+%22%2C%223%22%3A%22Salesperson%3A%22%2C%224%22%3A%22%22%2C%225%22%3A%22Beat%22%2C%226%22%3A%22Class%3A%22%2C%227%22%3A%22Channel%3A%22%2C%228%22%3A%22Party%3A%22%2C%229%22%3A%22Bill+From+Date%3A%22%2C%2210%22%3A%22Coll+From+Date%3A%22%2C%2211%22%3A%22Bill+To+Date%3A%22%2C%2212%22%3A%22Coll+To+Date%3A%22%2C%2213%22%3A%22Collection+code%22%2C%22val1%22%3A%22DEVAKI+ENTERPRISES%22%2C%22val2%22%3A%22%22%2C%22val3%22%3A%22List+of+Salesperson%22%2C%22val4%22%3A%22%22%2C%22val5%22%3A%22List+of+Beats%22%2C%22val6%22%3A%22List+of+Class%22%2C%22val7%22%3A%22List+of+Channel%22%2C%22val8%22%3A%22List+of+Party%22%2C%22val9%22%3A%2201%2F04%2F2023%22%2C%22val10%22%3A%2201%2F04%2F2018%22%2C%22val11%22%3A%2207%2F02%2F2024%22%2C%22val12%22%3A%2207%2F02%2F2024%22%2C%22val13%22%3A%22List+of+Collection+Codes%22%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Outstanding+Report-Beat+Wise+%2COutstanding+Report%2COutstanding+Summary%22%2C%22reportfilename%22%3A%22Outstanding+Report%22%2C%22viewpage%22%3A%22report%2Foutstanding%22%2C%22viewname%22%3A%22OUT_STANDING_REPORT%22%2C%22querycount%22%3A%222%22%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%22Beat+wise%22%2C%22%3Aval2%22%3A%22Party+Level%22%2C%22%3Aval3%22%3A%22%22%2C%22%3Aval4%22%3A%22%22%2C%22%3Aval5%22%3A%22%22%2C%22%3Aval6%22%3A%22%22%2C%22%3Aval7%22%3A%22%22%2C%22%3Aval8%22%3A%222018-04-01%22%2C%22%3Aval9%22%3A%222024-02-07%22%2C%22%3Aval10%22%3A%222018-04-01%22%2C%22%3Aval11%22%3A%222024-02-07%22%2C%22%3Aval12%22%3A%22None%22%2C%22%3Aval13%22%3A%22Equals%22%2C%22%3Aval14%22%3A%220.00%22%2C%22%3Aval15%22%3A%22Both%22%2C%22%3Aval16%22%3A%22Excel%22%2C%22%3Aval17%22%3A%22%22%7D&orderBy=%5BBeat+Name%5D%2C%5BParty+Name%5D%2C+CONVERT(DATETIME%2C%5BBill+Date%5D%2C103)' \
+  --compressed

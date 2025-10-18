@@ -1,0 +1,15 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/jsonController/generateJsonFile' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'X-NewRelic-ID: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-264cca88e463d4bc----1729108067158' \
+  -H 'traceparent: 00-44573bdf6f7741686f9ef7eaee8fa052-264cca88e463d4bc-01' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjI2NGNjYTg4ZTQ2M2Q0YmMiLCJ0ciI6IjQ0NTczYmRmNmY3NzQxNjg2ZjllZjdlYWVlOGZhMDUyIiwidGkiOjE3MjkxMDgwNjcxNTgsInRrIjoiOTM1NzAifX0=' \
+  -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'Accept: */*' \
+  -H 'Referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=Utility/eInvoiceGeneration' \
+  -H 'X-Requested-With: XMLHttpRequest' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  --data-raw 'jsonData=%5B%5D&jsonObjforheaders=%5B%7B%7D%2C%7B%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22E+Invoice%2CE+Invoice%22%2C%22reportfilename%22%3A%22E_Invoice%22%2C%22viewpage%22%3A%22Utility%2FeInvoiceGeneration%22%2C%22viewname%22%3A%22E_Invoice_Generation_SP%22%2C%22querycount%22%3A1%7D%5D&orderBy=%5BVehicle+No%5D%2C%5BTrans+Date%5D%2C%5BDoc.No%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%2220241015%22%2C%22%3Aval2%22%3A%2220241017%22%2C%22%3Aval3%22%3A1%2C%22%3Aval4%22%3A%22%22%2C%22%3Aval5%22%3A%22%22%2C%22%3Aval6%22%3A%22%22%2C%22%3Aval7%22%3A%22%22%2C%22%3Aval8%22%3A%22SecBills%22%2C%22%3Aval9%22%3A%22A49554%22%2C%22%3Aval10%22%3A1%7D' \
+  --compressed

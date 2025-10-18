@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=AFA7949F981AD4EB22F746EDC05E9A70; mocProcesStatus=Completed; processLastUpdatedTime=0; _ga=GA1.1.1560147661.1708583756; _ga_HG3QRT1TP7=GS1.1.1708620916.2.1.1708622122.60.0.0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-07-30T15:04:48.419Z","openedTabs":["Login","Beat Mapping Utility"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjViMzI5ZTM2MmU2MzI1YjkiLCJ0ciI6IjUyNjU3N2UzOThkNDU3NzAxNmVlZjE4YTc3YzU2ZjRlIiwidGkiOjE3MjIzNTE5NTY4NDEsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/outletBeatPlgLinkage/loadIndexScreen' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-526577e398d4577016eef18a77c56f4e-5b329e362e6325b9-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-5b329e362e6325b9----1722351956841' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%5B%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Outlet+Beat+Party%2COutlet+Beat+Party%22%2C%22reportfilename%22%3A%22Outlet+Beat+Party+Report%22%2C%22viewpage%22%3A%22utilities%2FoutletBeatPlgLinkage%22%2C%22viewname%22%3A%22OUTLET_BEAT_PARTY_LINKAGE%22%2C%22querycount%22%3A1%7D%5D' \
+  --compressed

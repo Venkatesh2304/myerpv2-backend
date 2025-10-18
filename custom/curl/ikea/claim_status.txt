@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=5C051B71529522B788AB58A4E8B3E708; mocProcesStatus=Completed; processLastUpdatedTime=0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-02-07T06:02:46.190Z","openedTabs":["Login","Stock Ledger","Current Stock","Outstanding Report","Damage/Shortage Proposal Status Report","Claim Status Report"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjU3YzlmNzA4ZWE3OTAzMGIiLCJ0ciI6IjEyMGVlZDgzNjAzNzZiZDliNDk3OWRmMWY5M2VjYTJmIiwidGkiOjE3MDcyOTI0NDk0NzMsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=claims/pncc/claimsStatusReport' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-120eed8360376bd9b4979df1f93eca2f-57c9f708ea79030b-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-57c9f708ea79030b----1707292449473' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%5B%5D&jsonObjforheaders=%5B%7B%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Claims+Status+Report%2CSUMMARY%2CHUL+CLAIMS%2CDEPOT+CLAIMS%2COTHER+ISSUES+-+3P+GIFTS%2CPAYMENT+DETAILS%2CSERVICE+INVOICES-PAYMENT+STATUS%2CMANUAL+ACK%22%2C%22reportfilename%22%3A%22Claims_Status_Report%22%2C%22viewpage%22%3A%22claims%2FPNCC%2FclaimsStatusReport%22%2C%22viewname%22%3A%22CLAIMS_STATUS_REPORT_PROC%22%2C%22querycount%22%3A7%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%2208%2F2023%22%7D&sheetNameWithNoteMsg=%7B%22SUMMARY%22%3A%22*+VERIFICATION+IN+PROGRESS%2FPENDING+%3A+Approval+in+Progress++%5Cn%5Cn*+PASSED%2FCLOSED+%3A+The+claim+is+cleared.+Once+credited+to+account+will+appear+in+Detail+sheets++%5Cn%5Cn*+FAILED+%3A+Kindly+refer+the+Remarks+column+for+physical+documents+to+be+sent++%5Cn%5Cn*+ON+HOLD+%3A+Temporarily+corresponding+activity+is+on+hold+from+processing++%5Cn%5Cn*+REJECTED+%3A+The+claim+is+rejected+and+will+not+be+processed+%22%2C%22SERVICE+INVOICES-PAYMENT+STATUS%22%3A%22*+Service+Invoice+of+older+10+digit+format+will+have+status+as+NA+%26+same+cannot+be+processed+further+through+Cygnet+upload.+%5Cn%5Cn*+Pending+for+Upload+%3A+Service+Invoice+generated+RS+need+to+Sync+to+proceed+further.+%5Cn%5Cn*+Pushed+to+Cygnet+%3A+RS+Sync+done+%26+Service+invoice+pushed+to+Cygnet(3P)+to+action+on+same+%26+push+forward+to+GSTIN+portal.%5Cn%5Cn*+GST+System+session+is+not+available++%3A+Please+submit+the+OTP+received+on+Taxpayer+email+id+%2F+mobile+no.+%5Cn%5Cn*+Documents+pushed+successfully++%3A+Service+Invoice+submitted+successfully+to+GSTIN+portal.+Payment+will+be+done+shortly.+%5Cn%5Cn*+GST+Error+%3A+The+claim+is+rejected+and+will+not+be+processed+due+to+error.+Please+contact+Branch+Finance+team+for+further+clarification.%22%7D' \
+  --compressed

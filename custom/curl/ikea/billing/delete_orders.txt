@@ -1,0 +1,24 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/quantumImport/discardSelected' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: application/json, text/javascript, */*; q=0.01' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'clientdatetime: 1728040579973' \
+  -H 'clientzonediff: -330' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=28EFC26A03EC994950FF7FC483D16E8D; isUserLoggedOut=No; tabsOpened={"date":"2024-10-04T11:09:53.828Z","openedTabs":["Login"]}; maitabOpened=Yes' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6Ijg1NjFlZTIyODU3YzZjNWYiLCJ0ciI6ImRkZjQ1ZTY4ZTA1NzUxNzExNjQ5MzVkNzYwMjk0OGQ5IiwidGkiOjE3MjgwNDA1Nzk5NzQsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/user/authenSuccess' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-ddf45e68e0575171164935d7602948d9-8561ee22857c6c5f-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-8561ee22857c6c5f----1728040579974' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw '{"mol":[],"id":"04/10/2024","cf":2,"qso":[]}' \
+  --compressed

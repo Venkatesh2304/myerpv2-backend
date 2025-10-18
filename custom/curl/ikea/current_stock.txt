@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=5C051B71529522B788AB58A4E8B3E708; mocProcesStatus=Completed; processLastUpdatedTime=0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-02-07T06:02:46.190Z","openedTabs":["Login","Stock Ledger","Current Stock"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6ImYzNGMzMmRjMjFjNGMwZTQiLCJ0ciI6IjZmMTU5NzcyMWIyMDAxN2JjZGY1NDJlNGFhMjE1MjIzIiwidGkiOjE3MDcyODU5ODg0ODgsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/currentStockReport' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-6f1597721b20017bcdf542e4aa215223-f34c32dc21c4c0e4-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-f34c32dc21c4c0e4----1707285988488' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonObjWhereClause=%7B%22%3Aval1%22%3A%22%22%2C%22%3Aval2%22%3A%22%22%2C%22%3Aval3%22%3A%22%22%2C%22%3Aval4%22%3A%22%22%2C%22%3Aval5%22%3A%22%22%2C%22%3Aval6%22%3A%22%22%2C%22%3Aval7%22%3A%22%22%2C%22%3Aval8%22%3A%22%22%2C%22%3Aval9%22%3A%22Units%22%2C%22%3Aval10%22%3A%22Basepack%2BSKU7%22%2C%22%3Aval11%22%3A%22%22%2C%22%3Aval12%22%3A%22Purchase+Rate+*+Qty%22%2C%22%3Aval13%22%3A%22Yes%22%2C%22%3Aval14%22%3A%22No%22%2C%22%3Aval15%22%3A%22All%22%2C%22%3Aval16%22%3A%222024-02-07%22%2C%22%3Aval17%22%3A%22None%22%2C%22%3Aval18%22%3A%22Code%22%2C%22%3AreportOption%22%3A%22EXCEL%22%2C%22%3Aval19%22%3A%22INDIA%22%2C%22%3Aval20%22%3A%22ALL%22%2C%22%3AloggedInUserId%22%3A%2216%22%7D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Current+Stock+Report%2CCurrentStock%22%2C%22reportfilename%22%3A%22CurrentStock%22%2C%22viewpage%22%3A%22report%2FcurrentStockReport%22%2C%22viewname%22%3A%22CURRENT_STOCK_REPORT_PROC%22%2C%22querycount%22%3A1%7D%5D&jsonObjforheaders=%5B%7B%221%22%3A%22RS+Name%3A%22%2C%222%22%3A%22%22%2C%223%22%3A%22Profit+Center%3A%22%2C%224%22%3A%22Location%3A%22%2C%225%22%3A%22Division%3A%22%2C%226%22%3A%22Status%3A%22%2C%227%22%3A%22Category%3A%22%2C%228%22%3A%22Date%3A%22%2C%229%22%3A%22Sub-Category%3A%22%2C%2210%22%3A%22%22%2C%2211%22%3A%22Brand%3A%22%2C%2212%22%3A%22%22%2C%2213%22%3A%22Item+Varient%3A%22%2C%2214%22%3A%22%22%2C%2215%22%3A%22Product%3A%22%2C%2216%22%3A%22%22%2C%2217%22%3A%22Latest+Tax+percentage+is+picked+based+on+RS+state+%22%2C%22val1%22%3A%22DEVAKI+ENTERPRISES%22%2C%22val2%22%3A%22%22%2C%22val3%22%3A%22List+of+Profit+Centre%22%2C%22val4%22%3A%22List+of+Locations%22%2C%22val5%22%3A%22List+of+Divisions%22%2C%22val6%22%3A%22All%22%2C%22val7%22%3A%22List+of+Categories%22%2C%22val8%22%3A%2207%2F02%2F2024%22%2C%22val9%22%3A%22List+of+Sub+Categories%22%2C%22val10%22%3A%22%22%2C%22val11%22%3A%22List+of+Brands%22%2C%22val12%22%3A%22%22%2C%22val13%22%3A%22List+of+Item+Varients%22%2C%22val14%22%3A%22%22%2C%22val15%22%3A%22List+of+Products%22%2C%22val16%22%3A%22%22%2C%22val17%22%3A%22%22%7D%5D' \
+  --compressed

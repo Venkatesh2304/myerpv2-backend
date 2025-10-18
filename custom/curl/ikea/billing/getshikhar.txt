@@ -1,0 +1,24 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/quantumImport/shikharlist' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: application/json, text/javascript, */*; q=0.01' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'clientdatetime: 1716664432152' \
+  -H 'clientzonediff: -330' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=A65EFF42FFA416DFA74228A3F2E0EABC; mocProcesStatus=Completed; processLastUpdatedTime=0; _ga=GA1.1.1560147661.1708583756; _ga_HG3QRT1TP7=GS1.1.1708620916.2.1.1708622122.60.0.0; isUserLoggedOut=No; tabsOpened={"date":"2024-05-25T19:13:24.052Z","openedTabs":["Login"]}; maitabOpened=Yes' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjM2MWNlMWJhNjg4OGI4NWUiLCJ0ciI6IjExZDAyYjU2MzNlOTBmMmYwNDk0MzkwODU4NWY2YzBjIiwidGkiOjE3MTY2NjQ0MzIxNTMsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/user/authenSuccess' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-11d02b5633e90f2f04943908585f6c0c-361ce1ba6888b85e-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-361ce1ba6888b85e----1716664432153' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw $'{"uniqueId":0,"importDate":"26/05/2024","sourceOfOrder":"\'P\',\'R\',\'N\',\'B\',\'S\',\'V\',\'PC\',\'BA\',\'TC\'"}' \
+  --compressed

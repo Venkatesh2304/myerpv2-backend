@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=D0B6E2CAF851E575FD712F9DC02DD273; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-10-07T13:06:46.063Z","openedTabs":["Login","Basepack Information"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjVjNzJmNzJiMmMxMGI5MTkiLCJ0ciI6IjU4YzgwYTRjYzliMDgzZGJkNzJhZWFhM2UxNDE1YTI0IiwidGkiOjE3MjgzMDY0NTA3MjgsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/basepackInformation/loadBasepackInformation' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-58c80a4cc9b083dbd72aeaa3e1415a24-5c72f72b2c10b919-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-5c72f72b2c10b919----1728306450728' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonObjfileInfi=%5B%7B%22title%22%3A%22Basepack+Information%2CBasepack+Information%22%2C%22reportfilename%22%3A%22Basepack_Information%22%2C%22viewpage%22%3A%22masters%2FbasepackInformation%22%2C%22viewname%22%3A%22BASEPACK_INFORMATION_EXPORT_EXCEL%22%2C%22querycount%22%3A%221%22%7D%5D&jsonObjWhereClause=%7B%22%3AlevelId%22%3A6%2C%22%3AinputId%22%3A%22%22%2C%22%3Astatus%22%3A%220%22%7D&sheetNameWithNoteMsg=%7B%22Basepack+Information%22%3A%22Note+%3A+Colored+Basepack(s)+are+Inactivated+from+HUL+-+Center%22%2C%22Basepack+Information+%22%3A%22Note+%3A+Colored+Basepack(s)+are+Delisted+from+HUL+-+Center%22%7D&orderBy=%5BBasePack+Description%5D' \
+  --compressed

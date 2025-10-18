@@ -1,0 +1,20 @@
+curl 'https://ewaybillgst.gov.in/Login.aspx' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Cache-Control: max-age=0' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Cookie: ewaybillTaxPayer=dwktr1lgij014mcuel2kh4xl; ASP.NET_SessionId=dwktr1lgij014mcuel2kh4xl; ewb_ld_cookie=292419338.20480.0000; TS01224110=01eb9953840fc2ce0a15b92708cdac474083d765b20383b759c1b89b82c59137bfb1c0bf4f47628d9e971735dee59bea44fd9ca9c40cf43b8a9c9d455ba1ef82e3c6530541454d856a17de9060c7f65e4e614ac9e37bb62de638e6bd55466ea1e1b1cf9219' \
+  -H 'Origin: https://ewaybillgst.gov.in' \
+  -H 'Referer: https://ewaybillgst.gov.in/' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  --data-raw '__LASTFOCUS=&__EVENTTARGET=btnLogin&__EVENTARGUMENT=&__VIEWSTATE=Q8%2Buj%2BF7Nbv9vIivFo%2FyUXGDBG%2FxEVsfImeI1CkKyC0sGixRwxqUVPb7CSeSlSLg21%2F2sLX948xmkpubhSUmFV7BJAQHZeo7t%2FtD9x83Hffc7fCVOm0hiJ8cG%2FeMkUyK5Gn%2BwUU4fW1IT3tf8vwMMhuXzCemhnVvP8hbfTVWhAMok3Vx9IsC0r1AMK30Luf9&__VIEWSTATEGENERATOR=C2EE9ABB&__SCROLLPOSITIONX=0&__SCROLLPOSITIONY=0&__VIEWSTATEENCRYPTED=&__EVENTVALIDATION=V6fYEMlgH8ASX0RaaHQ41%2Bntiu1u5QaC6jF9nNGPDdl73FUhTF6CHaMpiUp8aHQgA4y3dcW3eVQ3DHRg2wp9jMv1ELX%2FbaxBLL%2BHnqieoCSfe349TqmlIYPEHMIlifQWX0ikp8iYaVDTH%2Bh1wRBeoDyC1Zls3JpWy%2FX0pUpSv0%2FlBm%2Fc9c%2BGXnaEUKMudWK9hJQmvMTszalWliggUAqzr7ny7GtF1V%2Fg604YbMWdbCTRQ0v6iR7SybH73vGKZeYvC9D7nWanNHPqZWDo7V2VpuN1jCRxBRnHhHu4bbYHpEQ%3D&HiddenField3=lchMNiwl5ObVR3b&csrfToken=d7bf57c6-65df-44d4-947a-d59261eb679e&txt_username=DEVAKI9999&txt_password=d5e92ca372e4801aaccabaf100b4e844a9e6b48237a26a4161d9f1dc4342ac50&txtCaptcha=JY1QG0&hidSalt=lchMNiwl5ObVR3b' \
+  --compressed

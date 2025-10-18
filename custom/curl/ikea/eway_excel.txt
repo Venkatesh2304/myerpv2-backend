@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=48853E109A1AAE04AE7C28F81FE87098; mocProcesStatus=Completed; processLastUpdatedTime=0; _ga=GA1.1.1212015972.1729149654; _ga_HG3QRT1TP7=GS1.1.1729149654.1.0.1729150104.60.0.0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-12-14T05:46:29.238Z","openedTabs":["Login","E-Way Bill"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjEwOWFlNjZlMzIyYjc0NTUiLCJ0ciI6ImM5ZGE4OGFmMjIwZTBjYmQwYmNjNGI1NjBmOWIwMTdmIiwidGkiOjE3MzQxNTUyNjQ2NjcsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=Utility/eWayBillGeneration' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-c9da88af220e0cbd0bcc4b560f9b017f-109ae66e322b7455-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-109ae66e322b7455----1734155264667' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%5B%5D&jsonObjforheaders=%5B%7B%7D%2C%7B%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22E+Way+Bill%2CE+Way+Bill%22%2C%22reportfilename%22%3A%22E_Way_Bill%22%2C%22viewpage%22%3A%22Utility%2FeWayBillGeneration%22%2C%22viewname%22%3A%22E_Way_Bill_Generation_SP%22%7D%5D&orderBy=%5BVehicle+No%5D%2C%5BTrans+Date%5D%2C%5BDoc.No%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%2220241214%22%2C%22%3Aval2%22%3A%2220241214%22%2C%22%3Aval3%22%3A0%2C%22%3Aval4%22%3A%22%22%2C%22%3Aval5%22%3A%22A62986%22%2C%22%3Aval6%22%3A%22A62986%22%2C%22%3Aval7%22%3A%22%22%2C%22%3Aval8%22%3A%22SecBills%22%7D' \
+  --compressed

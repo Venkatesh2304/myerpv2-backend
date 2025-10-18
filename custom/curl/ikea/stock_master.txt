@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=99E861B9C112D2AA6C2FCC017380B8D6; mocProcesStatus=Completed; processLastUpdatedTime=0; _ga=GA1.1.1560147661.1708583756; _ga_HG3QRT1TP7=GS1.1.1708620916.2.1.1708622122.60.0.0; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2024-04-07T15:01:07.505Z","openedTabs":["Login","Product Master Report"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjMxNTczNTgzOGE2NzkzZjciLCJ0ciI6IjZkZmIxMDI2ZDFlYzFjZThlNjE2NWQxZjlkN2VmNzA1IiwidGkiOjE3MTI1MDIyMjMyNTcsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/productMaster' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-6dfb1026d1ec1ce8e6165d1f9d7ef705-315735838a6793f7-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-315735838a6793f7----1712502223257' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonData=%7B%22viewName%22%3A%22RS_INFORMATION%22%7D&jsonObjforheaders=%5B%7B%221%22%3A%22Distributor+++%3A%22%2C%222%22%3A%22Brand+++++++++%3A%22%2C%223%22%3A%22ProfitCenter++%3A%22%2C%224%22%3A%22Item+Varient++%3A%22%2C%225%22%3A%22Division++++++%3A%22%2C%226%22%3A%22Product+Code++%3A%22%2C%227%22%3A%22Category++++++%3A%22%2C%228%22%3A%22%22%2C%229%22%3A%22Sub+Category++%3A%22%2C%22val1%22%3A%2241A392++-++DEVAKI+ENTERPRISES%22%2C%22val2%22%3A%22List+of+Brands%22%2C%22val3%22%3A%22List+of+Profit+Center%22%2C%22val4%22%3A%22List+of+Item+Varients%22%2C%22val5%22%3A%22List+of+Divisions%22%2C%22val6%22%3A%22List+of+Products%22%2C%22val7%22%3A%22List+of+Categories%22%2C%22val8%22%3A%22%22%2C%22val9%22%3A%22List+of+Sub+Categories%22%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Product+Master%2CProduct+Master%22%2C%22reportfilename%22%3A%22Product_Master%22%2C%22viewpage%22%3A%22report%2FproductMaster%22%2C%22viewname%22%3A%22PRODUCT_MASTER_REPORT%22%2C%22querycount%22%3A1%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%22%22%2C%22%3Aval2%22%3A%22%22%2C%22%3Aval3%22%3A%22%22%2C%22%3Aval4%22%3A%22%22%2C%22%3Aval5%22%3A%22%22%2C%22%3Aval6%22%3A%22%22%2C%22%3Aval7%22%3A%22%22%2C%22%3Aval8%22%3A%22Both%22%7D' \
+  --compressed

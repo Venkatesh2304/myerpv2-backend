@@ -1,0 +1,22 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'authority: leveredge18.hulcd.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=D50BE36954CAEB28AF71AC3D2D58D4AB; mocProcesStatus=Completed; processLastUpdatedTime=0; _ga=GA1.1.1560147661.1708583756; _ga_HG3QRT1TP7=GS1.1.1708620916.2.1.1708622122.60.0.0; isUserLoggedOut=No; tabsOpened={"date":"2024-09-25T19:52:35.251Z","openedTabs":["Login"]}; maitabOpened=Yes' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6ImYxYzM1MDNhNjg1NDE0MTEiLCJ0ciI6ImFjZTRiNTU4YmNhNGVlOWQ1MmNkOTNiNmI5MzU0YmRlIiwidGkiOjE3MjcyOTM5ODIzODAsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/user/authenSuccess' \
+  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-ace4b558bca4ee9d52cd93b6b9354bde-f1c3503a68541411-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-f1c3503a68541411----1727293982380' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw 'jsonObjfileInfi=%5B%7B%22title%22%3A%22Cheque+Download%2CCHEQUE%2CSTATUS%2CVALIDATION%22%2C%22reportfilename%22%3A%22Cheque+Download%22%2C%22viewpage%22%3A%22cheque%22%2C%22viewname%22%3A%22CHEQUE_BULK_DWN_XL%22%2C%22querycount%22%3A3%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%22PENDING%22%2C%22%3Aval2%22%3A%2230%2F03%2F2024%22%2C%22%3Aval3%22%3A%2226%2F09%2F2024%22%2C%22%3Aval4%22%3A%2201%2F04%2F2023%22%2C%22%3Aval5%22%3A%2226%2F09%2F2024%22%2C%22%3Aval6%22%3A-1%2C%22%3Aval7%22%3A%22%22%2C%22%3Aval8%22%3A%22%22%2C%22%3Aval9%22%3A%22ALL%22%7D' \
+  --compressed

@@ -1,0 +1,21 @@
+curl 'https://leveredge18.hulcd.com/rsunify/app/reportsController/generatereport' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9,hi;q=0.8' \
+  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+  -H 'cookie: JSESSIONID=F030030866513EDA89E3A1BF92AEBEA4; isUserLoggedOut=No; maitabOpened=Yes; tabsOpened={"date":"2025-05-30T04:29:35.485Z","openedTabs":["Login","Product Master Report","Purchase Register","Product Wise Purchase"]}' \
+  -H 'newrelic: eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjEwMTUzNDciLCJhcCI6IjE1ODg3NTgxMDAiLCJpZCI6IjA0OTQ5ZGQ2Yjc3NzE3MmIiLCJ0ciI6ImYzMTcyN2Y3YjM0NzFhNWU0ZTAwNmU0YzQ5MDcwMmE3IiwidGkiOjE3NDg1Nzk2OTY3OTMsInRrIjoiOTM1NzAifX0=' \
+  -H 'origin: https://leveredge18.hulcd.com' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://leveredge18.hulcd.com/rsunify/app/reportsController/reportScreen?viewpage=report/productwisePurchase' \
+  -H 'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'traceparent: 00-f31727f7b3471a5e4e006e4c490702a7-04949dd6b777172b-01' \
+  -H 'tracestate: 93570@nr=0-1-1015347-1588758100-04949dd6b777172b----1748579696793' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36' \
+  -H 'x-newrelic-id: VQYGVFVXDxABUVRWBQgCVlcH' \
+  -H 'x-requested-with: XMLHttpRequest' \
+  --data-raw $'jsonData=%5B%7B%22viewname%22%3A%22Poduct_Wise_Purchase_REPORT%22%7D%5D&jsonObjforheaders=%5B%7B%221%22%3A%22RS+Name+++++%3A%22%2C%222%22%3A%22Supplier++++%3A%22%2C%223%22%3A%22Division++++%3A%22%2C%224%22%3A%22From+Date+++%3A%22%2C%225%22%3A%22Basepack++++%3A%22%2C%226%22%3A%22To+Date+++++%3A%22%2C%227%22%3A%22Invoice+No%22%2C%22val1%22%3A%22DEVAKI+ENTERPRISES%22%2C%22val2%22%3A%22List+Of+Suppliers%22%2C%22val3%22%3A%22List+Of+Division%22%2C%22val4%22%3A%2201%2F04%2F2025%22%2C%22val5%22%3A%22List+Of+Basepacks%22%2C%22val6%22%3A%2230%2F05%2F2025%22%2C%22val7%22%3A%22List+Of+Invoice+Number%22%7D%5D&jsonObjfileInfi=%5B%7B%22title%22%3A%22Product+Wise+Purchase%2CProduct+Wise+Purchase%2CTax+Summary%22%2C%22reportfilename%22%3A%22Product_Wise_Purchase%22%2C%22viewpage%22%3A%22report%2FproductwisePurchase%22%2C%22viewname%22%3A%22Poduct_Wise_Purchase_REPORT%22%2C%22querycount%22%3A2%7D%5D&jsonObjWhereClause=%7B%22%3Aval1%22%3A%2201%2F04%2F2025%22%2C%22%3Aval2%22%3A%2230%2F05%2F2025%22%2C%22%3Aval3%22%3A%22%22%2C%22%3Aval4%22%3A%22%22%2C%22%3Aval5%22%3A%22%22%2C%22%3Aval6%22%3A%22\'\'%22%2C%22%3Aval7%22%3A%22Cases%22%2C%22%3Aval8%22%3A%22Detailed%22%2C%22%3Aval9%22%3A%22Excel%22%7D'
