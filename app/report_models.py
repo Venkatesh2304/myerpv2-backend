@@ -1,10 +1,11 @@
 import abc
+from dataclasses import dataclass
 import datetime
 from decimal import Decimal
 import enum
 import os
 import pickle
-from typing import Callable
+from typing import Callable, Type
 from django.db import models
 import pandas as pd
 from sqlalchemy import create_engine
@@ -14,6 +15,7 @@ from django.core.checks import register, Error
 from django.apps import apps
 from myerpv2 import settings
 from app.sql import engine
+from typing import TypeVar, Generic
 
 
 def decimal_field(required=False, decimal_places=2, **kwargs) -> models.DecimalField:
@@ -26,74 +28,94 @@ def decimal_field(required=False, decimal_places=2, **kwargs) -> models.DecimalF
         max_digits=12, decimal_places=decimal_places, **required_fields, **kwargs
     )
 
-# class ReportFetcher :
-#     def __init__(self,fetcher_method:Callable[int,int]) -> None:
-#         self.fetcher_method = fetcher_method
 
-#     def fetch(self, fromd:datetime.date, tod:datetime.date) -> pd.DataFrame|None :
-#         return self.fetcher_method(fromd,tod)
+@dataclass
+class ReportArgs(abc.ABC):
+    pass
 
-class ReportModel(models.Model):
+ArgsT = TypeVar("ArgsT", bound="ReportArgs")
+
+@dataclass
+class EmptyArgs(ReportArgs):
+    pass
+
+@dataclass
+class DateRangeArgs(ReportArgs):
+    fromd: datetime.date
+    tod: datetime.date
+
+@dataclass
+class MonthArgs(ReportArgs):
+    month: int
+    year: int
+    def __str__(self) -> str:
+        return f"{self.month:02d}{self.year}"
+
+class BaseReport(Generic[ArgsT]):    
+    fetcher = None  # type: ignore
+    # Preprocessing options
+    column_map: dict = {}
+    ignore_last_nrows = 0
+    dropna_columns: list[str] = []
+    date_format:str|None = "" #None means detect the format automatically
+
+    #caching
+    enable_cache = True
+    use_cache = True
+    _cache_folders = {}
+
+    @classmethod
+    def get_cache_dir(cls):
+        """Return (and create if needed) a cache dir specific to this subclass."""
+        report_cls = cls.__qualname__.split(".")[0] #Class Qualname is like SalesRegisterReport.Report
+        if report_cls not in cls._cache_folders:
+            path = os.path.join(".cache", report_cls)
+            os.makedirs(path, exist_ok=True)
+            cls._cache_folders[report_cls] = os.path.abspath(path)
+        return cls._cache_folders[report_cls]
     
-    class Report:    
-        fetcher = None  # type: ignore
-        # Preprocessing options
-        column_map: dict = {}
-        ignore_last_nrows = 0
-        dropna_columns: list[str] = []
-        date_format:str|None = "" #None means detect the format automatically
-
-        #caching
-        enable_cache = True
-        use_cache = False
-        _cache_folders = {}
-
-        @classmethod
-        def get_cache_dir(cls):
-            """Return (and create if needed) a cache dir specific to this subclass."""
-            report_cls = cls.__qualname__.split(".")[0] #Class Qualname is like SalesRegisterReport.Report
-            if report_cls not in cls._cache_folders:
-                path = os.path.join(".cache", report_cls)
-                os.makedirs(path, exist_ok=True)
-                cls._cache_folders[report_cls] = os.path.abspath(path)
-            return cls._cache_folders[report_cls]
+    @classmethod
+    def basic_preprocessing(cls, df: pd.DataFrame) -> pd.DataFrame:
+        if cls.ignore_last_nrows > 0:
+            df = df.iloc[: -cls.ignore_last_nrows]
+        if cls.column_map:
+            df = df.rename(columns=cls.column_map)
+        if cls.date_format != "" :
+                df["date"] = pd.to_datetime(df["date"], format=cls.date_format).dt.date
         
-        @classmethod
-        def basic_preprocessing(cls, df: pd.DataFrame) -> pd.DataFrame:
-            if cls.ignore_last_nrows > 0:
-                df = df.iloc[: -cls.ignore_last_nrows]
-            if cls.column_map:
-                df = df.rename(columns=cls.column_map)
-            if cls.date_format != "" :
-                    df["date"] = pd.to_datetime(df["date"], format=cls.date_format).dt.date
-            
-            if cls.dropna_columns:
-                df = df.dropna(subset=cls.dropna_columns, how="any")
-            
-            return df
-
-        @classmethod
-        def custom_preprocessing(cls, df: pd.DataFrame) -> pd.DataFrame:
-            return df
-
-        @classmethod
-        def fetch_raw_dataframe(cls, fetcher_cls_instance: object, fromd: datetime.date, tod: datetime.date) -> pd.DataFrame:
-            if cls.fetcher is None:
-                raise NotImplementedError("Fetcher method not implemented.")
-            return cls.fetcher(fetcher_cls_instance, fromd, tod)
+        if cls.dropna_columns:
+            df = df.dropna(subset=cls.dropna_columns, how="any")
         
-        @classmethod
-        def get_dataframe(
-            cls, fetcher_cls_instance: object, fromd: datetime.date, tod: datetime.date
-        ) -> pd.DataFrame:
-            df = cls.fetch_raw_dataframe(fetcher_cls_instance, fromd, tod)
-            df = cls.basic_preprocessing(df)
-            df = cls.custom_preprocessing(df)
-            return df
+        return df
+
+    @classmethod
+    def custom_preprocessing(cls, df: pd.DataFrame) -> pd.DataFrame:
+        return df
+
+    @classmethod
+    def fetch_raw_dataframe(cls, fetcher_cls_instance: object, args: ArgsT) -> pd.DataFrame:
+        raise NotImplementedError("fetch_raw_dataframe method not implemented.")
+    
+    @classmethod
+    def get_dataframe(
+        cls, fetcher_cls_instance: object, args: ArgsT
+    ) -> pd.DataFrame:
+        df = cls.fetch_raw_dataframe(fetcher_cls_instance, args)
+        df = cls.basic_preprocessing(df)
+        df = cls.custom_preprocessing(df)
+        return df
+
+class BaseReportModel(models.Model,Generic[ArgsT]):
+    arg_type:Type[ArgsT]
+    Report: Type[BaseReport[ArgsT]] = BaseReport[ArgsT]
 
     class Meta:
         abstract = True
     
+    @classmethod
+    def delete_before_insert(cls, args: ArgsT):
+        raise NotImplementedError("delete_before_insert method not implemented.")
+
     @classmethod
     def save_to_db(cls, df: pd.DataFrame) -> int | None:
         # Collect concrete, non-auto fields (exclude auto PK and m2m)
@@ -118,25 +140,31 @@ class ReportModel(models.Model):
         inserted_row_count: int | None = df[cols].to_sql(
             cls._meta.db_table, engine, if_exists="append", index=False 
         )
+        inserted_row_count = len(df)
         return inserted_row_count
 
     @classmethod
     def update_db(
-        cls, fetcher_obj: object, fromd: datetime.date, tod: datetime.date , **kwargs
+        cls, fetcher_obj: object, args: ArgsT
     ) -> int | None:
-        raise NotImplementedError("Use subclass with Report.fetcher implemented.")
+        df = cls.Report.get_dataframe(fetcher_obj, args)
+        cls.delete_before_insert(args)
+        inserted_rows = cls.save_to_db(df)
+        return inserted_rows
 
-class DateReportModel(ReportModel):
+class DateReportModel(BaseReportModel[DateRangeArgs]):
+    arg_type = DateRangeArgs
     #Note: All Models Should have a date field
-
-    class Report(ReportModel.Report):
+    class Report(BaseReport[DateRangeArgs]) :
         @classmethod
         def fetch_raw_dataframe(
-            cls, fetcher_cls_instance: object, fromd: datetime.date, tod: datetime.date
+            cls, fetcher_cls_instance: object, args: DateRangeArgs
         ) -> pd.DataFrame:
+            fromd = args.fromd
+            tod = args.tod
             #Load from cache if enabaled & exists
             is_loaded_from_cache = False
-            df = None
+            df:pd.DataFrame = None #type: ignore
             if cls.use_cache and cls.enable_cache:
                 cache_dir = cls.get_cache_dir()
                 cache_path = os.path.join(cache_dir,f"{fromd}_{tod}.pkl")
@@ -156,43 +184,38 @@ class DateReportModel(ReportModel):
             
             return df 
     
-    class Meta:
+    class Meta: # type: ignore
         abstract = True
     
     @classmethod
-    def update_db(
-        cls, fetcher_obj: object, fromd: datetime.date, tod: datetime.date, **kwargs
-    ) -> int | None:
-        df = cls.Report.get_dataframe(fetcher_obj, fromd, tod)
-        cls.objects.filter(date__gte=fromd, date__lte=tod).delete()
-        return cls.save_to_db(df)
-
+    def delete_before_insert(cls, args: DateRangeArgs):
+        cls.objects.filter(date__gte=args.fromd, date__lte=args.tod).delete()
+        
     @classmethod
     def last_update_date(cls) -> datetime.date | None:
         last_rec = cls.objects.order_by("-date").first()
         if last_rec:
-            return last_rec.date
+            return last_rec.date # type: ignore
         return None
 
-class SimpleReportModel(ReportModel):
+class EmptyReportModel(BaseReportModel[EmptyArgs]):
+    arg_type = EmptyArgs
     #No caching
-    class Report(ReportModel.Report):
+    class Report(BaseReport[EmptyArgs]):
         @classmethod
         def fetch_raw_dataframe(
-            cls, fetcher_cls_instance: object, fromd: datetime.date, tod: datetime.date
+            cls, fetcher_cls_instance: object, args: EmptyArgs
         ) -> pd.DataFrame:  # type: ignore
             df: pd.DataFrame = cls.fetcher(fetcher_cls_instance)  # type: ignore
             return df
     
-    class Meta:
+    class Meta: # type: ignore
         abstract = True
 
     @classmethod
-    def update_db(cls, fetcher_obj: object, fromd: datetime.date, tod: datetime.date) -> int | None:
-        df = cls.Report.get_dataframe(fetcher_obj, fromd, tod)
+    def delete_before_insert(cls, args: EmptyArgs):
         cls.objects.all().delete()
-        return cls.save_to_db(df) 
-    
+        
 class SalesRegisterReport(DateReportModel):
     inum = models.CharField(max_length=100, verbose_name="BillRefNo")
     date = models.DateField(verbose_name="Date")
@@ -317,7 +340,7 @@ class DmgShtReport(DateReportModel):
     credit_note_no = models.CharField(max_length=100, verbose_name="Credit Note No", null=True)
     original_invoice_no = models.CharField(max_length=100, verbose_name="Original Invoice No", null=True)
 
-    class Meta:
+    class Meta: # type: ignore
         db_table = "dmgsht_report"
 
     class Report(DateReportModel.Report):
@@ -332,11 +355,11 @@ class DmgShtReport(DateReportModel):
             df["party_id"] = df["party_id"].fillna("HUL") #For RS entries
             return df
 
-class StockHsnRateReport(SimpleReportModel):
+class StockHsnRateReport(EmptyReportModel):
     stock_id = models.CharField(max_length=8, verbose_name="Product Code")
     hsn = models.CharField(max_length=8, verbose_name="HSN")
     rt = decimal_field(required=True, decimal_places=1, verbose_name="Tax Rate")
-    class Report(SimpleReportModel.Report):
+    class Report(EmptyReportModel.Report):
         fetcher = IkeaDownloader.product_hsn_master
         column_map = { "prod_code":"stock_id","HSN_NUMBER":"hsn","CGST_RATE":"rt" }
         dropna_columns = ["hsn"]
@@ -350,7 +373,7 @@ class StockHsnRateReport(SimpleReportModel):
     class Meta: # type: ignore
         db_table = "stockhsnrate_report"
 
-class PartyReport(SimpleReportModel):
+class PartyReport(EmptyReportModel):
     code = models.CharField(max_length=10, primary_key=True, verbose_name="Party Code")
     master_code = models.CharField(max_length=10, verbose_name="Party Master Code", null=True)
     name = models.CharField(max_length=100, verbose_name="Party Name", null=True)
@@ -360,7 +383,7 @@ class PartyReport(SimpleReportModel):
     ctin = models.CharField(max_length=20, verbose_name="GSTIN Number", null=True)
     phone = models.CharField(max_length=20, verbose_name="Phone", null=True)
     
-    class Report(SimpleReportModel.Report):
+    class Report(EmptyReportModel.Report):
         fetcher = IkeaDownloader.party_master
         column_map = {
             "Party Name": "name",
@@ -380,8 +403,52 @@ class PartyReport(SimpleReportModel):
             df["addr"] = strips( strips( strips( df["addr"] , "TRICHY" )  , "PH :" ) , "N.A" )
             return df
 
-    class Meta:
+    class Meta: # type: ignore
         db_table = "party_report"
+
+class GSTR1Portal(BaseReportModel[MonthArgs]):
+    arg_type = MonthArgs
+    period = models.CharField(max_length=6, verbose_name="Period (MMYYYY)")
+    date = models.DateField(verbose_name="Invoice Date")
+    inum = models.CharField(max_length=30, verbose_name="Invoice No")
+    type = models.CharField(max_length=10, verbose_name="Type (b2b/cdnr)")
+    ctin = models.CharField(max_length=20, verbose_name="GSTIN of Recipient", null=True)
+    amt = decimal_field(required=True, decimal_places=2, verbose_name="Invoice Amount")
+    txval = decimal_field(required=True, decimal_places=2, verbose_name="Taxable Value")
+    cgst = decimal_field(required=False, decimal_places=2, verbose_name="Amount - Central Tax")
+    sgst = decimal_field(required=False, decimal_places=2, verbose_name="Amount - State/UT Tax")
+    irn = models.CharField(max_length=80, verbose_name="IRN", null=True)
+    irn_date = models.DateField(verbose_name="IRN Date", null=True)
+    srctype = models.CharField(max_length=15, verbose_name="Source Type (E-Invoice)", null=True)
+
+    class Report(BaseReport[MonthArgs]):
+
+        column_map = {"idt":"date","invcamt":"cgst","invsamt":"sgst","val":"amt","invtxval":"txval",
+                      "irngendate":"irn_date","srctyp":"srctype"}
+
+        @classmethod
+        def fetch_raw_dataframe(
+            cls, fetcher_cls_instance, args: MonthArgs
+        ) -> pd.DataFrame:
+            period = str(args)
+            b2b_data = fetcher_cls_instance.getinvs(period,"b2b") # type: ignore
+            cdnr_data = fetcher_cls_instance.getinvs(period,"cdnr") # type: ignore
+            gst_portal_b2b = pd.DataFrame(b2b_data , columns = ["inum","ctin","idt","invcamt","invsamt","val","invtxval","irn","irngendate","srctyp"])
+            gst_portal_b2b["type"] = "b2b"
+            gst_portal_cdnr = pd.DataFrame(cdnr_data  , columns = ["nt_num","ctin","nt_dt","invcamt","invsamt","val","invtxval","irn","irngendate","srctyp"])
+            gst_portal_cdnr = gst_portal_cdnr.rename(columns={"nt_num":"inum","nt_dt":"idt"})
+            gst_portal_cdnr["type"] = "cdnr"
+            gst_portal_cdnr[["invtxval","invcamt","invsamt"]] = -gst_portal_cdnr[["invtxval","invcamt","invsamt"]]
+            gst_portal_data = pd.concat([gst_portal_b2b,gst_portal_cdnr])
+            gst_portal_data["period"] = period
+            return gst_portal_data
+        
+    class Meta: # type: ignore
+        db_table = "gstr1_portal"
+
+    @classmethod
+    def delete_before_insert(cls, args: MonthArgs):
+        cls.objects.filter(period = str(args)).delete()
 
 # System check for models
 @register()

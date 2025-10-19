@@ -142,3 +142,18 @@ LOGGING = {
         },
     },
 }
+
+from django.db.migrations.state import ModelState
+from typing import Generic
+
+_original_render = ModelState.render
+
+def _patched_render(self, apps):
+    # remove any Generic bases before creating the model class
+    self.bases = tuple(
+        base for base in self.bases
+        if not (isinstance(base, type) and issubclass(base, Generic))
+    )
+    return _original_render(self, apps)
+
+ModelState.render = _patched_render

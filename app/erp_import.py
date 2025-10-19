@@ -1,43 +1,58 @@
+from abc import abstractmethod
+import abc
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Generic, Type
 from django.db import connection,transaction
 import app.models as models
 from custom.classes import IkeaDownloader
 from app.sql import engine
-from app.report_models import ReportModel
+from app.report_models import BaseReportModel,ArgsT,ReportArgs,DateRangeArgs,EmptyArgs, SalesRegisterReport
 #TODO: Strict checks 
 
-class BaseImport :
-    reports:list[ReportModel] = []
-    model:models.models.Model = None 
+class BaseImport(Generic[ArgsT]): 
+    
+    arg_type:Type[ArgsT] 
+    model:Type[models.models.Model]
+    reports:list[Type[BaseReportModel[ArgsT]]] = []
+
     @classmethod
-    def update_reports(cls,fromd,tod) : 
+    def update_reports(cls,args: ArgsT) : 
         #Update the Reports
         inserted_row_counts = {}
         for report in cls.reports :
             #TODO: Better ways to log and handle errors
-            inserted_row_counts[report.__name__] = report.update_db(IkeaDownloader(),fromd,tod)
+            inserted_row_counts[report.__name__] = report.update_db(IkeaDownloader(),args)
 
     @classmethod
-    def basic_run(cls,fromd,tod)  :
+    @abstractmethod
+    def basic_run(cls,args: ArgsT) :
         raise NotImplementedError("Basic Run method not implemented")
     
     @classmethod
-    def run_atomic(cls,fromd,tod) :
+    @abstractmethod
+    def run_atomic(cls,args: ArgsT) :
         raise NotImplementedError("Run Atomic method not implemented")
 
     @classmethod
-    def run(cls,fromd,tod) :
-        cls.update_reports(fromd,tod)
-        cls.run_atomic(fromd,tod)
+    def run(cls,args: ArgsT) :
+        cls.update_reports(args)
+        cls.run_atomic(args)
     
-class DateImport(BaseImport) :
+class DateImport(abc.ABC, BaseImport[DateRangeArgs]) :
+    arg_type = DateRangeArgs
+
     @classmethod
-    def basic_run(cls,fromd,tod) :
+    @abstractmethod
+    def delete_before_insert(cls,args: DateRangeArgs) :
+        raise NotImplementedError("Delete before insert method not implemented")
+        
+    @classmethod
+    def basic_run(cls,args: DateRangeArgs) :
+        cls.delete_before_insert(args)
         #Delete the existing rows in the date range (cascading delete)
-        deleted_count, _ = cls.model.objects.filter(date__gte=fromd,date__lte=tod).delete()
         cur = connection.cursor()
-        fromd_str = fromd.strftime('%Y-%m-%d')
-        tod_str = tod.strftime('%Y-%m-%d')
+        fromd_str = args.fromd.strftime('%Y-%m-%d')
+        tod_str = args.tod.strftime('%Y-%m-%d')
         
         #Create a temp tables for the report tables (with the filtered date)
         #Temp table name : eg: salesregister_report => salesregister_temp
@@ -48,10 +63,11 @@ class DateImport(BaseImport) :
                                 SELECT * FROM {db_table} WHERE date >= '{fromd_str}' AND date <= '{tod_str}'""")
         return cur
 
-class SimpleImport(BaseImport) :
+class SimpleImport(abc.ABC, BaseImport[EmptyArgs]) :
+    arg_type = EmptyArgs
     delete_all = False
     @classmethod
-    def basic_run(cls, fromd, tod):
+    def basic_run(cls, args: EmptyArgs):
         if cls.delete_all :
             cls.model.objects.all().delete()
         cur = connection.cursor()
@@ -103,11 +119,16 @@ class SalesImport(DateImport) :
                                    SELECT * FROM salesregister_temp WHERE type = '{type}'""")
         cur.execute(f"""CREATE TEMP TABLE {type}_gstr1 ON COMMIT DROP AS 
                                     SELECT * FROM ikea_gstr1_temp WHERE type = '{type}'""")
-        
+    
+    @classmethod
+    def delete_before_insert(cls,args: DateRangeArgs) :
+        types = ["sales","salesreturn","claimservice"]
+        cls.model.objects.filter(date__gte=args.fromd,date__lte=args.tod,type__in = types).delete()
+
     @classmethod
     @transaction.atomic
-    def run_atomic(cls,fromd,tod) : 
-        cur = cls.basic_run(fromd,tod)
+    def run_atomic(cls,args: DateRangeArgs) : 
+        cur = cls.basic_run(args)
         cls.create_type_tables(cur,'sales')
         cls.insert_sr(cur,'sales')
         cls.insert_gstr(cur,'sales')
@@ -141,6 +162,8 @@ class SalesImport(DateImport) :
             WHERE sr.id = swr.id;            
         """)
         cur.execute(f"UPDATE salesreturn_gstr1 SET inum = credit_note_no , txval = -txval")
+        cur.execute("select * from salesreturn_sr")
+
         cls.insert_sr(cur,'salesreturn')
         cls.insert_gstr(cur,'salesreturn')
         
@@ -159,16 +182,21 @@ class MarketReturnImport(DateImport):
     model = models.Sales
 
     @classmethod
+    def delete_before_insert(cls,args: DateRangeArgs) :
+        types = ["damage","shortage"]
+        cls.model.objects.filter(date__gte=args.fromd,date__lte=args.tod,type__in=types).delete()
+
+    @classmethod
     @transaction.atomic
-    def run_atomic(cls,fromd,tod) : 
+    def run_atomic(cls,args: DateRangeArgs) : 
         #TODO: Dependency on stock and party details
-        cur = cls.basic_run(fromd,tod)
+        cur = cls.basic_run(args)
         cur.execute(f"""
             CREATE TEMP TABLE marketreturn ON COMMIT DROP AS 
                 SELECT type , inum , date , party_id  , 
                        -amt as amt , 
                        (SELECT ctin FROM app_sales WHERE party_id = mr.party_id order by date DESC limit 1) as ctin ,
-                       (SELECT rt FROM app_inventory where stock_id = mr.stock_id order by id DESC limit 1) as rt ,
+                       (SELECT rt FROM app_stock where name = stock_id limit 1) as rt ,
                         0 as txval , 
                         stock_id , qty   
                 FROM dmgsht_temp as mr WHERE return_from = 'market'
@@ -195,8 +223,8 @@ class StockImport(SimpleImport):
 
     @classmethod
     @transaction.atomic
-    def run_atomic(cls,fromd,tod) :
-        cur = cls.basic_run(fromd,tod)
+    def run_atomic(cls,args: EmptyArgs) :
+        cur = cls.basic_run(args)
         cur.execute(f"""
             INSERT INTO app_stock (name, hsn, rt)
             SELECT stock_id, hsn , rt
@@ -211,8 +239,8 @@ class PartyImport(SimpleImport):
 
     @classmethod
     @transaction.atomic
-    def run_atomic(cls,fromd,tod) :
-        cur = cls.basic_run(fromd,tod)
+    def run_atomic(cls,args: EmptyArgs) :
+        cur = cls.basic_run(args)
         cur.execute(f"""
             INSERT INTO app_party (name,addr,code,master_code,phone,ctin)
             SELECT name,addr,code,master_code,phone,ctin
@@ -222,29 +250,32 @@ class PartyImport(SimpleImport):
         """)
 
 class GstFilingImport :
-    imports:list[BaseImport] = [SalesImport,PartyImport,StockImport,MarketReturnImport]
+    imports:list[Type[BaseImport]] = [SalesImport,PartyImport,StockImport,MarketReturnImport]
 
     @classmethod
-    def report_update_thread(cls,report,fromd,tod) :
-        inserted_count = report.update_db(IkeaDownloader(),fromd,tod)
+    def report_update_thread(cls,report: BaseReportModel, args: ReportArgs) :
+        inserted_count = report.update_db(IkeaDownloader(), args)
         print(f"Report {report.__name__} updated with {inserted_count} rows")
         return inserted_count
         
     @classmethod
-    def run(cls,fromd,tod) :
-        reports_to_update:list[ReportModel] = []
+    def run(cls, args_dict: dict[Type[ReportArgs],ReportArgs]) :
+        reports_to_update = []
         for import_class in cls.imports :
-            reports_to_update.extend(import_class.reports)
-
+            reports_to_update.extend(import_class.reports) # type: ignore
+        # reports_to_update = []
         with ThreadPoolExecutor(max_workers=10) as executor:
-            futures = {executor.submit(cls.report_update_thread ,r, fromd, tod): r for r in reports_to_update}
+            futures = []
+            for report_model in reports_to_update : 
+                arg = args_dict[report_model.arg_type] # type: ignore
+                futures.append(executor.submit(cls.report_update_thread, report_model, arg)) # type: ignore
+
             for future in as_completed(futures):
-                report = futures[future]
                 try:
                     result = future.result()  # This re-raises any exception
                     print(result)
                 except Exception as e:
-                    print(f"Report {report.__name__} generated an exception: {e}")
-                    
+                    print(e)
         for import_class in cls.imports :
-            import_class.run_atomic(fromd,tod)
+            arg = args_dict[import_class.arg_type] # type: ignore
+            import_class.run_atomic(arg)

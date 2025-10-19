@@ -70,7 +70,7 @@ class Sales( PartyVoucher,GstVoucher ) :
       type = CharField(max_length=15,db_default="sales",null=True)
       tds = FloatField(default=0,db_default=0)
       tcs = FloatField(default=0,db_default=0)
-      class Meta:
+      class Meta: # type: ignore
         verbose_name_plural = 'Sales'
 
 class Discount(models.Model): 
@@ -89,7 +89,7 @@ class Purchase( PartyVoucher , GstVoucher ) : #No txval
       ref = CharField(max_length=15,null=True)
       tds = FloatField(default=0,db_default=0)
       tcs = FloatField(default=0,db_default=0)
-      class Meta : 
+      class Meta :  # type: ignore
             verbose_name_plural = 'Purchase'
       
 class StockAdjustment(models.Model) : 
