@@ -5,7 +5,7 @@ from decimal import Decimal
 import enum
 import os
 import pickle
-from typing import Callable, Type
+from typing import Callable, Type, final
 from django.db import models
 import pandas as pd
 from sqlalchemy import create_engine
@@ -16,7 +16,7 @@ from django.apps import apps
 from myerpv2 import settings
 from app.sql import engine
 from typing import TypeVar, Generic
-
+from app.company_models import Company, Group
 
 def decimal_field(required=False, decimal_places=2, **kwargs) -> models.DecimalField:
     required_fields = (
@@ -28,12 +28,12 @@ def decimal_field(required=False, decimal_places=2, **kwargs) -> models.DecimalF
         max_digits=12, decimal_places=decimal_places, **required_fields, **kwargs
     )
 
-
 @dataclass
 class ReportArgs(abc.ABC):
     pass
 
 ArgsT = TypeVar("ArgsT", bound="ReportArgs")
+
 
 @dataclass
 class EmptyArgs(ReportArgs):
@@ -60,8 +60,8 @@ class BaseReport(Generic[ArgsT]):
     date_format:str|None = "" #None means detect the format automatically
 
     #caching
-    enable_cache = True
-    use_cache = True
+    enable_cache = False
+    use_cache = False
     _cache_folders = {}
 
     @classmethod
@@ -108,16 +108,12 @@ class BaseReport(Generic[ArgsT]):
 class BaseReportModel(models.Model,Generic[ArgsT]):
     arg_type:Type[ArgsT]
     Report: Type[BaseReport[ArgsT]] = BaseReport[ArgsT]
-
+    
     class Meta:
         abstract = True
     
     @classmethod
-    def delete_before_insert(cls, args: ArgsT):
-        raise NotImplementedError("delete_before_insert method not implemented.")
-
-    @classmethod
-    def save_to_db(cls, df: pd.DataFrame) -> int | None:
+    def save_to_db(cls,df: pd.DataFrame) -> int | None:
         # Collect concrete, non-auto fields (exclude auto PK and m2m)
         fields = []
         for f in cls._meta.get_fields():
@@ -130,9 +126,12 @@ class BaseReportModel(models.Model,Generic[ArgsT]):
                     f, (models.AutoField, models.BigAutoField, models.SmallAutoField)
                 ):
                     continue
-                fields.append(f)
+                if isinstance(f,models.ForeignKey):
+                    fields.append(f.name + "_id")
+                else : 
+                    fields.append(f.name)
 
-        cols = [f.name for f in fields]
+        cols = fields
         #check if all columns are present in dataframe , if not raise error for all non present columns
         missing_cols = [col for col in cols if col not in df.columns]
         if missing_cols:
@@ -143,16 +142,28 @@ class BaseReportModel(models.Model,Generic[ArgsT]):
         inserted_row_count = len(df)
         return inserted_row_count
 
+
+class CompanyReportModel(BaseReportModel[ArgsT]):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, db_index=True)
+
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def delete_before_insert(cls, company: Company,args: ArgsT):
+        raise NotImplementedError("delete_before_insert method not implemented.")
+
     @classmethod
     def update_db(
-        cls, fetcher_obj: object, args: ArgsT
+        cls, fetcher_obj: object, company: Company, args: ArgsT
     ) -> int | None:
         df = cls.Report.get_dataframe(fetcher_obj, args)
-        cls.delete_before_insert(args)
+        df["company_id"] = company.pk
+        cls.delete_before_insert(company,args)
         inserted_rows = cls.save_to_db(df)
         return inserted_rows
 
-class DateReportModel(BaseReportModel[DateRangeArgs]):
+class DateReportModel(CompanyReportModel[DateRangeArgs]):
     arg_type = DateRangeArgs
     #Note: All Models Should have a date field
     class Report(BaseReport[DateRangeArgs]) :
@@ -188,17 +199,18 @@ class DateReportModel(BaseReportModel[DateRangeArgs]):
         abstract = True
     
     @classmethod
-    def delete_before_insert(cls, args: DateRangeArgs):
-        cls.objects.filter(date__gte=args.fromd, date__lte=args.tod).delete()
+    @final
+    def delete_before_insert(cls, company:Company, args: DateRangeArgs):
+        cls.objects.filter(company = company,date__gte=args.fromd, date__lte=args.tod).delete()
         
     @classmethod
-    def last_update_date(cls) -> datetime.date | None:
-        last_rec = cls.objects.order_by("-date").first()
+    def last_update_date(cls, company: Company) -> datetime.date | None:
+        last_rec = cls.objects.filter(company = company).order_by("-date").first()
         if last_rec:
             return last_rec.date # type: ignore
         return None
 
-class EmptyReportModel(BaseReportModel[EmptyArgs]):
+class EmptyReportModel(CompanyReportModel[EmptyArgs]):
     arg_type = EmptyArgs
     #No caching
     class Report(BaseReport[EmptyArgs]):
@@ -213,8 +225,9 @@ class EmptyReportModel(BaseReportModel[EmptyArgs]):
         abstract = True
 
     @classmethod
-    def delete_before_insert(cls, args: EmptyArgs):
-        cls.objects.all().delete()
+    @final
+    def delete_before_insert(cls, company: Company, args: EmptyArgs):
+        cls.objects.filter(company = company).delete()
         
 class SalesRegisterReport(DateReportModel):
     inum = models.CharField(max_length=100, verbose_name="BillRefNo")
@@ -374,7 +387,7 @@ class StockHsnRateReport(EmptyReportModel):
         db_table = "stockhsnrate_report"
 
 class PartyReport(EmptyReportModel):
-    code = models.CharField(max_length=10, primary_key=True, verbose_name="Party Code")
+    code = models.CharField(max_length=10, verbose_name="Party Code")
     master_code = models.CharField(max_length=10, verbose_name="Party Master Code", null=True)
     name = models.CharField(max_length=100, verbose_name="Party Name", null=True)
     addr = models.CharField(max_length=150, verbose_name="Address", null=True)
@@ -406,7 +419,28 @@ class PartyReport(EmptyReportModel):
     class Meta: # type: ignore
         db_table = "party_report"
 
-class GSTR1Portal(BaseReportModel[MonthArgs]):
+
+class GroupReportModel(BaseReportModel[ArgsT]):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, db_index=True)
+
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def delete_before_insert(cls, group: Group,args: ArgsT):
+        raise NotImplementedError("delete_before_insert method not implemented.")
+
+    @classmethod
+    def update_db(
+        cls, fetcher_obj: object, group: Group, args: ArgsT
+    ) -> int | None:
+        df = cls.Report.get_dataframe(fetcher_obj, args)
+        df["group_id"] = group.pk
+        cls.delete_before_insert(group,args)
+        inserted_rows = cls.save_to_db(df)
+        return inserted_rows
+
+class GSTR1Portal(GroupReportModel[MonthArgs]):
     arg_type = MonthArgs
     period = models.CharField(max_length=6, verbose_name="Period (MMYYYY)")
     date = models.DateField(verbose_name="Invoice Date")
@@ -447,8 +481,8 @@ class GSTR1Portal(BaseReportModel[MonthArgs]):
         db_table = "gstr1_portal"
 
     @classmethod
-    def delete_before_insert(cls, args: MonthArgs):
-        cls.objects.filter(period = str(args)).delete()
+    def delete_before_insert(cls, group: Group,args: MonthArgs):
+        cls.objects.filter(group = group,period = str(args)).delete()
 
 # System check for models
 @register()

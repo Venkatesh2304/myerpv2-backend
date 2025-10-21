@@ -3,6 +3,7 @@ import re
 from typing import Callable
 from django.db import connection, transaction
 import pandas as pd
+from app.company_models import Group
 from app.report_models import MonthArgs
 
 def addtable(writer, sheet, name, data, style="default"):
@@ -73,24 +74,27 @@ def main():
     conn = connection.connection
     month_arg = MonthArgs(month=9, year=2025)
     period = str(month_arg)
+    group = Group.objects.get(name="devaki")
+    company_filter = f"company_id in (select name from app_company where group_id = '{group.pk}')"
     invs = pd.read_sql(
         f"""
-        SELECT date,inum,party_id,ctin,type,amt,
+        SELECT company_id,date,inum,party_id,ctin,type,amt,
                     (case when ctin is NULL then 'b2c' else (case when type in ('sales','claimservice') then 'b2b' else 'cdnr' end) end) as gst_type , 
-                    (select  COALESCE(SUM(txval), 0)  from app_inventory where bill_id=inum) as txval , 
-                    (select  COALESCE(SUM(txval), 0)  from app_inventory where bill_id=inum and rt = 0) as zero_rate_txval , 
-                    (select  COALESCE(SUM(txval * rt/100),0) from app_inventory where bill_id=inum) as cgst  , 
-                    (select name from app_party where party_id = code) as name
-        from app_sales where gst_period='{period}'
+                    (select  COALESCE(SUM(txval), 0)  from app_inventory where company_id=app_sales.company_id and bill_id=inum) as txval , 
+                    (select  COALESCE(SUM(txval), 0)  from app_inventory where company_id=app_sales.company_id and  bill_id=inum and rt = 0) as zero_rate_txval , 
+                    (select  COALESCE(SUM(txval * rt/100),0) from app_inventory where company_id=app_sales.company_id and bill_id=inum) as cgst  ,
+                    (select name from app_party where company_id=app_sales.company_id and party_id = code) as name
+        from app_sales where gst_period='{period}' and {company_filter}
     """,
         con=conn,
     )
     items = pd.read_sql(
         f"""
     SELECT 
+        company_id,
         bill_id as inum, 
         qty * sign(txval) AS qty, 
-        REPLACE((SELECT hsn FROM app_stock WHERE name = stock_id), '.', '') AS hsn, 
+        REPLACE((SELECT hsn FROM app_stock WHERE name = stock_id and company_id=app_inventory.company_id limit 1), '.', '') AS hsn, 
         rt * 2 AS rt,
         rt * txval / 100 AS cgst,  
         rt * txval / 100 AS sgst,  
@@ -100,6 +104,7 @@ def main():
     WHERE 
         txval != 0 
         AND bill_id IN (SELECT inum FROM app_sales where gst_period='{period}')
+        AND {company_filter}
     """,
         con=conn,
     )
@@ -167,8 +172,8 @@ def main():
     gst_type_stats.loc["registered_zero_rate"] = {"txval": total_registered_zero_rate, "cgst": 0}  # type: ignore
     gst_type_stats = gst_type_stats.reset_index()
 
-    gst_type_and_invoice_type_total_stats = summary.groupby(
-        ["gst_type", "type"], as_index=False
+    gst_company_type_invoice_type_total_stats = summary.groupby(
+        ["company_id","gst_type", "type"], as_index=False
     ).agg({"txval": "sum", "cgst": "sum"})
 
     b2b_rt_stats = (
@@ -192,7 +197,7 @@ def main():
         .agg({"inum": "nunique"})
         .rename(columns={"inum": "count"})
     )
-    detailed = invs[["inum", "date", "name", "ctin", "amt", "txval", "cgst"]]
+    detailed = invs[["company_id","inum", "date", "name", "ctin", "amt", "txval", "cgst"]]
 
     writer = pd.ExcelWriter(f"workings_{period}.xlsx", engine="xlsxwriter")
     addtable(
@@ -201,7 +206,7 @@ def main():
         name=["SUMMARY (GST TYPE)", "SUMMARY (INVOICE TYPE)", "RATE", "DOCS"],
         data=[
             gst_type_stats,
-            gst_type_and_invoice_type_total_stats,
+            gst_company_type_invoice_type_total_stats,
             rt_stats,
             count_stats,
         ],

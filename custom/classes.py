@@ -92,7 +92,7 @@ class BaseIkea(Session) :
            self.get("/rsunify/app/billing/getUserId",timeout=15)
            self.logger.info("Login Check : Passed")
            return True 
-         except StatusCodeError : 
+         except StatusCodeError as e :
            self.logger.error("Login Check : Failed")
            return False 
     
@@ -124,6 +124,7 @@ class BaseIkea(Session) :
              print(f"Retry Count : {retry_count} , Trying to Login ikea") 
              self.login()
              retry_count += 1
+             
 
       def get_buffer(self,relative_url) :
           return super().get_buffer( self.IKEA_DOWNLOAD_REPORT_URL + relative_url )

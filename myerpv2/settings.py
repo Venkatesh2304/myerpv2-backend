@@ -77,7 +77,7 @@ WSGI_APPLICATION = "myerpv2.wsgi.application"
 DATABASES = {
      'default': {
         'ENGINE':   'django.db.backends.postgresql',
-        'NAME':     'myerpv2test',
+        'NAME':     'myerpv2all',
         'USER':     'postgres',
         'PASSWORD': 'Ven2004',
         'HOST':     'localhost',
@@ -109,13 +109,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
+TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 
-USE_TZ = True
-
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -127,21 +124,21 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # shows SQL + timings
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',  # shows SQL + timings
+#         },
+#     },
+# }
 
 from django.db.migrations.state import ModelState
 from typing import Generic

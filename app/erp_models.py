@@ -2,11 +2,15 @@ from django.db import models
 from django.db.models import CharField,IntegerField,OneToOneField,FloatField,ForeignKey,DateField,BooleanField
 from django.db.models import Sum,F
 
-## Abstract models
+class CompanyModel(models.Model):
+      company = models.ForeignKey("app.Company",on_delete=models.CASCADE,db_index=True)
+      class Meta :
+            abstract = True
 
+## Abstract models
 class PartyVoucher(models.Model) : 
-      inum = CharField(max_length=20,primary_key=True)
-      party = ForeignKey("app.Party",on_delete=models.DO_NOTHING,null=True,db_constraint=False)
+      inum = CharField(max_length=20)
+      party_id  = CharField(max_length=20)
       date = DateField()
       amt = FloatField(null=True)
 
@@ -26,8 +30,8 @@ class GstVoucher(models.Model) :
 
 ## Models For Accounting
 
-class Party(models.Model) : 
-      code = CharField(max_length=10,primary_key=True)
+class Party(CompanyModel) : 
+      code = CharField(max_length=10,db_index=True)
       master_code = CharField(max_length=10,null=True,blank=True)
       name = CharField(max_length=80,null=True,blank=True)
       type = CharField(db_default="shop",max_length=10)
@@ -41,9 +45,10 @@ class Party(models.Model) :
      
       class Meta : 
             verbose_name_plural = 'Party'
+            unique_together = ("company","code")
 
-class Stock(models.Model) : 
-      name = CharField(max_length=20,primary_key=True)
+class Stock(CompanyModel) : 
+      name = CharField(max_length=20,db_index=True)
       hsn = CharField(max_length=20,null=True)
       desc = CharField(max_length=20,null=True,blank=True)
       rt = FloatField(null=True)
@@ -52,19 +57,20 @@ class Stock(models.Model) :
             return self.name 
       class Meta : 
             verbose_name_plural = 'Stock'
+            unique_together = ("company","name")
       
-class Inventory(models.Model) : 
-      stock = ForeignKey("app.Stock",on_delete=models.DO_NOTHING,related_name="invs",db_constraint=False) 
+class Inventory(CompanyModel) : 
+      stock_id = models.CharField(max_length=10)
       qty = IntegerField()
       txval = FloatField(blank=True,null=True)
       rt = FloatField(blank=True,null=True)
-      bill = ForeignKey("app.Sales",on_delete=models.CASCADE,related_name="invs",null=True,blank=True,db_constraint=False)
-      pur_bill = ForeignKey("app.Purchase",on_delete=models.CASCADE,related_name="invs",null=True,blank=True,db_constraint=False)
-      adj_bill = ForeignKey("app.StockAdjustment",on_delete=models.CASCADE,related_name="invs",null=True,blank=True,db_constraint=False)
+      bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
+      pur_bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
+      adj_bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
       # class Meta : 
       #       unique_together = (("stock","bill"),("stock","pur_bill"),("stock","adj_bill"))
 
-class Sales( PartyVoucher,GstVoucher ) :
+class Sales(CompanyModel, PartyVoucher, GstVoucher) :
       discount = FloatField(default=0,db_default=0)
       roundoff = FloatField(default=0,db_default=0)
       type = CharField(max_length=15,db_default="sales",null=True)
@@ -73,17 +79,17 @@ class Sales( PartyVoucher,GstVoucher ) :
       class Meta: # type: ignore
         verbose_name_plural = 'Sales'
 
-class Discount(models.Model): 
-      bill = ForeignKey("app.Sales",on_delete=models.CASCADE,related_name="discounts",db_constraint=True)
+class Discount(CompanyModel): 
+      bill_id = models.CharField(max_length=20)
       sub_type = CharField(max_length=20)
       type = CharField(null=True,blank=True,max_length=20)
       amt =  FloatField(default=0,db_default=0)
       moc = CharField(max_length=30,null=True,blank=True)
       class Meta : 
-            unique_together = ("sub_type","bill")
+            # unique_together = ("sub_type","bill_id")
             verbose_name_plural = 'Discount'
         
-class Purchase( PartyVoucher , GstVoucher ) : #No txval 
+class Purchase(CompanyModel, PartyVoucher, GstVoucher) : #No txval 
       #txval = FloatField(null=True)
       type = CharField(max_length=15,db_default="purchase",null=True)
       ref = CharField(max_length=15,null=True)
@@ -92,7 +98,7 @@ class Purchase( PartyVoucher , GstVoucher ) : #No txval
       class Meta :  # type: ignore
             verbose_name_plural = 'Purchase'
       
-class StockAdjustment(models.Model) : 
-      inum = CharField(max_length=20,primary_key=True)
+class StockAdjustment(CompanyModel) : 
+      inum = CharField(max_length=20)
       date = DateField()
       godown = CharField(max_length=20,null=True)

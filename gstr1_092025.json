@@ -16,12 +16,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 342.0,
+                                "txval": 1026.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 8.55,
-                                "samt": 8.55
+                                "camt": 25.65,
+                                "samt": 25.65
                             }
                         }
                     ]
@@ -43,19 +43,19 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 2443.0,
+                                "txval": 7329.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 61.08,
-                                "samt": 61.08
+                                "camt": 183.22,
+                                "samt": 183.22
                             }
                         }
                     ]
                 },
                 {
-                    "nt_num": "SAT09572",
-                    "val": 747.23,
+                    "nt_num": "SAT09571",
+                    "val": 1460.43,
                     "nt_dt": "09-09-2025",
                     "pos": "33",
                     "rchrg": "N",
@@ -65,45 +65,72 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 407.0,
+                                "txval": 3714.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 334.26,
+                                "samt": 334.26
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33AADPN3443P1ZI",
+            "nt": [
+                {
+                    "nt_num": "SAT09577",
+                    "val": 498.16,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 1425.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 10.18,
-                                "samt": 10.18
+                                "camt": 35.62,
+                                "samt": 35.62
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "SAT09578",
+                    "val": 132.16,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 339.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 8.48,
+                                "samt": 8.48
                             }
                         },
                         {
                             "num": 2,
                             "itm_det": {
-                                "txval": 271.0,
+                                "txval": 36.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 18.0,
-                                "camt": 24.39,
-                                "samt": 24.39
-                            }
-                        }
-                    ]
-                },
-                {
-                    "nt_num": "SAT09573",
-                    "val": 407.2,
-                    "nt_dt": "09-09-2025",
-                    "pos": "33",
-                    "rchrg": "N",
-                    "inv_typ": "R",
-                    "ntty": "C",
-                    "itms": [
-                        {
-                            "num": 1,
-                            "itm_det": {
-                                "txval": 345.0,
-                                "csamt": 0,
-                                "iamt": 0,
-                                "rt": 18.0,
-                                "camt": 31.05,
-                                "samt": 31.05
+                                "camt": 3.24,
+                                "samt": 3.24
                             }
                         }
                     ]
@@ -125,12 +152,34 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 466.0,
+                                "txval": 1398.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 11.65,
-                                "samt": 11.65
+                                "camt": 34.95,
+                                "samt": 34.95
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "SAT09576",
+                    "val": 816.04,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 2076.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 186.84,
+                                "samt": 186.84
                             }
                         }
                     ]
@@ -152,12 +201,110 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 211.0,
+                                "txval": 633.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 5.28,
-                                "samt": 5.28
+                                "camt": 15.82,
+                                "samt": 15.82
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33AAIFM3378B1ZI",
+            "nt": [
+                {
+                    "nt_num": "URB00065",
+                    "val": 25907.67,
+                    "nt_dt": "06-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 21957.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 1976.13,
+                                "samt": 1976.13
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "URB00066",
+                    "val": 7091.25,
+                    "nt_dt": "06-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 6011.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 540.99,
+                                "samt": 540.99
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33AAIPJ5645A1Z4",
+            "nt": [
+                {
+                    "nt_num": "SAT09489",
+                    "val": 434.58,
+                    "nt_dt": "06-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 1242.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 31.05,
+                                "samt": 31.05
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "SAT09490",
+                    "val": 144.86,
+                    "nt_dt": "06-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 414.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 10.35,
+                                "samt": 10.35
                             }
                         }
                     ]
@@ -179,12 +326,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 247.0,
+                                "txval": 741.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 6.18,
-                                "samt": 6.18
+                                "camt": 18.52,
+                                "samt": 18.52
                             }
                         }
                     ]
@@ -201,12 +348,132 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 633.0,
+                                "txval": 1899.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 15.82,
-                                "samt": 15.82
+                                "camt": 47.48,
+                                "samt": 47.48
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33AARFK4663L1ZS",
+            "nt": [
+                {
+                    "nt_num": "RUR00175",
+                    "val": 54668.47,
+                    "nt_dt": "25-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 8437.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 210.92,
+                                "samt": 210.92
+                            }
+                        },
+                        {
+                            "num": 2,
+                            "itm_det": {
+                                "txval": 38829.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 3494.61,
+                                "samt": 3494.61
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "RUR00177",
+                    "val": 11884.59,
+                    "nt_dt": "25-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 730.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 18.25,
+                                "samt": 18.25
+                            }
+                        },
+                        {
+                            "num": 2,
+                            "itm_det": {
+                                "txval": 9423.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 848.07,
+                                "samt": 848.07
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "URB00069",
+                    "val": 188.6,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 180.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 4.5,
+                                "samt": 4.5
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33AAYFA0168P1ZV",
+            "nt": [
+                {
+                    "nt_num": "SAT09620",
+                    "val": 241.61,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 615.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 55.35,
+                                "samt": 55.35
                             }
                         }
                     ]
@@ -217,8 +484,8 @@
             "ctin": "33ABFFR9478P1Z8",
             "nt": [
                 {
-                    "nt_num": "SAT09623",
-                    "val": 512.54,
+                    "nt_num": "SAT09621",
+                    "val": 327.69,
                     "nt_dt": "09-09-2025",
                     "pos": "33",
                     "rchrg": "N",
@@ -228,12 +495,99 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 488.0,
+                                "txval": 75.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 12.2,
-                                "samt": 12.2
+                                "camt": 1.88,
+                                "samt": 1.88
+                            }
+                        },
+                        {
+                            "num": 2,
+                            "itm_det": {
+                                "txval": 768.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 69.12,
+                                "samt": 69.12
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "SAT09622",
+                    "val": 90.0,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 228.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 20.52,
+                                "samt": 20.52
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33ABMFS0344N1ZX",
+            "nt": [
+                {
+                    "nt_num": "SAT09515",
+                    "val": 348.62,
+                    "nt_dt": "06-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 996.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 24.9,
+                                "samt": 24.9
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33AEWFS0175G1ZR",
+            "nt": [
+                {
+                    "nt_num": "SAT09600",
+                    "val": 1303.71,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 3726.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 93.15,
+                                "samt": 93.15
                             }
                         }
                     ]
@@ -255,12 +609,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 53.0,
+                                "txval": 159.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 1.32,
-                                "samt": 1.32
+                                "camt": 3.97,
+                                "samt": 3.97
                             }
                         }
                     ]
@@ -277,12 +631,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 192.0,
+                                "txval": 576.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 4.8,
-                                "samt": 4.8
+                                "camt": 14.4,
+                                "samt": 14.4
                             }
                         }
                     ]
@@ -304,12 +658,66 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 938.0,
+                                "txval": 2814.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 23.45,
-                                "samt": 23.45
+                                "camt": 70.35,
+                                "samt": 70.35
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33AGKPV0273A1ZO",
+            "nt": [
+                {
+                    "nt_num": "SAT09594",
+                    "val": 679.08,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 1938.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 48.45,
+                                "samt": 48.45
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33AGYPV9567F1ZD",
+            "nt": [
+                {
+                    "nt_num": "SAT09596",
+                    "val": 14221.82,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 40635.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 1015.88,
+                                "samt": 1015.88
                             }
                         }
                     ]
@@ -319,6 +727,28 @@
         {
             "ctin": "33AHVPM2207R1ZR",
             "nt": [
+                {
+                    "nt_num": "SAT09612",
+                    "val": 52.63,
+                    "nt_dt": "09-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 135.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 18.0,
+                                "camt": 12.15,
+                                "samt": 12.15
+                            }
+                        }
+                    ]
+                },
                 {
                     "nt_num": "SAT09613",
                     "val": 7275.21,
@@ -331,23 +761,23 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 2905.0,
+                                "txval": 8715.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 72.62,
-                                "samt": 72.62
+                                "camt": 217.88,
+                                "samt": 217.88
                             }
                         },
                         {
                             "num": 2,
                             "itm_det": {
-                                "txval": 3580.0,
+                                "txval": 10740.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 18.0,
-                                "camt": 322.2,
-                                "samt": 322.2
+                                "camt": 966.6,
+                                "samt": 966.6
                             }
                         }
                     ]
@@ -369,12 +799,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 375.0,
+                                "txval": 1125.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 9.38,
-                                "samt": 9.38
+                                "camt": 28.12,
+                                "samt": 28.12
                             }
                         }
                     ]
@@ -391,12 +821,34 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 373.0,
+                                "txval": 1119.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 9.32,
-                                "samt": 9.32
+                                "camt": 27.98,
+                                "samt": 27.98
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "SAT09518",
+                    "val": 2412.65,
+                    "nt_dt": "08-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 6891.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 172.28,
+                                "samt": 172.28
                             }
                         }
                     ]
@@ -413,12 +865,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 661.0,
+                                "txval": 1983.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 16.52,
-                                "samt": 16.52
+                                "camt": 49.58,
+                                "samt": 49.58
                             }
                         }
                     ]
@@ -440,12 +892,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 40.0,
+                                "txval": 120.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 1.0,
-                                "samt": 1.0
+                                "camt": 3.0,
+                                "samt": 3.0
                             }
                         }
                     ]
@@ -462,12 +914,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 363.0,
+                                "txval": 1089.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 9.07,
-                                "samt": 9.07
+                                "camt": 27.22,
+                                "samt": 27.22
                             }
                         }
                     ]
@@ -489,12 +941,34 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 53.0,
+                                "txval": 159.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 1.32,
-                                "samt": 1.32
+                                "camt": 3.97,
+                                "samt": 3.97
+                            }
+                        }
+                    ]
+                },
+                {
+                    "nt_num": "SAT09533",
+                    "val": 680.18,
+                    "nt_dt": "08-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 1944.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 48.6,
+                                "samt": 48.6
                             }
                         }
                     ]
@@ -511,12 +985,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 1032.0,
+                                "txval": 3096.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 25.8,
-                                "samt": 25.8
+                                "camt": 77.4,
+                                "samt": 77.4
                             }
                         }
                     ]
@@ -538,12 +1012,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 34.0,
+                                "txval": 102.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 0.85,
-                                "samt": 0.85
+                                "camt": 2.55,
+                                "samt": 2.55
                             }
                         }
                     ]
@@ -560,12 +1034,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 249.0,
+                                "txval": 747.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 6.22,
-                                "samt": 6.22
+                                "camt": 18.67,
+                                "samt": 18.67
                             }
                         }
                     ]
@@ -582,12 +1056,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 678.0,
+                                "txval": 2034.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 16.95,
-                                "samt": 16.95
+                                "camt": 50.85,
+                                "samt": 50.85
                             }
                         }
                     ]
@@ -609,12 +1083,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 342.0,
+                                "txval": 1026.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 8.55,
-                                "samt": 8.55
+                                "camt": 25.65,
+                                "samt": 25.65
                             }
                         }
                     ]
@@ -622,12 +1096,12 @@
             ]
         },
         {
-            "ctin": "33BQTPM0121J1ZW",
+            "ctin": "33BPHPR1660A1ZA",
             "nt": [
                 {
-                    "nt_num": "SAT09456",
-                    "val": 1824.67,
-                    "nt_dt": "01-09-2025",
+                    "nt_num": "SAT09574",
+                    "val": 1101.82,
+                    "nt_dt": "09-09-2025",
                     "pos": "33",
                     "rchrg": "N",
                     "inv_typ": "R",
@@ -636,45 +1110,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 904.0,
-                                "csamt": 0,
-                                "iamt": 0,
-                                "rt": 5.0,
-                                "camt": 22.6,
-                                "samt": 22.6
-                            }
-                        },
-                        {
-                            "num": 2,
-                            "itm_det": {
-                                "txval": 741.0,
+                                "txval": 2802.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 18.0,
-                                "camt": 66.69,
-                                "samt": 66.69
-                            }
-                        }
-                    ]
-                },
-                {
-                    "nt_num": "SAT09457",
-                    "val": 700.0,
-                    "nt_dt": "01-09-2025",
-                    "pos": "33",
-                    "rchrg": "N",
-                    "inv_typ": "R",
-                    "ntty": "C",
-                    "itms": [
-                        {
-                            "num": 1,
-                            "itm_det": {
-                                "txval": 667.0,
-                                "csamt": 0,
-                                "iamt": 0,
-                                "rt": 5.0,
-                                "camt": 16.68,
-                                "samt": 16.68
+                                "camt": 252.18,
+                                "samt": 252.18
                             }
                         }
                     ]
@@ -696,12 +1137,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 175.0,
+                                "txval": 525.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 4.38,
-                                "samt": 4.38
+                                "camt": 13.12,
+                                "samt": 13.12
                             }
                         }
                     ]
@@ -718,12 +1159,39 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 948.0,
+                                "txval": 2844.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 23.7,
-                                "samt": 23.7
+                                "camt": 71.1,
+                                "samt": 71.1
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "ctin": "33CNCPM3719H2Z4",
+            "nt": [
+                {
+                    "nt_num": "SAT09512",
+                    "val": 245.45,
+                    "nt_dt": "06-09-2025",
+                    "pos": "33",
+                    "rchrg": "N",
+                    "inv_typ": "R",
+                    "ntty": "C",
+                    "itms": [
+                        {
+                            "num": 1,
+                            "itm_det": {
+                                "txval": 702.0,
+                                "csamt": 0,
+                                "iamt": 0,
+                                "rt": 5.0,
+                                "camt": 17.55,
+                                "samt": 17.55
                             }
                         }
                     ]
@@ -745,12 +1213,12 @@
                         {
                             "num": 1,
                             "itm_det": {
-                                "txval": 113.0,
+                                "txval": 339.0,
                                 "csamt": 0,
                                 "iamt": 0,
                                 "rt": 5.0,
-                                "camt": 2.82,
-                                "samt": 2.82
+                                "camt": 8.48,
+                                "samt": 8.48
                             }
                         }
                     ]
@@ -760,10 +1228,21 @@
     ],
     "b2cs": [
         {
-            "txval": 2955732.32,
+            "txval": 3258.6,
+            "rt": 0.0,
+            "camt": 0.0,
+            "samt": 0.0,
+            "iamt": 0,
+            "csamt": 0,
+            "sply_ty": "INTRA",
+            "typ": "OE",
+            "pos": "33"
+        },
+        {
+            "txval": 2892012.55,
             "rt": 5.0,
-            "camt": 73893.31,
-            "samt": 73893.31,
+            "camt": 72300.31,
+            "samt": 72300.31,
             "iamt": 0,
             "csamt": 0,
             "sply_ty": "INTRA",
@@ -782,10 +1261,10 @@
             "pos": "33"
         },
         {
-            "txval": 6348611.17,
+            "txval": 6836845.99,
             "rt": 18.0,
-            "camt": 571375.01,
-            "samt": 571375.01,
+            "camt": 615316.14,
+            "samt": 615316.14,
             "iamt": 0,
             "csamt": 0,
             "sply_ty": "INTRA",
@@ -798,11 +1277,11 @@
             {
                 "num": 1,
                 "hsn_sc": "09019020",
-                "txval": 53586.21,
-                "qty": 281,
+                "txval": 52694.21,
+                "qty": 275,
                 "rt": 5.0,
-                "camt": 1339.66,
-                "samt": 1339.66,
+                "camt": 1317.36,
+                "samt": 1317.36,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -834,11 +1313,11 @@
             {
                 "num": 4,
                 "hsn_sc": "09023020",
-                "txval": 3209149.25,
-                "qty": 24851,
+                "txval": 3205809.25,
+                "qty": 24763,
                 "rt": 5.0,
-                "camt": 80228.73,
-                "samt": 80228.73,
+                "camt": 80145.23,
+                "samt": 80145.23,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -846,11 +1325,11 @@
             {
                 "num": 5,
                 "hsn_sc": "09024040",
-                "txval": 12946.16,
-                "qty": 80,
+                "txval": 12172.16,
+                "qty": 72,
                 "rt": 5.0,
-                "camt": 323.65,
-                "samt": 323.65,
+                "camt": 304.3,
+                "samt": 304.3,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -870,11 +1349,11 @@
             {
                 "num": 7,
                 "hsn_sc": "19011090",
-                "txval": 13871.36,
-                "qty": 50,
+                "txval": 12293.36,
+                "qty": 44,
                 "rt": 5.0,
-                "camt": 346.78,
-                "samt": 346.78,
+                "camt": 307.33,
+                "samt": 307.33,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -894,11 +1373,11 @@
             {
                 "num": 9,
                 "hsn_sc": "19019090",
-                "txval": 1276281.68,
-                "qty": 189334,
+                "txval": 1230439.68,
+                "qty": 185348,
                 "rt": 5.0,
-                "camt": 31907.04,
-                "samt": 31907.04,
+                "camt": 30760.99,
+                "samt": 30760.99,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -942,11 +1421,11 @@
             {
                 "num": 13,
                 "hsn_sc": "19053100",
-                "txval": 1031.47,
-                "qty": 86,
+                "txval": 963.47,
+                "qty": 84,
                 "rt": 5.0,
-                "camt": 25.79,
-                "samt": 25.79,
+                "camt": 24.09,
+                "samt": 24.09,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -966,11 +1445,11 @@
             {
                 "num": 15,
                 "hsn_sc": "20079990",
-                "txval": 74495.85,
-                "qty": 16382,
+                "txval": 74145.85,
+                "qty": 16380,
                 "rt": 5.0,
-                "camt": 1862.4,
-                "samt": 1862.4,
+                "camt": 1853.65,
+                "samt": 1853.65,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1014,11 +1493,11 @@
             {
                 "num": 19,
                 "hsn_sc": "21011120",
-                "txval": 1593408.79,
-                "qty": 358949,
+                "txval": 1591944.79,
+                "qty": 358765,
                 "rt": 5.0,
-                "camt": 39835.22,
-                "samt": 39835.22,
+                "camt": 39798.62,
+                "samt": 39798.62,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1062,11 +1541,11 @@
             {
                 "num": 23,
                 "hsn_sc": "21032000",
-                "txval": 10262.37,
-                "qty": 1776,
+                "txval": 9642.37,
+                "qty": 1766,
                 "rt": 5.0,
-                "camt": 256.56,
-                "samt": 256.56,
+                "camt": 241.06,
+                "samt": 241.06,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1110,11 +1589,11 @@
             {
                 "num": 27,
                 "hsn_sc": "21039030",
-                "txval": 1099.48,
-                "qty": 26,
+                "txval": 577.48,
+                "qty": 20,
                 "rt": 5.0,
-                "camt": 27.49,
-                "samt": 27.49,
+                "camt": 14.44,
+                "samt": 14.44,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1146,11 +1625,11 @@
             {
                 "num": 30,
                 "hsn_sc": "21041010",
-                "txval": 3063.76,
-                "qty": 234,
+                "txval": 2819.76,
+                "qty": 230,
                 "rt": 5.0,
-                "camt": 76.59,
-                "samt": 76.59,
+                "camt": 70.49,
+                "samt": 70.49,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1230,11 +1709,11 @@
             {
                 "num": 37,
                 "hsn_sc": "30049011",
-                "txval": 41519.29,
-                "qty": 126,
+                "txval": 39633.29,
+                "qty": 116,
                 "rt": 5.0,
-                "camt": 1037.98,
-                "samt": 1037.98,
+                "camt": 990.83,
+                "samt": 990.83,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1254,29 +1733,65 @@
             {
                 "num": 39,
                 "hsn_sc": "33041000",
-                "txval": 226.51,
-                "qty": 6,
+                "txval": 914406.61,
+                "qty": 4478,
                 "rt": 18.0,
-                "camt": 20.39,
-                "samt": 20.39,
+                "camt": 82296.59,
+                "samt": 82296.59,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 40,
-                "hsn_sc": "33049120",
-                "txval": 122412.4,
-                "qty": 10559,
-                "rt": 5.0,
-                "camt": 3060.31,
-                "samt": 3060.31,
+                "hsn_sc": "33042000",
+                "txval": 1575109.06,
+                "qty": 9139,
+                "rt": 18.0,
+                "camt": 141759.82,
+                "samt": 141759.82,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 41,
+                "hsn_sc": "33049110",
+                "txval": 183287.18,
+                "qty": 666,
+                "rt": 5.0,
+                "camt": 4582.18,
+                "samt": 4582.18,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 42,
+                "hsn_sc": "33049110",
+                "txval": 522903.57,
+                "qty": 2121,
+                "rt": 18.0,
+                "camt": 47061.32,
+                "samt": 47061.32,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 43,
+                "hsn_sc": "33049120",
+                "txval": 121820.4,
+                "qty": 10553,
+                "rt": 5.0,
+                "camt": 3045.51,
+                "samt": 3045.51,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 44,
                 "hsn_sc": "33049120",
                 "txval": 180677.24,
                 "qty": 8132,
@@ -1288,55 +1803,79 @@
                 "csamt": 0
             },
             {
-                "num": 42,
-                "hsn_sc": "33049910",
-                "txval": 235162.85,
-                "qty": 17673,
-                "rt": 18.0,
-                "camt": 21164.66,
-                "samt": 21164.66,
-                "uqc": "NOS",
-                "iamt": 0,
-                "csamt": 0
-            },
-            {
-                "num": 43,
-                "hsn_sc": "33049930",
-                "txval": 22949.81,
-                "qty": 427,
-                "rt": 18.0,
-                "camt": 2065.48,
-                "samt": 2065.48,
-                "uqc": "NOS",
-                "iamt": 0,
-                "csamt": 0
-            },
-            {
-                "num": 44,
-                "hsn_sc": "33049990",
-                "txval": 2.08,
-                "qty": 7,
-                "rt": 18.0,
-                "camt": 0.19,
-                "samt": 0.19,
-                "uqc": "NOS",
-                "iamt": 0,
-                "csamt": 0
-            },
-            {
                 "num": 45,
-                "hsn_sc": "33051090",
-                "txval": 380816.49,
-                "qty": 391502,
-                "rt": 5.0,
-                "camt": 9520.41,
-                "samt": 9520.41,
+                "hsn_sc": "33049910",
+                "txval": 583689.83,
+                "qty": 19432,
+                "rt": 18.0,
+                "camt": 52532.08,
+                "samt": 52532.08,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 46,
+                "hsn_sc": "33049920",
+                "txval": 250300.32,
+                "qty": 5792,
+                "rt": 18.0,
+                "camt": 22527.03,
+                "samt": 22527.03,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 47,
+                "hsn_sc": "33049930",
+                "txval": 128363.94,
+                "qty": 1091,
+                "rt": 18.0,
+                "camt": 11552.75,
+                "samt": 11552.75,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 48,
+                "hsn_sc": "33049940",
+                "txval": 27594.4,
+                "qty": 209,
+                "rt": 0.0,
+                "camt": 0.0,
+                "samt": 0.0,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 49,
+                "hsn_sc": "33049990",
+                "txval": 1290388.92,
+                "qty": 4204,
+                "rt": 18.0,
+                "camt": 116135.0,
+                "samt": 116135.0,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 50,
+                "hsn_sc": "33051090",
+                "txval": 372440.49,
+                "qty": 387840,
+                "rt": 5.0,
+                "camt": 9311.01,
+                "samt": 9311.01,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 51,
                 "hsn_sc": "33051090",
                 "txval": 791181.35,
                 "qty": 996911,
@@ -1348,31 +1887,31 @@
                 "csamt": 0
             },
             {
-                "num": 47,
+                "num": 52,
                 "hsn_sc": "33059090",
-                "txval": 15180.35,
-                "qty": 890,
+                "txval": 14988.35,
+                "qty": 888,
                 "rt": 18.0,
-                "camt": 1366.23,
-                "samt": 1366.23,
+                "camt": 1348.95,
+                "samt": 1348.95,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 48,
+                "num": 53,
                 "hsn_sc": "33061020",
-                "txval": 199927.79,
-                "qty": 13009,
+                "txval": 198525.79,
+                "qty": 12997,
                 "rt": 5.0,
-                "camt": 4998.19,
-                "samt": 4998.19,
+                "camt": 4963.14,
+                "samt": 4963.14,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 49,
+                "num": 54,
                 "hsn_sc": "33061020",
                 "txval": 232517.69,
                 "qty": 14681,
@@ -1384,7 +1923,7 @@
                 "csamt": 0
             },
             {
-                "num": 50,
+                "num": 55,
                 "hsn_sc": "34011110",
                 "txval": 1384.4,
                 "qty": 18,
@@ -1396,7 +1935,7 @@
                 "csamt": 0
             },
             {
-                "num": 51,
+                "num": 56,
                 "hsn_sc": "34011110",
                 "txval": 72.33,
                 "qty": 1,
@@ -1408,19 +1947,19 @@
                 "csamt": 0
             },
             {
-                "num": 52,
+                "num": 57,
                 "hsn_sc": "34011190",
-                "txval": 1095667.0,
-                "qty": 67481,
+                "txval": 1098133.0,
+                "qty": 67588,
                 "rt": 5.0,
-                "camt": 27391.67,
-                "samt": 27391.67,
+                "camt": 27453.32,
+                "samt": 27453.32,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 53,
+                "num": 58,
                 "hsn_sc": "34011190",
                 "txval": 1117248.66,
                 "qty": 68888,
@@ -1432,19 +1971,19 @@
                 "csamt": 0
             },
             {
-                "num": 54,
+                "num": 59,
                 "hsn_sc": "34011930",
-                "txval": 2137596.28,
-                "qty": 158579,
+                "txval": 2138339.28,
+                "qty": 158607,
                 "rt": 18.0,
-                "camt": 192383.67,
-                "samt": 192383.67,
+                "camt": 192450.54,
+                "samt": 192450.54,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 55,
+                "num": 60,
                 "hsn_sc": "34011942",
                 "txval": 5654.55,
                 "qty": 241,
@@ -1456,55 +1995,55 @@
                 "csamt": 0
             },
             {
-                "num": 56,
+                "num": 61,
                 "hsn_sc": "34013019",
-                "txval": 40407.01,
-                "qty": 549,
+                "txval": 40255.01,
+                "qty": 547,
                 "rt": 18.0,
-                "camt": 3636.63,
-                "samt": 3636.63,
+                "camt": 3622.95,
+                "samt": 3622.95,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 57,
+                "num": 62,
                 "hsn_sc": "34013090",
-                "txval": 12874.77,
-                "qty": 248,
+                "txval": 67293.59,
+                "qty": 657,
                 "rt": 18.0,
-                "camt": 1158.73,
-                "samt": 1158.73,
+                "camt": 6056.42,
+                "samt": 6056.42,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 58,
+                "num": 63,
                 "hsn_sc": "34025000",
-                "txval": 4639531.87,
-                "qty": 546827,
+                "txval": 4633128.87,
+                "qty": 545150,
                 "rt": 18.0,
-                "camt": 417557.87,
-                "samt": 417557.87,
+                "camt": 416981.6,
+                "samt": 416981.6,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 59,
+                "num": 64,
                 "hsn_sc": "34054000",
-                "txval": 1143117.27,
-                "qty": 223279,
+                "txval": 1143460.27,
+                "qty": 223334,
                 "rt": 18.0,
-                "camt": 102880.55,
-                "samt": 102880.55,
+                "camt": 102911.42,
+                "samt": 102911.42,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 60,
+                "num": 65,
                 "hsn_sc": "38089400",
                 "txval": 25075.38,
                 "qty": 368,
@@ -1516,7 +2055,7 @@
                 "csamt": 0
             },
             {
-                "num": 61,
+                "num": 66,
                 "hsn_sc": "38101010",
                 "txval": 2143.36,
                 "qty": 47,
@@ -1528,7 +2067,7 @@
                 "csamt": 0
             },
             {
-                "num": 62,
+                "num": 67,
                 "hsn_sc": "39249010",
                 "txval": 1255.5,
                 "qty": 50,
@@ -1540,7 +2079,7 @@
                 "csamt": 0
             },
             {
-                "num": 63,
+                "num": 68,
                 "hsn_sc": "96032100",
                 "txval": 667.36,
                 "qty": 40,
@@ -1552,7 +2091,7 @@
                 "csamt": 0
             },
             {
-                "num": 64,
+                "num": 69,
                 "hsn_sc": "96032100",
                 "txval": 4626.19,
                 "qty": 403,
@@ -1564,25 +2103,25 @@
                 "csamt": 0
             },
             {
-                "num": 65,
+                "num": 70,
                 "hsn_sc": "998397",
-                "txval": 279462.85,
+                "txval": 308997.92,
                 "qty": 0,
                 "rt": 18.0,
-                "camt": 25151.66,
-                "samt": 25151.66,
+                "camt": 27809.81,
+                "samt": 27809.81,
                 "uqc": "NA",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 66,
+                "num": 71,
                 "hsn_sc": "999799",
-                "txval": 31097.97,
+                "txval": 189016.5,
                 "qty": 0,
                 "rt": 18.0,
-                "camt": 2798.82,
-                "samt": 2798.82,
+                "camt": 17011.49,
+                "samt": 17011.49,
                 "uqc": "NA",
                 "iamt": 0,
                 "csamt": 0
@@ -1592,11 +2131,11 @@
             {
                 "num": 1,
                 "hsn_sc": "09019020",
-                "txval": 40020.15,
-                "qty": 195,
+                "txval": 38830.15,
+                "qty": 179,
                 "rt": 5.0,
-                "camt": 1000.5,
-                "samt": 1000.5,
+                "camt": 970.75,
+                "samt": 970.75,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1616,11 +2155,11 @@
             {
                 "num": 3,
                 "hsn_sc": "09023010",
-                "txval": 517032.03,
-                "qty": 82943,
+                "txval": 515682.03,
+                "qty": 82743,
                 "rt": 5.0,
-                "camt": 12925.8,
-                "samt": 12925.8,
+                "camt": 12892.05,
+                "samt": 12892.05,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1628,11 +2167,11 @@
             {
                 "num": 4,
                 "hsn_sc": "09023020",
-                "txval": 1012936.39,
-                "qty": 11498,
+                "txval": 987994.01,
+                "qty": 10722,
                 "rt": 5.0,
-                "camt": 25323.41,
-                "samt": 25323.41,
+                "camt": 24699.85,
+                "samt": 24699.85,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1652,11 +2191,11 @@
             {
                 "num": 6,
                 "hsn_sc": "19011090",
-                "txval": 7884.49,
-                "qty": 32,
+                "txval": 1978.49,
+                "qty": 16,
                 "rt": 5.0,
-                "camt": 197.11,
-                "samt": 197.11,
+                "camt": 49.46,
+                "samt": 49.46,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1676,11 +2215,11 @@
             {
                 "num": 8,
                 "hsn_sc": "19019090",
-                "txval": 358549.43,
-                "qty": 52056,
+                "txval": 313945.43,
+                "qty": 50134,
                 "rt": 5.0,
-                "camt": 8963.74,
-                "samt": 8963.74,
+                "camt": 7848.64,
+                "samt": 7848.64,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -1700,18 +2239,6 @@
             {
                 "num": 10,
                 "hsn_sc": "19023010",
-                "txval": 138.27,
-                "qty": 27,
-                "rt": 5.0,
-                "camt": 3.46,
-                "samt": 3.46,
-                "uqc": "NOS",
-                "iamt": 0,
-                "csamt": 0
-            },
-            {
-                "num": 11,
-                "hsn_sc": "19023010",
                 "txval": 982.16,
                 "qty": 52,
                 "rt": 12.0,
@@ -1722,19 +2249,19 @@
                 "csamt": 0
             },
             {
-                "num": 12,
+                "num": 11,
                 "hsn_sc": "19053100",
-                "txval": 13045.82,
-                "qty": 1976,
+                "txval": 12917.82,
+                "qty": 1970,
                 "rt": 5.0,
-                "camt": 326.15,
-                "samt": 326.15,
+                "camt": 322.95,
+                "samt": 322.95,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 13,
+                "num": 12,
                 "hsn_sc": "19053100",
                 "txval": 30905.3,
                 "qty": 4424,
@@ -1746,19 +2273,19 @@
                 "csamt": 0
             },
             {
-                "num": 14,
+                "num": 13,
                 "hsn_sc": "20079990",
-                "txval": 35509.4,
-                "qty": 6361,
+                "txval": 30263.4,
+                "qty": 6033,
                 "rt": 5.0,
-                "camt": 887.73,
-                "samt": 887.73,
+                "camt": 756.58,
+                "samt": 756.58,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 15,
+                "num": 14,
                 "hsn_sc": "20079990",
                 "txval": 78911.75,
                 "qty": 12369,
@@ -1770,19 +2297,19 @@
                 "csamt": 0
             },
             {
-                "num": 16,
+                "num": 15,
                 "hsn_sc": "20081100",
-                "txval": 1490.91,
-                "qty": 33,
+                "txval": 1140.91,
+                "qty": 25,
                 "rt": 5.0,
-                "camt": 37.27,
-                "samt": 37.27,
+                "camt": 28.52,
+                "samt": 28.52,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 17,
+                "num": 16,
                 "hsn_sc": "20081100",
                 "txval": 2208.81,
                 "qty": 42,
@@ -1794,19 +2321,19 @@
                 "csamt": 0
             },
             {
-                "num": 18,
+                "num": 17,
                 "hsn_sc": "21011120",
-                "txval": 276908.39,
-                "qty": 70361,
+                "txval": 273776.39,
+                "qty": 69911,
                 "rt": 5.0,
-                "camt": 6922.71,
-                "samt": 6922.71,
+                "camt": 6844.41,
+                "samt": 6844.41,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 19,
+                "num": 18,
                 "hsn_sc": "21011120",
                 "txval": 547784.69,
                 "qty": 173663,
@@ -1818,7 +2345,7 @@
                 "csamt": 0
             },
             {
-                "num": 20,
+                "num": 19,
                 "hsn_sc": "21031000",
                 "txval": 912.18,
                 "qty": 44,
@@ -1830,7 +2357,7 @@
                 "csamt": 0
             },
             {
-                "num": 21,
+                "num": 20,
                 "hsn_sc": "21031000",
                 "txval": 49.15,
                 "qty": 1,
@@ -1842,19 +2369,19 @@
                 "csamt": 0
             },
             {
-                "num": 22,
+                "num": 21,
                 "hsn_sc": "21032000",
-                "txval": 15583.77,
-                "qty": 2607,
+                "txval": 14117.77,
+                "qty": 2573,
                 "rt": 5.0,
-                "camt": 389.59,
-                "samt": 389.59,
+                "camt": 352.94,
+                "samt": 352.94,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 23,
+                "num": 22,
                 "hsn_sc": "21032000",
                 "txval": 40527.35,
                 "qty": 7099,
@@ -1866,19 +2393,7 @@
                 "csamt": 0
             },
             {
-                "num": 24,
-                "hsn_sc": "21039020",
-                "txval": 355.98,
-                "qty": 33,
-                "rt": 5.0,
-                "camt": 8.9,
-                "samt": 8.9,
-                "uqc": "NOS",
-                "iamt": 0,
-                "csamt": 0
-            },
-            {
-                "num": 25,
+                "num": 23,
                 "hsn_sc": "21039020",
                 "txval": 683.39,
                 "qty": 30,
@@ -1890,7 +2405,7 @@
                 "csamt": 0
             },
             {
-                "num": 26,
+                "num": 24,
                 "hsn_sc": "21039030",
                 "txval": 7484.22,
                 "qty": 223,
@@ -1902,7 +2417,7 @@
                 "csamt": 0
             },
             {
-                "num": 27,
+                "num": 25,
                 "hsn_sc": "21039090",
                 "txval": 756.3,
                 "qty": 14,
@@ -1914,19 +2429,7 @@
                 "csamt": 0
             },
             {
-                "num": 28,
-                "hsn_sc": "21041010",
-                "txval": 1745.37,
-                "qty": 143,
-                "rt": 5.0,
-                "camt": 43.63,
-                "samt": 43.63,
-                "uqc": "NOS",
-                "iamt": 0,
-                "csamt": 0
-            },
-            {
-                "num": 29,
+                "num": 26,
                 "hsn_sc": "21041010",
                 "txval": 3582.09,
                 "qty": 400,
@@ -1938,7 +2441,7 @@
                 "csamt": 0
             },
             {
-                "num": 30,
+                "num": 27,
                 "hsn_sc": "21069099",
                 "txval": 1505.35,
                 "qty": 3,
@@ -1950,19 +2453,19 @@
                 "csamt": 0
             },
             {
-                "num": 31,
+                "num": 28,
                 "hsn_sc": "22029930",
-                "txval": 8085.11,
-                "qty": 327,
+                "txval": 3363.11,
+                "qty": 187,
                 "rt": 5.0,
-                "camt": 202.13,
-                "samt": 202.13,
+                "camt": 84.08,
+                "samt": 84.08,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 32,
+                "num": 29,
                 "hsn_sc": "22029930",
                 "txval": 12363.9,
                 "qty": 730,
@@ -1974,7 +2477,7 @@
                 "csamt": 0
             },
             {
-                "num": 33,
+                "num": 30,
                 "hsn_sc": "27121090",
                 "txval": 20271.58,
                 "qty": 3919,
@@ -1986,7 +2489,7 @@
                 "csamt": 0
             },
             {
-                "num": 34,
+                "num": 31,
                 "hsn_sc": "30049011",
                 "txval": 2825.71,
                 "qty": 10,
@@ -1998,7 +2501,7 @@
                 "csamt": 0
             },
             {
-                "num": 35,
+                "num": 32,
                 "hsn_sc": "30049011",
                 "txval": 6828.74,
                 "qty": 35,
@@ -2010,13 +2513,49 @@
                 "csamt": 0
             },
             {
-                "num": 36,
+                "num": 33,
                 "hsn_sc": "33041000",
-                "txval": 226.51,
-                "qty": 6,
+                "txval": 61359.69,
+                "qty": 514,
                 "rt": 18.0,
-                "camt": 20.39,
-                "samt": 20.39,
+                "camt": 5522.37,
+                "samt": 5522.37,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 34,
+                "hsn_sc": "33042000",
+                "txval": 189697.35,
+                "qty": 1538,
+                "rt": 18.0,
+                "camt": 17072.76,
+                "samt": 17072.76,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 35,
+                "hsn_sc": "33049110",
+                "txval": 37154.23,
+                "qty": 180,
+                "rt": 5.0,
+                "camt": 928.86,
+                "samt": 928.86,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 36,
+                "hsn_sc": "33049110",
+                "txval": 59762.69,
+                "qty": 354,
+                "rt": 18.0,
+                "camt": 5378.64,
+                "samt": 5378.64,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -2024,11 +2563,11 @@
             {
                 "num": 37,
                 "hsn_sc": "33049120",
-                "txval": 43808.22,
-                "qty": 2348,
+                "txval": 41726.22,
+                "qty": 2324,
                 "rt": 5.0,
-                "camt": 1095.21,
-                "samt": 1095.21,
+                "camt": 1043.16,
+                "samt": 1043.16,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
@@ -2048,53 +2587,77 @@
             {
                 "num": 39,
                 "hsn_sc": "33049910",
-                "txval": 152374.3,
-                "qty": 9029,
+                "txval": 183851.66,
+                "qty": 9363,
                 "rt": 18.0,
-                "camt": 13713.69,
-                "samt": 13713.69,
+                "camt": 16546.65,
+                "samt": 16546.65,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 40,
-                "hsn_sc": "33049930",
-                "txval": 15995.88,
-                "qty": 340,
+                "hsn_sc": "33049920",
+                "txval": 34539.63,
+                "qty": 640,
                 "rt": 18.0,
-                "camt": 1439.63,
-                "samt": 1439.63,
+                "camt": 3108.57,
+                "samt": 3108.57,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 41,
-                "hsn_sc": "33049990",
-                "txval": 1006.88,
-                "qty": 13,
+                "hsn_sc": "33049930",
+                "txval": 20077.08,
+                "qty": 439,
                 "rt": 18.0,
-                "camt": 90.62,
-                "samt": 90.62,
+                "camt": 1806.94,
+                "samt": 1806.94,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 42,
-                "hsn_sc": "33051090",
-                "txval": 146179.27,
-                "qty": 157245,
-                "rt": 5.0,
-                "camt": 3654.48,
-                "samt": 3654.48,
+                "hsn_sc": "33049940",
+                "txval": 3258.6,
+                "qty": 25,
+                "rt": 0.0,
+                "camt": 0.0,
+                "samt": 0.0,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 43,
+                "hsn_sc": "33049990",
+                "txval": 108243.34,
+                "qty": 852,
+                "rt": 18.0,
+                "camt": 9741.9,
+                "samt": 9741.9,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 44,
+                "hsn_sc": "33051090",
+                "txval": 142663.27,
+                "qty": 157219,
+                "rt": 5.0,
+                "camt": 3566.58,
+                "samt": 3566.58,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 45,
                 "hsn_sc": "33051090",
                 "txval": 357250.09,
                 "qty": 409956,
@@ -2106,19 +2669,19 @@
                 "csamt": 0
             },
             {
-                "num": 44,
+                "num": 46,
                 "hsn_sc": "33059090",
-                "txval": 12342.88,
-                "qty": 1656,
+                "txval": 13844.87,
+                "qty": 1688,
                 "rt": 18.0,
-                "camt": 1110.86,
-                "samt": 1110.86,
+                "camt": 1246.04,
+                "samt": 1246.04,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 45,
+                "num": 47,
                 "hsn_sc": "33061020",
                 "txval": 69683.65,
                 "qty": 3806,
@@ -2130,7 +2693,7 @@
                 "csamt": 0
             },
             {
-                "num": 46,
+                "num": 48,
                 "hsn_sc": "33061020",
                 "txval": 149395.3,
                 "qty": 8304,
@@ -2142,7 +2705,7 @@
                 "csamt": 0
             },
             {
-                "num": 47,
+                "num": 49,
                 "hsn_sc": "34011110",
                 "txval": 465.61,
                 "qty": 6,
@@ -2154,7 +2717,7 @@
                 "csamt": 0
             },
             {
-                "num": 48,
+                "num": 50,
                 "hsn_sc": "34011110",
                 "txval": 208.3,
                 "qty": 3,
@@ -2166,7 +2729,7 @@
                 "csamt": 0
             },
             {
-                "num": 49,
+                "num": 51,
                 "hsn_sc": "34011190",
                 "txval": 395522.03,
                 "qty": 20089,
@@ -2178,7 +2741,7 @@
                 "csamt": 0
             },
             {
-                "num": 50,
+                "num": 52,
                 "hsn_sc": "34011190",
                 "txval": 671271.09,
                 "qty": 37873,
@@ -2190,19 +2753,19 @@
                 "csamt": 0
             },
             {
-                "num": 51,
+                "num": 53,
                 "hsn_sc": "34011930",
-                "txval": 672140.16,
-                "qty": 51070,
+                "txval": 672499.16,
+                "qty": 51089,
                 "rt": 18.0,
-                "camt": 60492.61,
-                "samt": 60492.61,
+                "camt": 60524.92,
+                "samt": 60524.92,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
-                "num": 52,
+                "num": 54,
                 "hsn_sc": "34011942",
                 "txval": 5673.38,
                 "qty": 241,
@@ -2214,55 +2777,55 @@
                 "csamt": 0
             },
             {
-                "num": 53,
-                "hsn_sc": "34013019",
-                "txval": 12561.02,
-                "qty": 218,
-                "rt": 18.0,
-                "camt": 1130.49,
-                "samt": 1130.49,
-                "uqc": "NOS",
-                "iamt": 0,
-                "csamt": 0
-            },
-            {
-                "num": 54,
-                "hsn_sc": "34013090",
-                "txval": 14961.22,
-                "qty": 359,
-                "rt": 18.0,
-                "camt": 1346.51,
-                "samt": 1346.51,
-                "uqc": "NOS",
-                "iamt": 0,
-                "csamt": 0
-            },
-            {
                 "num": 55,
-                "hsn_sc": "34025000",
-                "txval": 2088036.6,
-                "qty": 230755,
+                "hsn_sc": "34013019",
+                "txval": 12415.02,
+                "qty": 216,
                 "rt": 18.0,
-                "camt": 187923.29,
-                "samt": 187923.29,
+                "camt": 1117.35,
+                "samt": 1117.35,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 56,
-                "hsn_sc": "34054000",
-                "txval": 489010.95,
-                "qty": 83663,
+                "hsn_sc": "34013090",
+                "txval": 16738.19,
+                "qty": 373,
                 "rt": 18.0,
-                "camt": 44010.99,
-                "samt": 44010.99,
+                "camt": 1506.44,
+                "samt": 1506.44,
                 "uqc": "NOS",
                 "iamt": 0,
                 "csamt": 0
             },
             {
                 "num": 57,
+                "hsn_sc": "34025000",
+                "txval": 2084750.6,
+                "qty": 230381,
+                "rt": 18.0,
+                "camt": 187627.55,
+                "samt": 187627.55,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 58,
+                "hsn_sc": "34054000",
+                "txval": 489111.95,
+                "qty": 83676,
+                "rt": 18.0,
+                "camt": 44020.08,
+                "samt": 44020.08,
+                "uqc": "NOS",
+                "iamt": 0,
+                "csamt": 0
+            },
+            {
+                "num": 59,
                 "hsn_sc": "38089400",
                 "txval": 15886.7,
                 "qty": 255,
@@ -2274,7 +2837,7 @@
                 "csamt": 0
             },
             {
-                "num": 58,
+                "num": 60,
                 "hsn_sc": "38101010",
                 "txval": 4922.32,
                 "qty": 114,
@@ -2286,7 +2849,7 @@
                 "csamt": 0
             },
             {
-                "num": 59,
+                "num": 61,
                 "hsn_sc": "39249010",
                 "txval": 225.99,
                 "qty": 9,
@@ -2298,7 +2861,7 @@
                 "csamt": 0
             },
             {
-                "num": 60,
+                "num": 62,
                 "hsn_sc": "96032100",
                 "txval": 925.55,
                 "qty": 69,
@@ -2310,7 +2873,7 @@
                 "csamt": 0
             },
             {
-                "num": 61,
+                "num": 63,
                 "hsn_sc": "96032100",
                 "txval": 10031.84,
                 "qty": 948,
@@ -2331,11 +2894,11 @@
                 "docs": [
                     {
                         "num": 1,
-                        "to": "SI0041A392102503",
+                        "to": "SI0041B864102502",
                         "from": "SI0041A392102501",
-                        "totnum": 3,
-                        "cancel": 0,
-                        "net_issue": 3
+                        "totnum": 472000002,
+                        "cancel": 471999995,
+                        "net_issue": 7
                     },
                     {
                         "num": 2,
@@ -2344,6 +2907,22 @@
                         "totnum": 7703,
                         "cancel": 51,
                         "net_issue": 7652
+                    },
+                    {
+                        "num": 3,
+                        "to": "CA01318",
+                        "from": "CA01057",
+                        "totnum": 262,
+                        "cancel": 2,
+                        "net_issue": 260
+                    },
+                    {
+                        "num": 4,
+                        "to": "CB00555",
+                        "from": "CB00400",
+                        "totnum": 156,
+                        "cancel": 5,
+                        "net_issue": 151
                     }
                 ]
             },
@@ -2353,6 +2932,14 @@
                 "docs": [
                     {
                         "num": 1,
+                        "to": "RUR00178",
+                        "from": "RUR00166",
+                        "totnum": 13,
+                        "cancel": 4,
+                        "net_issue": 9
+                    },
+                    {
+                        "num": 2,
                         "to": "SAT09627",
                         "from": "SAT09460",
                         "totnum": 168,
@@ -2360,7 +2947,15 @@
                         "net_issue": 165
                     },
                     {
-                        "num": 2,
+                        "num": 3,
+                        "to": "URB00077",
+                        "from": "URB00064",
+                        "totnum": 14,
+                        "cancel": 0,
+                        "net_issue": 14
+                    },
+                    {
+                        "num": 4,
                         "to": "AA026579",
                         "from": "AA026553",
                         "totnum": 27,
@@ -2368,12 +2963,20 @@
                         "net_issue": 27
                     },
                     {
-                        "num": 3,
-                        "to": "SAT09623",
-                        "from": "SAT09456",
-                        "totnum": 168,
-                        "cancel": 162,
-                        "net_issue": 6
+                        "num": 5,
+                        "to": "BB000041",
+                        "from": "BB000026",
+                        "totnum": 16,
+                        "cancel": 0,
+                        "net_issue": 16
+                    },
+                    {
+                        "num": 6,
+                        "to": "CC000033",
+                        "from": "CC000027",
+                        "totnum": 7,
+                        "cancel": 0,
+                        "net_issue": 7
                     }
                 ]
             }
@@ -2382,5 +2985,15 @@
     "gstin": "29AAACR8573R1ZV",
     "fp": "092025",
     "version": "GST3.0.4",
-    "hash": "hash"
+    "hash": "hash",
+    "nil": {
+        "inv": [
+            {
+                "sply_ty": "INTRAB2B",
+                "expt_amt": 0,
+                "ngsup_amt": 0,
+                "nil_amt": 16123.16
+            }
+        ]
+    }
 }

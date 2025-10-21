@@ -1,3 +1,4 @@
+from app.company_models import Group
 from app.erp_import import *
 from app.report_models import *
 import datetime
@@ -16,8 +17,15 @@ args_dict = {
     DateRangeArgs: DateRangeArgs(fromd=fromd,tod=tod),
     EmptyArgs: EmptyArgs(),
 }
-GstFilingImport.run(args_dict=args_dict)
-exit(0)
+group,_ = Group.objects.get_or_create(name="devaki")
+company,_ = Company.objects.get_or_create(name="devaki_urban",group = group)
+company.save()
+i = IkeaDownloader()
+exit()
+
+# GstFilingImport.run(company=company,args_dict=args_dict)
+# exit(0)
+
 g = Gst()
 while not g.is_logged_in():
     with open("captcha.png",'wb+') as f : 
@@ -25,8 +33,8 @@ while not g.is_logged_in():
     status = g.login(input("Enter captcha: "))
     print("login status :",status)
 
-# month_arg = MonthArgs(month=9,year=2025)
-GSTR1Portal.update_db(g,month_arg)
+month_arg = MonthArgs(month=9,year=2025)
+GSTR1Portal.update_db(g,group,month_arg)
 
 
 # GstFilingImport.run(args_dict=args_dict)
