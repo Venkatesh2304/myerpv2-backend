@@ -2,6 +2,7 @@ from abc import abstractmethod
 import abc
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import decimal
 import itertools
 import time
 import tracemalloc
@@ -112,7 +113,7 @@ class SalesImport(DateImport):
 
     @classmethod
     def delete_before_insert(cls, company: Company, args: DateRangeArgs):
-        types = ["sales","salesreturn", "claimservice"] #"sales",
+        types = ["sales", "salesreturn", "claimservice"][1:]
         inums_qs = cls.model.objects.filter(company=company).filter(
             date__gte=args.fromd, date__lte=args.tod, type__in=types
         )
@@ -129,11 +130,11 @@ class SalesImport(DateImport):
             company=company, date__gte=args.fromd, date__lte=args.tod
         )
 
-        #Sales 
-        sales_objs = sales_qs.filter(type="sales")
-        sales_inventory_objs = inventory_qs.filter(type="sales")
+        # Sales
+        sales_objs = sales_qs.filter(type="salesx")
+        sales_inventory_objs = inventory_qs.filter(type="salesx")
 
-        #Sales Return
+        # Sales Return
         date_original_inum_to_cn: defaultdict[tuple, list[str]] = defaultdict(list)
         salesreturn_objs = list(sales_qs.filter(type="salesreturn").order_by("amt"))
         salesreturn_inventory_objs = list(
@@ -160,30 +161,41 @@ class SalesImport(DateImport):
             inum = inums.pop(0)
             obj.inum = inum
 
-        #ClaimService 
+        # ClaimService
         claimservice_inventory_objs = inventory_qs.filter(type="claimservice")
-        claimservice_objs_maps: dict[str, SalesRegisterReport] = {}
+        claimservice_txval: defaultdict[str, decimal.Decimal] = defaultdict(
+            lambda: decimal.Decimal("0.000")
+        )
+        claimservice_tax: defaultdict[str, decimal.Decimal] = defaultdict(
+            lambda: decimal.Decimal("0.000")
+        )
         for inv_obj in claimservice_inventory_objs:
-            if inv_obj.inum not in claimservice_objs_maps:
-                claimservice_objs_maps[inv_obj.inum] = SalesRegisterReport(
-                    company=company,
-                    type="claimservice",
-                    inum=inv_obj.inum,
-                    date=inv_obj.date,
-                    party_id="HUL",
-                    ctin=inv_obj.ctin,
-                    amt=0,
-                    tds=0
-                )
-            obj = claimservice_objs_maps[inv_obj.inum]
-            obj.amt += inv_obj.txval*(100+2*inv_obj.rt- cls.TDS_PERCENT)/100
-            obj.tds += -inv_obj.txval*cls.TDS_PERCENT/100
-        for qs in claimservice_objs_maps.values():
-            qs.amt = round(qs.amt,3)
-        claimservice_objs = list(claimservice_objs_maps.values())
+            claimservice_txval[inv_obj.inum] += inv_obj.txval
+            claimservice_tax[inv_obj.inum] += 2 * inv_obj.txval * inv_obj.rt / 100
 
-        #Insert all three types into Sales and Inventory
-        salesregister_objs = (
+        claimservice_objs: list[SalesRegisterReport] = []
+        for inv_obj in claimservice_inventory_objs.distinct("inum"):
+            txval = claimservice_txval[inv_obj.inum]
+            tax = claimservice_tax[inv_obj.inum]
+            tds = (txval * cls.TDS_PERCENT) / 100
+
+            obj = SalesRegisterReport(
+                company=company,
+                type="claimservice",
+                inum=inv_obj.inum,
+                date=inv_obj.date,
+                party_id="HUL",
+                ctin=inv_obj.ctin,
+                amt=txval + tax - tds,
+                tds=tds,
+            )
+            claimservice_objs.append(obj)
+
+        # Insert sales
+        salesregister_objs = itertools.chain(
+            sales_objs.iterator(chunk_size=1000), salesreturn_objs, claimservice_objs
+        )
+        model_sales_objs = (
             models.Sales(
                 company_id=company.pk,
                 type=qs.type,
@@ -199,10 +211,49 @@ class SalesImport(DateImport):
                 tcs=qs.tcs,
                 tds=-qs.tds,
             )
-            for qs in itertools.chain(sales_objs.iterator(chunk_size=1000), salesreturn_objs, claimservice_objs)
+            for qs in salesregister_objs
         )
-        models.Sales.objects.bulk_create(salesregister_objs, batch_size=1000)
-        ikea_gstr_objs = (
+        models.Sales.objects.bulk_create(model_sales_objs, batch_size=1000)
+
+        # Insert Discount
+        # Recreate the iterator with non-zero discounts only
+        salesregister_objs = itertools.chain(
+            sales_objs.exclude(
+                btpr=0,
+                outpyt=0,
+                ushop=0,
+                pecom=0,
+                other_discount=0,
+            ).iterator(chunk_size=1000),
+            salesreturn_objs,
+            claimservice_objs,
+        )
+        model_discount_objs = (
+            models.Discount(
+                company_id=company.pk,
+                bill_id=qs.inum,
+                sub_type=discount,
+                amt=-value,
+            )
+            for qs in salesregister_objs
+            for discount, value in [
+                ("btpr", qs.btpr),
+                ("outpyt", qs.outpyt),
+                ("ushop", qs.ushop),
+                ("pecom", qs.pecom),
+                ("other_discount", qs.other_discount),
+            ]
+            if value != 0
+        )
+        models.Discount.objects.bulk_create(model_discount_objs, batch_size=1000)
+
+        # Insert inventory
+        ikea_gstr_objs = itertools.chain(
+            sales_inventory_objs.iterator(chunk_size=1000),
+            salesreturn_inventory_objs,
+            claimservice_inventory_objs,
+        )
+        model_inventory_objs = (
             models.Inventory(
                 company_id=company.pk,
                 bill_id=qs.inum,
@@ -211,13 +262,9 @@ class SalesImport(DateImport):
                 rt=qs.rt,
                 txval=qs.txval,
             )
-            for qs in itertools.chain(
-                sales_inventory_objs.iterator(chunk_size=1000),
-                salesreturn_inventory_objs,
-                claimservice_inventory_objs,
-            )
+            for qs in ikea_gstr_objs
         )
-        models.Inventory.objects.bulk_create(ikea_gstr_objs, batch_size=1000)
+        models.Inventory.objects.bulk_create(model_inventory_objs, batch_size=1000)
 
 
 class MarketReturnImport(DateImport):
