@@ -21,7 +21,7 @@ from app.report_models import (
     EmptyArgs,
     SalesRegisterReport,
 )
-from django.db.models import OuterRef, Subquery, Value, FloatField, QuerySet
+from django.db.models import OuterRef, Subquery, Value, DecimalField, QuerySet
 from django.db.models.functions import Coalesce
 
 
@@ -295,15 +295,18 @@ class MarketReturnImport(DateImport):
         market_returns = models.DmgShtReport.objects.filter(
             return_from="market", company=company
         ).annotate(
-            rt=Subquery(stock_rt_subquery, output_field=FloatField()),
+            rt=Subquery(stock_rt_subquery, output_field=DecimalField(decimal_places=1,max_digits=3)),
             ctin=Subquery(party_ctin_subquery, output_field=models.CharField()),
         )
 
         sales_objects = {}
         inventory_objects = []
         for mr in market_returns:
-            ctin = mr.ctin  # type: ignore
+            ctin = mr.ctin or None  # type: ignore
             rt = mr.rt  # type: ignore
+            if rt is None : 
+                print(f"Stock HSN Rate not found for stock {mr.stock_id} , skipping entry")
+                continue
             txval = round((float(mr.amt) * 100 / (100 + 2 * float(rt))), 3) if rt else 0
 
             if mr.inum not in sales_objects:
@@ -341,15 +344,17 @@ class StockImport(SimpleImport):
     @classmethod
     @transaction.atomic
     def run_atomic(cls, company: Company, args: EmptyArgs):
-        cur = cls.basic_run(company, args)
-        cur.execute(
-            f"""
-            INSERT INTO app_stock (company_id, name, hsn, rt)
-            SELECT company_id, stock_id, hsn , rt
-            FROM stockhsnrate_report
-            ON CONFLICT (company_id,name) DO UPDATE SET hsn = EXCLUDED.hsn , rt = EXCLUDED.rt
-        """
+        objs = ( 
+            models.Stock(
+                company=company,
+                name=obj.stock_id,
+                hsn=obj.hsn,
+                rt=obj.rt,
+            )
+            for obj in
+            models.StockHsnRateReport.objects.filter(company=company).iterator()
         )
+        models.Stock.objects.bulk_create(objs,batch_size=2000,ignore_conflicts=True)
 
 
 class PartyImport(SimpleImport):
@@ -360,22 +365,26 @@ class PartyImport(SimpleImport):
     @classmethod
     @transaction.atomic
     def run_atomic(cls, company: Company, args: EmptyArgs):
-        cur = cls.basic_run(company, args)
-        cur.execute(
-            f"""
-            INSERT INTO app_party (company_id,name,addr,code,master_code,phone,ctin)
-            SELECT company_id,name,addr,code,master_code,phone,ctin
-            FROM party_report
-            ON CONFLICT (company_id,code) DO UPDATE SET addr = EXCLUDED.addr , name = EXCLUDED.name ,
-                master_code = EXCLUDED.master_code , phone = EXCLUDED.phone , ctin = EXCLUDED.ctin
-        """
+        objs = (
+            models.Party(
+                company=company,
+                name=obj.name,
+                addr=obj.addr,
+                code=obj.code,
+                master_code=obj.master_code,
+                phone=obj.phone,
+                ctin=obj.ctin,
+            )
+            for obj in
+            models.PartyReport.objects.filter(company=company).iterator()
         )
-
+        models.Party.objects.bulk_create(objs,batch_size=2000,ignore_conflicts=True)
+        
 
 class GstFilingImport:
     imports: list[Type[BaseImport]] = [
-        SalesImport
-    ]  # SalesImport,PartyImport,StockImport,MarketReturnImport
+        SalesImport,PartyImport,StockImport, MarketReturnImport
+    ]
 
     @classmethod
     def report_update_thread(
@@ -388,9 +397,10 @@ class GstFilingImport:
     @classmethod
     def run(cls, company: Company, args_dict: dict[Type[ReportArgs], ReportArgs]):
         reports_to_update = []
+        s = time.time()
         for import_class in cls.imports:
             reports_to_update.extend(import_class.reports)  # type: ignore
-        reports_to_update = []
+        # reports_to_update = []
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = []
             for report_model in reports_to_update:
@@ -403,6 +413,7 @@ class GstFilingImport:
                     print(result)
                 except Exception as e:
                     print(e)
+        print("Reports Completed in :",time.time() - s)
         print("Reports Imported. Starting Data Import..")
         for import_class in cls.imports:
             arg = args_dict[import_class.arg_type]  # type: ignore
