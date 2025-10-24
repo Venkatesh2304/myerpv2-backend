@@ -4,3 +4,4 @@ logs/
 .cache/
 sql.log
 .~*
+__pycache__/
