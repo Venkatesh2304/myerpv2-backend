@@ -266,7 +266,6 @@ class SalesImport(DateImport):
         )
         models.Inventory.objects.bulk_create(model_inventory_objs, batch_size=1000)
 
-
 class MarketReturnImport(DateImport):
     reports = [models.DmgShtReport]
     model = models.Sales
