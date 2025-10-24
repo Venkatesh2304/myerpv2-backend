@@ -266,6 +266,7 @@ class SalesImport(DateImport):
         )
         models.Inventory.objects.bulk_create(model_inventory_objs, batch_size=1000)
 
+
 class MarketReturnImport(DateImport):
     reports = [models.DmgShtReport]
     model = models.Sales
@@ -295,7 +296,10 @@ class MarketReturnImport(DateImport):
         market_returns = models.DmgShtReport.objects.filter(
             return_from="market", company=company
         ).annotate(
-            rt=Subquery(stock_rt_subquery, output_field=DecimalField(decimal_places=1,max_digits=3)),
+            rt=Subquery(
+                stock_rt_subquery,
+                output_field=DecimalField(decimal_places=1, max_digits=3),
+            ),
             ctin=Subquery(party_ctin_subquery, output_field=models.CharField()),
         )
 
@@ -304,8 +308,10 @@ class MarketReturnImport(DateImport):
         for mr in market_returns:
             ctin = mr.ctin or None  # type: ignore
             rt = mr.rt  # type: ignore
-            if rt is None : 
-                print(f"Stock HSN Rate not found for stock {mr.stock_id} , skipping entry")
+            if rt is None:
+                print(
+                    f"Stock HSN Rate not found for stock {mr.stock_id} , skipping entry"
+                )
                 continue
             txval = round((float(mr.amt) * 100 / (100 + 2 * float(rt))), 3) if rt else 0
 
@@ -344,17 +350,24 @@ class StockImport(SimpleImport):
     @classmethod
     @transaction.atomic
     def run_atomic(cls, company: Company, args: EmptyArgs):
-        objs = ( 
+        objs = (
             models.Stock(
                 company=company,
                 name=obj.stock_id,
                 hsn=obj.hsn,
                 rt=obj.rt,
             )
-            for obj in
-            models.StockHsnRateReport.objects.filter(company=company).iterator()
+            for obj in models.StockHsnRateReport.objects.filter(
+                company=company
+            ).iterator()
         )
-        models.Stock.objects.bulk_create(objs,batch_size=2000,ignore_conflicts=True)
+        models.Stock.objects.bulk_create(
+            objs,
+            batch_size=2000,
+            update_conflicts=True,
+            update_fields=["hsn", "rt"],
+            unique_fields=["company_id", "name"],
+        )
 
 
 class PartyImport(SimpleImport):
@@ -375,15 +388,23 @@ class PartyImport(SimpleImport):
                 phone=obj.phone,
                 ctin=obj.ctin,
             )
-            for obj in
-            models.PartyReport.objects.filter(company=company).iterator()
+            for obj in models.PartyReport.objects.filter(company=company).iterator()
         )
-        models.Party.objects.bulk_create(objs,batch_size=2000,ignore_conflicts=True)
-        
+        models.Party.objects.bulk_create(
+            objs,
+            batch_size=2000,
+            update_conflicts=True,
+            update_fields=["addr", "master_code", "name", "phone", "ctin"],
+            unique_fields=["company_id", "code"],
+        )
+
 
 class GstFilingImport:
     imports: list[Type[BaseImport]] = [
-        SalesImport,PartyImport,StockImport, MarketReturnImport
+        SalesImport,
+        PartyImport,
+        StockImport,
+        MarketReturnImport,
     ]
 
     @classmethod
@@ -413,7 +434,7 @@ class GstFilingImport:
                     print(result)
                 except Exception as e:
                     print(e)
-        print("Reports Completed in :",time.time() - s)
+        print("Reports Completed in :", time.time() - s)
         print("Reports Imported. Starting Data Import..")
         for import_class in cls.imports:
             arg = args_dict[import_class.arg_type]  # type: ignore
