@@ -113,7 +113,7 @@ class SalesImport(DateImport):
 
     @classmethod
     def delete_before_insert(cls, company: Company, args: DateRangeArgs):
-        types = ["sales", "salesreturn", "claimservice"][1:]
+        types = ["sales", "salesreturn", "claimservice"]
         inums_qs = cls.model.objects.filter(company=company).filter(
             date__gte=args.fromd, date__lte=args.tod, type__in=types
         )
@@ -131,8 +131,8 @@ class SalesImport(DateImport):
         )
 
         # Sales
-        sales_objs = sales_qs.filter(type="salesx")
-        sales_inventory_objs = inventory_qs.filter(type="salesx")
+        sales_objs = sales_qs.filter(type="sales")
+        sales_inventory_objs = inventory_qs.filter(type="sales")
 
         # Sales Return
         date_original_inum_to_cn: defaultdict[tuple, list[str]] = defaultdict(list)
