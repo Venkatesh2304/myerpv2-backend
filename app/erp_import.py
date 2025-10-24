@@ -442,7 +442,7 @@ class GstFilingImport:
         reports_to_update = []
         for import_class in cls.imports:
             reports_to_update.extend(import_class.reports)  # type: ignore
-        # reports_to_update = []
+        reports_to_update = []
         s = time.time()
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = []
