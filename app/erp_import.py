@@ -249,7 +249,7 @@ class SalesImport(DateImport):
                 tcs=qs.tcs,
                 tds=qs.tds,
             )
-            for qs in itertools.chain(sales_objs, salesreturn_objs, claimservice_objs)
+            for qs in itertools.chain(sales_objs.iterator(chunk_size=1000), salesreturn_objs, claimservice_objs)
         )
         models.Sales.objects.bulk_create(salesregister_objs, batch_size=1000)
         ikea_gstr_objs = (
@@ -262,7 +262,7 @@ class SalesImport(DateImport):
                 txval=qs.txval,
             )
             for qs in itertools.chain(
-                sales_inventory_objs,
+                sales_inventory_objs.iterator(chunk_size=1000),
                 salesreturn_inventory_objs,
                 claimservice_inventory_objs,
             )
@@ -443,6 +443,7 @@ class GstFilingImport:
         for import_class in cls.imports:
             reports_to_update.extend(import_class.reports)  # type: ignore
         # reports_to_update = []
+        s = time.time()
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = []
             for report_model in reports_to_update:
@@ -455,6 +456,7 @@ class GstFilingImport:
                     print(result)
                 except Exception as e:
                     print(e)
+        print("Report Update Completed in ", time.time() - s)
         print("Reports Imported. Starting Data Import..")
         for import_class in cls.imports:
             arg = args_dict[import_class.arg_type]  # type: ignore
