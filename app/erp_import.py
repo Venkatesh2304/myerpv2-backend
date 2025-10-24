@@ -164,6 +164,7 @@ class SalesImport(DateImport):
             if inv_obj.inum not in claimservice_objs_maps:
                 claimservice_objs_maps[inv_obj.inum] = SalesRegisterReport(
                     company=company,
+                    type="claimservice",
                     inum=inv_obj.inum,
                     date=inv_obj.date,
                     party_id="HUL",
