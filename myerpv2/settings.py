@@ -124,21 +124,33 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#         },
-#     },
-#     'loggers': {
-#         'django.db.backends': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',  # shows SQL + timings
-#         },
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'sql_file': {
+            'class': 'logging.FileHandler',
+            'filename': 'sql.log',  # path to your log file
+            'formatter': 'verbose',  # optional
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {name} {message}',
+            'style': '{',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['sql_file'],  # log to file
+            'level': 'DEBUG',          # log all queries
+            'propagate': False,        # prevent duplicate logging
+        },
+    },
+}
 
 from django.db.migrations.state import ModelState
 from typing import Generic

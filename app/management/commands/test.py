@@ -1,9 +1,42 @@
+import time
 from app.company_models import Group
 from app.erp_import import *
 from app.report_models import *
+from app.erp_models import *
 import datetime
 
 from custom.classes import Gst, IkeaDownloader
+from django.db import connection
+import tracemalloc
+
+cur = connection.cursor()
+
+
+# objs = list(IkeaGSTR1Report.objects.all())
+# Inventory.objects.all().delete()
+
+# s  = time.time()
+# tracemalloc.start()  # start tracking memory
+# new_objs = [ 
+#     Inventory(company_id = obj.company_id, bill_id = obj.inum, stock_id = obj.stock_id, qty = obj.qty, txval = obj.txval,  rt = obj.rt)
+#     for obj in objs
+# ]
+# current, peak = tracemalloc.get_traced_memory()
+# print(f"Current memory usage: {current / 1024 / 1024:.2f} MB")
+# print(f"Peak memory usage: {peak / 1024 / 1024:.2f} MB")
+
+# tracemalloc.stop()
+# Inventory.objects.bulk_create(new_objs,batch_size=1000)
+
+
+# cur.execute(f"""
+#             INSERT INTO app_inventory (company_id,bill_id, stock_id, qty, txval, rt)
+#             SELECT gstr1.company_id, gstr1.inum, gstr1.stock_id, gstr1.qty, gstr1.txval, gstr1.rt
+#             FROM ikea_gstr1_report as gstr1
+#         """)
+# e  = time.time() 
+# print( e - s )
+# exit(0)
 
 fromd = datetime.date(2025,9,1)
 # fromd = datetime.date(2025,9,1)
@@ -20,10 +53,11 @@ args_dict = {
 group,_ = Group.objects.get_or_create(name="devaki")
 company,_ = Company.objects.get_or_create(name="devaki_urban",group = group)
 company.save()
-i = IkeaDownloader()
-exit()
 
-# GstFilingImport.run(company=company,args_dict=args_dict)
+# i = IkeaDownloader()
+GstFilingImport.run(company=company,args_dict=args_dict)
+exit(0)
+
 # exit(0)
 
 g = Gst()

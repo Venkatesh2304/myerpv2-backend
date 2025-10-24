@@ -1,0 +1,72 @@
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/logging/config.py", line 710, in configure_handler
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/logging/config.py", line 710, in configure_handler
+    formatter = self.config['formatters'][formatter]
+  File "/usr/lib/python3.10/logging/config.py", line 326, in __getitem__
+    formatter = self.config['formatters'][formatter]
+  File "/usr/lib/python3.10/logging/config.py", line 326, in __getitem__
+    value = dict.__getitem__(self, key)
+    value = dict.__getitem__(self, key)
+KeyError: 'verbose'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+KeyError: 'verbose'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/logging/config.py", line 565, in configure
+  File "/usr/lib/python3.10/logging/config.py", line 565, in configure
+    handler = self.configure_handler(handlers[name])
+    handler = self.configure_handler(handlers[name])
+  File "/usr/lib/python3.10/logging/config.py", line 712, in configure_handler
+  File "/usr/lib/python3.10/logging/config.py", line 712, in configure_handler
+    raise ValueError('Unable to set formatter '
+ValueError: Unable to set formatter 'verbose'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/venkatesh/code/erp/myerpv2/manage.py", line 22, in <module>
+    raise ValueError('Unable to set formatter '
+ValueError: Unable to set formatter 'verbose'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/venkatesh/code/erp/myerpv2/manage.py", line 22, in <module>
+    main()
+  File "/home/venkatesh/code/erp/myerpv2/manage.py", line 18, in main
+    main()
+  File "/home/venkatesh/code/erp/myerpv2/manage.py", line 18, in main
+    execute_from_command_line(sys.argv)
+  File "/home/venkatesh/code/erp/myerpv2/env/lib/python3.10/site-packages/django/core/management/__init__.py", line 442, in execute_from_command_line
+    execute_from_command_line(sys.argv)
+  File "/home/venkatesh/code/erp/myerpv2/env/lib/python3.10/site-packages/django/core/management/__init__.py", line 442, in execute_from_command_line
+    utility.execute()
+  File "/home/venkatesh/code/erp/myerpv2/env/lib/python3.10/site-packages/django/core/management/__init__.py", line 416, in execute
+    utility.execute()
+  File "/home/venkatesh/code/erp/myerpv2/env/lib/python3.10/site-packages/django/core/management/__init__.py", line 416, in execute
+    django.setup()
+  File "/home/venkatesh/code/erp/myerpv2/env/lib/python3.10/site-packages/django/__init__.py", line 19, in setup
+    django.setup()
+  File "/home/venkatesh/code/erp/myerpv2/env/lib/python3.10/site-packages/django/__init__.py", line 19, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+  File "/home/venkatesh/code/erp/myerpv2/env/lib/python3.10/site-packages/django/utils/log.py", line 76, in configure_logging
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+  File "/home/venkatesh/code/erp/myerpv2/env/lib/python3.10/site-packages/django/utils/log.py", line 76, in configure_logging
+    logging_config_func(logging_settings)
+  File "/usr/lib/python3.10/logging/config.py", line 811, in dictConfig
+    logging_config_func(logging_settings)
+  File "/usr/lib/python3.10/logging/config.py", line 811, in dictConfig
+    dictConfigClass(config).configure()
+  File "/usr/lib/python3.10/logging/config.py", line 572, in configure
+    dictConfigClass(config).configure()
+  File "/usr/lib/python3.10/logging/config.py", line 572, in configure
+    raise ValueError('Unable to configure handler '
+ValueError: Unable to configure handler 'sql_file'
+    raise ValueError('Unable to configure handler '
+ValueError: Unable to configure handler 'sql_file'
