@@ -17,16 +17,7 @@ from myerpv2 import settings
 from app.sql import engine
 from typing import TypeVar, Generic
 from app.company_models import Company, Group
-
-def decimal_field(required=False, decimal_places=2, **kwargs) -> models.DecimalField:
-    required_fields = (
-        {"db_default": Decimal("0.00"), "default": 0 , "blank": True, "null": True}
-        if not required
-        else {}
-    )
-    return models.DecimalField(
-        max_digits=12, decimal_places=decimal_places, **required_fields, **kwargs
-    )
+from app.fields import decimal_field
 
 @dataclass
 class ReportArgs(abc.ABC):
@@ -290,7 +281,7 @@ class IkeaGSTR1Report(DateReportModel):
     txval = decimal_field(required=True, decimal_places=3, verbose_name="Taxable Value")
     stock_id = models.CharField(max_length=50, verbose_name="UQC")
     qty = models.IntegerField(verbose_name="Quantity")
-    rt = decimal_field(required=True, verbose_name="Tax - Central Tax")
+    rt = decimal_field(required=True, decimal_places=1, verbose_name="Tax - Central Tax")
     type = models.CharField(max_length=50, verbose_name="Type")
     hsn = models.CharField(max_length=50, verbose_name="HSN")
     desc = models.CharField(max_length=255, null=True, verbose_name="HSN Description")

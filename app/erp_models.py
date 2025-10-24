@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import CharField,IntegerField,OneToOneField,FloatField,ForeignKey,DateField,BooleanField,CompositePrimaryKey
 from django.db.models import Sum,F
 
+from app.fields import decimal_field
+
 class CompanyModel(models.Model):
       company = models.ForeignKey("app.Company",on_delete=models.CASCADE,db_index=True)
       class Meta :
@@ -12,7 +14,7 @@ class PartyVoucher(models.Model) :
       inum = CharField(max_length=20)
       party_id  = CharField(max_length=20)
       date = DateField()
-      amt = FloatField(null=True)
+      amt = decimal_field(required=True)
 
       def __str__(self) -> str:
             return self.inum
@@ -51,8 +53,8 @@ class Stock(CompanyModel) :
       name = CharField(max_length=20)  # removed db_index (part of composite PK)
       hsn = CharField(max_length=20,null=True)
       desc = CharField(max_length=20,null=True,blank=True)
-      rt = FloatField(null=True)
-      standard_rate = FloatField(null=True,blank=True)
+      rt = decimal_field(decimal_places=1)
+      standard_rate = decimal_field()
       pk = CompositePrimaryKey("company", "name")
       def __str__(self) -> str:
             return self.name 
@@ -62,8 +64,8 @@ class Stock(CompanyModel) :
 class Inventory(CompanyModel) : 
       stock_id = models.CharField(max_length=10)
       qty = IntegerField()
-      txval = FloatField(blank=True,null=True)
-      rt = FloatField(blank=True,null=True)
+      txval = decimal_field(decimal_places=3)
+      rt = decimal_field(decimal_places=1)
       bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
       pur_bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
       adj_bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
@@ -89,11 +91,11 @@ class Inventory(CompanyModel) :
       )
 
 class Sales(CompanyModel, PartyVoucher, GstVoucher) :
-      discount = FloatField(default=0,db_default=0)
-      roundoff = FloatField(default=0,db_default=0)
+      discount = decimal_field()
+      roundoff = decimal_field()
       type = CharField(max_length=15)
-      tds = FloatField(default=0,db_default=0)
-      tcs = FloatField(default=0,db_default=0)
+      tds = decimal_field()
+      tcs = decimal_field()
       pk = CompositePrimaryKey("company", "inum")
       party = models.ForeignObject(
             "Party",
@@ -108,7 +110,7 @@ class Discount(CompanyModel):
       bill_id = models.CharField(max_length=20)
       sub_type = CharField(max_length=20)
       type = CharField(null=True,blank=True,max_length=20)
-      amt =  FloatField(default=0,db_default=0)
+      amt =  decimal_field()
       moc = CharField(max_length=30,null=True,blank=True)
       class Meta : 
             # unique_together = ("sub_type","bill_id")
@@ -118,8 +120,8 @@ class Purchase(CompanyModel, PartyVoucher, GstVoucher) : #No txval
       #txval = FloatField(null=True)
       type = CharField(max_length=15,db_default="purchase",null=True)
       ref = CharField(max_length=15,null=True)
-      tds = FloatField(default=0,db_default=0)
-      tcs = FloatField(default=0,db_default=0)
+      tds = decimal_field()
+      tcs = decimal_field()
       pk = CompositePrimaryKey("company", "inum")
       party = models.ForeignObject(
             "Party",

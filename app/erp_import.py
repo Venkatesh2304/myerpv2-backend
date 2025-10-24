@@ -176,8 +176,8 @@ class SalesImport(DateImport):
                     tds=0
                 )
             obj = claimservice_objs_maps[inv_obj.inum]
-            obj.amt = inv_obj.txval*(100+2*inv_obj.rt- cls.TDS_PERCENT)/100
-            obj.tds = -inv_obj.txval*cls.TDS_PERCENT/100
+            obj.amt += inv_obj.txval*(100+2*inv_obj.rt- cls.TDS_PERCENT)/100
+            obj.tds += -inv_obj.txval*cls.TDS_PERCENT/100
         for qs in claimservice_objs_maps.values():
             qs.amt = round(qs.amt,3)
         claimservice_objs = list(claimservice_objs_maps.values())
@@ -197,7 +197,7 @@ class SalesImport(DateImport):
                 ),
                 roundoff=qs.roundoff,
                 tcs=qs.tcs,
-                tds=qs.tds,
+                tds=-qs.tds,
             )
             for qs in itertools.chain(sales_objs.iterator(chunk_size=1000), salesreturn_objs, claimservice_objs)
         )
