@@ -455,6 +455,7 @@ class GstFilingImport:
                     print(result)
                 except Exception as e:
                     print(e)
+        print("Reports Imported. Starting Data Import...")
         for import_class in cls.imports:
             arg = args_dict[import_class.arg_type]  # type: ignore
             s = time.time()
