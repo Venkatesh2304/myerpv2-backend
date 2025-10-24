@@ -177,7 +177,7 @@ class SalesImport(DateImport):
 
         for qs in claimservice_objs_maps.values():
             qs.amt = round(qs.amt,3)
-        claimservice_objs = []#list(claimservice_objs_maps.values())
+        claimservice_objs = list(claimservice_objs_maps.values())
         salesregister_objs = (
             models.Sales(
                 company_id=company.pk,
