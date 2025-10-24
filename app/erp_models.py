@@ -91,7 +91,7 @@ class Inventory(CompanyModel) :
 class Sales(CompanyModel, PartyVoucher, GstVoucher) :
       discount = FloatField(default=0,db_default=0)
       roundoff = FloatField(default=0,db_default=0)
-      type = CharField(max_length=15,db_default="sales",null=True)
+      type = CharField(max_length=15)
       tds = FloatField(default=0,db_default=0)
       tcs = FloatField(default=0,db_default=0)
       pk = CompositePrimaryKey("company", "inum")

@@ -129,9 +129,11 @@ class SalesImport(DateImport):
             company=company, date__gte=args.fromd, date__lte=args.tod
         )
 
+        #Sales 
         sales_objs = sales_qs.filter(type="sales")
         sales_inventory_objs = inventory_qs.filter(type="sales")
 
+        #Sales Return
         date_original_inum_to_cn: defaultdict[tuple, list[str]] = defaultdict(list)
         salesreturn_objs = list(sales_qs.filter(type="salesreturn").order_by("amt"))
         salesreturn_inventory_objs = list(
@@ -158,6 +160,7 @@ class SalesImport(DateImport):
             inum = inums.pop(0)
             obj.inum = inum
 
+        #ClaimService 
         claimservice_inventory_objs = inventory_qs.filter(type="claimservice")
         claimservice_objs_maps: dict[str, SalesRegisterReport] = {}
         for inv_obj in claimservice_inventory_objs:
@@ -178,8 +181,8 @@ class SalesImport(DateImport):
         for qs in claimservice_objs_maps.values():
             qs.amt = round(qs.amt,3)
         claimservice_objs = list(claimservice_objs_maps.values())
-        for obj in claimservice_objs : 
-            print(obj.inum,obj.amt,obj.tds)
+
+        #Insert all three types into Sales and Inventory
         salesregister_objs = (
             models.Sales(
                 company_id=company.pk,
@@ -215,54 +218,6 @@ class SalesImport(DateImport):
             )
         )
         models.Inventory.objects.bulk_create(ikea_gstr_objs, batch_size=1000)
-        # print("Memory used : ",tracemalloc.get_traced_memory())
-
-        # cls.create_type_tables(cur,'sales')
-        # cls.insert_sr(cur,'sales')
-        # cls.insert_gstr(cur,'sales')
-
-        # cls.create_type_tables(cur,'salesreturn')
-        # #Insert salesreturn to app_sales
-        # cur.execute(f"""
-        #     WITH modified_gstr1 AS (
-        #         SELECT
-        #             ROW_NUMBER() OVER (PARTITION BY date, original_invoice_no ORDER BY inv_amt) AS row_number,
-        #             credit_note_no,
-        #             date,
-        #             original_invoice_no
-        #         FROM salesreturn_gstr1
-        #     ),
-        #     sr_with_rownum AS (
-        #         SELECT *,
-        #             ROW_NUMBER() OVER (PARTITION BY date, inum ORDER BY amt) AS row_number
-        #         FROM salesreturn_sr
-        #     )
-
-        #     UPDATE salesreturn_sr AS sr
-        #     SET
-        #         roundoff = -sr.roundoff,
-        #         inum = mg.credit_note_no
-        #     FROM modified_gstr1 AS mg
-        #     JOIN sr_with_rownum AS swr
-        #     ON swr.date = mg.date
-        #     AND swr.inum = mg.original_invoice_no
-        #     AND swr.row_number = mg.row_number
-        #     WHERE sr.id = swr.id;
-        # """)
-        # cur.execute(f"UPDATE salesreturn_gstr1 SET inum = credit_note_no , txval = -txval")
-
-        # cls.insert_sr(cur,'salesreturn')
-        # cls.insert_gstr(cur,'salesreturn')
-
-        # cls.create_type_tables(cur,'claimservice')
-        # cur.execute(f"""
-        #     INSERT INTO app_sales (company_id,type,inum,date,party_id,ctin,amt,tds)
-        #     SELECT distinct on (company_id,inum) company_id, 'claimservice' , inum , date , 'HUL' , ctin ,
-        #             -(select ROUND(sum(txval*(100+2*rt-{cls.TDS_PERCENT})/100),3) from claimservice_gstr1 as cs where cs.inum = claimservice_gstr1.inum) as amt,
-        #             -(select ROUND(sum(txval*{cls.TDS_PERCENT}/100),3) from claimservice_gstr1 as cs where cs.inum = claimservice_gstr1.inum) as tds
-        #     FROM claimservice_gstr1
-        # """)
-        # cls.insert_gstr(cur,'claimservice')
 
 
 class MarketReturnImport(DateImport):
