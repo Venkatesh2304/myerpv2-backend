@@ -110,60 +110,6 @@ class SalesImport(DateImport):
     model = models.Sales
     TDS_PERCENT = 2
 
-    @staticmethod
-    def insert_gstr(cur, type):
-        cur.execute(
-            f"""
-            INSERT INTO app_stock (company_id,name, hsn, rt)
-            SELECT DISTINCT ON(company_id,stock_id) gstr1.company_id, gstr1.stock_id, gstr1.hsn, gstr1.rt
-            FROM {type}_gstr1 as gstr1
-            ON CONFLICT (company_id,name) DO UPDATE SET hsn = EXCLUDED.hsn , rt = EXCLUDED.rt
-        """
-        )
-        cur.execute(
-            f"""
-            INSERT INTO app_inventory (company_id,bill_id, stock_id, qty, txval, rt)
-            SELECT gstr1.company_id, gstr1.inum, gstr1.stock_id, gstr1.qty, gstr1.txval, gstr1.rt
-            FROM {type}_gstr1 as gstr1
-        """
-        )
-
-    @staticmethod
-    def insert_sr(cur, type):
-        # Insert Sales
-        cur.execute(
-            f"""
-            INSERT INTO app_sales (company_id,type,inum,date,party_id,amt,ctin,discount,roundoff,tcs,tds)
-            SELECT company_id,'{type}' as type , sr.inum, sr.date, sr.party_id, -sr.amt, sr.ctin, 
-                    -COALESCE(sr.btpr + sr.outpyt + sr.ushop + sr.pecom + sr.other_discount,0) as discount,
-                    sr.roundoff,sr.tcs,sr.tds
-            FROM {type}_sr as sr
-        """
-        )
-
-        # Insert Discount
-        discount_types = ["btpr", "outpyt", "ushop", "pecom", "other_discount"]
-        for sub_type in discount_types:
-            cur.execute(
-                f"""
-            INSERT INTO app_discount (company_id,bill_id, sub_type, amt)
-            SELECT company_id,sr.inum as bill_id , '{sub_type}', -COALESCE(sr.{sub_type}, 0) as amt
-            FROM  {type}_sr as sr
-            """
-            )
-
-    @staticmethod
-    def create_type_tables(cur, type):
-        """Create temp tables for type_sr and type_gstr1 for the given type"""
-        cur.execute(
-            f"""CREATE TEMP TABLE {type}_sr ON COMMIT DROP AS 
-                                   SELECT * FROM salesregister_temp WHERE type = '{type}'"""
-        )
-        cur.execute(
-            f"""CREATE TEMP TABLE {type}_gstr1 ON COMMIT DROP AS 
-                                    SELECT * FROM ikea_gstr1_temp WHERE type = '{type}'"""
-        )
-
     @classmethod
     def delete_before_insert(cls, company: Company, args: DateRangeArgs):
         types = ["sales","salesreturn", "claimservice"] #"sales",
@@ -175,7 +121,6 @@ class SalesImport(DateImport):
     @classmethod
     @transaction.atomic
     def run_atomic(cls, company: Company, args: DateRangeArgs):
-        # cur = cls.basic_run(company,args)
         cls.delete_before_insert(company, args)
         sales_qs = models.SalesRegisterReport.objects.filter(
             company=company, date__gte=args.fromd, date__lte=args.tod
@@ -188,10 +133,10 @@ class SalesImport(DateImport):
         sales_inventory_objs = inventory_qs.filter(type="sales")
 
         date_original_inum_to_cn: defaultdict[tuple, list[str]] = defaultdict(list)
+        salesreturn_objs = list(sales_qs.filter(type="salesreturn").order_by("amt"))
         salesreturn_inventory_objs = list(
             inventory_qs.filter(type="salesreturn").order_by("inv_amt")
         )
-        salesreturn_objs = list(sales_qs.filter(type="salesreturn").order_by("amt"))
 
         for obj in salesreturn_inventory_objs:
             obj.inum = obj.credit_note_no
@@ -232,7 +177,7 @@ class SalesImport(DateImport):
 
         for qs in claimservice_objs_maps.values():
             qs.amt = round(qs.amt,3)
-        claimservice_objs = [] #list(claimservice_objs_maps.values())
+        claimservice_objs = list(claimservice_objs_maps.values())
         salesregister_objs = (
             models.Sales(
                 company_id=company.pk,
@@ -443,7 +388,6 @@ class GstFilingImport:
         for import_class in cls.imports:
             reports_to_update.extend(import_class.reports)  # type: ignore
         reports_to_update = []
-        s = time.time()
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = []
             for report_model in reports_to_update:
@@ -456,7 +400,6 @@ class GstFilingImport:
                     print(result)
                 except Exception as e:
                     print(e)
-        print("Report Update Completed in ", time.time() - s)
         print("Reports Imported. Starting Data Import..")
         for import_class in cls.imports:
             arg = args_dict[import_class.arg_type]  # type: ignore
