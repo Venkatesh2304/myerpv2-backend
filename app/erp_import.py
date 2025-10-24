@@ -175,10 +175,11 @@ class SalesImport(DateImport):
             obj = claimservice_objs_maps[inv_obj.inum]
             obj.amt = inv_obj.txval*(100+2*inv_obj.rt- cls.TDS_PERCENT)/100
             obj.tds = -inv_obj.txval*cls.TDS_PERCENT/100
-        print("Claimservice invoices to be inserted: ", len(claimservice_objs_maps),list(claimservice_objs_maps.keys()) )
         for qs in claimservice_objs_maps.values():
             qs.amt = round(qs.amt,3)
         claimservice_objs = list(claimservice_objs_maps.values())
+        for obj in claimservice_objs : 
+            print(obj.inum,obj.amt,obj.tds)
         salesregister_objs = (
             models.Sales(
                 company_id=company.pk,
