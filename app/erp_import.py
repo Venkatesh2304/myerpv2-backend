@@ -166,7 +166,7 @@ class SalesImport(DateImport):
 
     @classmethod
     def delete_before_insert(cls, company: Company, args: DateRangeArgs):
-        types = ["salesreturn", "claimservice"] #"sales",
+        types = ["sales","salesreturn", "claimservice"] #"sales",
         inums_qs = cls.model.objects.filter(company=company).filter(
             date__gte=args.fromd, date__lte=args.tod, type__in=types
         )
@@ -184,8 +184,8 @@ class SalesImport(DateImport):
             company=company, date__gte=args.fromd, date__lte=args.tod
         )
 
-        sales_objs = [] #sales_qs.filter(type="sales")
-        sales_inventory_objs = [] #inventory_qs.filter(type="sales")
+        sales_objs = sales_qs.filter(type="sales")
+        sales_inventory_objs = inventory_qs.filter(type="sales")
 
         date_original_inum_to_cn: defaultdict[tuple, list[str]] = defaultdict(list)
         salesreturn_inventory_objs = list(
@@ -442,7 +442,7 @@ class GstFilingImport:
         reports_to_update = []
         for import_class in cls.imports:
             reports_to_update.extend(import_class.reports)  # type: ignore
-        reports_to_update = []
+        # reports_to_update = []
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = []
             for report_model in reports_to_update:
