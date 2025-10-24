@@ -5,3 +5,4 @@ logs/
 sql.log
 .~*
 __pycache__/
+*.pyc

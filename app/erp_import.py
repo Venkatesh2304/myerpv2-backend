@@ -181,7 +181,7 @@ class SalesImport(DateImport):
         salesregister_objs = (
             models.Sales(
                 company_id=company.pk,
-                type="sales",
+                type=qs.type,
                 inum=qs.inum,
                 date=qs.date,
                 party_id=qs.party_id,

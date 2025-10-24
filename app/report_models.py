@@ -20,7 +20,7 @@ from app.company_models import Company, Group
 
 def decimal_field(required=False, decimal_places=2, **kwargs) -> models.DecimalField:
     required_fields = (
-        {"db_default": Decimal("0.00"), "blank": True, "null": True}
+        {"db_default": Decimal("0.00"), "default": 0 , "blank": True, "null": True}
         if not required
         else {}
     )
