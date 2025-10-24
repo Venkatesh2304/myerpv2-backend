@@ -54,7 +54,7 @@ group,_ = Group.objects.get_or_create(name="devaki")
 company,_ = Company.objects.get_or_create(name="devaki_hul",group = group)
 company.save()
 
-i = IkeaDownloader()
+# i = IkeaDownloader()
 GstFilingImport.run(company=company,args_dict=args_dict)
 exit(0)
 
