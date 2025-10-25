@@ -81,6 +81,7 @@ def main():
     conn = connection.connection
     month_arg = MonthArgs(month=9, year=2025)
     period = str(month_arg)
+    # models.Sales.objects.filter(date__let).update(gst_period=None)
     group = Group.objects.get(name="devaki")
     coalesce_zero = lambda expr: Coalesce(
         expr, 0, output_field=decimal_field(decimal_places=3)
@@ -142,9 +143,9 @@ def main():
         cgst=Round(F('rt') * F('txval') / 100,precision=3),
         sgst=Round(F('rt') * F('txval') / 100,precision=3),
     ).values("company_id","bill_id","qty","hsn","rt","cgst","sgst","txval")
-    items = pd.DataFrame(qs.iterator())
+    # items = pd.DataFrame(qs.iterator())
     print(invs)
-    print(items)
+    # print(items)
     exit(0)
     
     gst_portal = pd.read_sql(
