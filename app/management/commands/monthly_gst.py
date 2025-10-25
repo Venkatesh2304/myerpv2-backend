@@ -137,15 +137,15 @@ def main():
     invs = pd.DataFrame(qs.iterator())
 
     qs = models.Inventory.objects.filter(company__group=group, sales__gst_period=period).exclude(txval = 0).values("company_id","bill_id").annotate(
-        qty=F('qty') * Func(F('txval'), function='SIGN', output_field=IntegerField()),
-        hsn=F("stock__hsn"),
-        rt=F('rt') * 2,
-        cgst=Round(F('rt') * F('txval') / 100,precision=3),
-        sgst=Round(F('rt') * F('txval') / 100,precision=3),
-    ).values("company_id","bill_id","qty","hsn","rt","cgst","sgst","txval")
-    # items = pd.DataFrame(qs.iterator())
+        # qty=F('qty') * Func(F('txval'), function='SIGN', output_field=IntegerField()),
+        # hsn=F("stock__hsn"),
+        # rt=F('rt') * 2,
+        # cgst=Round(F('rt') * F('txval') / 100,precision=3),
+        # sgst=Round(F('rt') * F('txval') / 100,precision=3),
+    ).values("company_id","bill_id") #,"qty","hsn","rt","cgst","sgst","txval"
     print(invs)
-    # print(items)
+    items = pd.DataFrame(qs.iterator())
+    print(items)
     exit(0)
     
     gst_portal = pd.read_sql(
