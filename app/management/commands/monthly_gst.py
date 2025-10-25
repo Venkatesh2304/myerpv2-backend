@@ -6,9 +6,22 @@ import pandas as pd
 from app.company_models import Group
 from app.report_models import MonthArgs
 import app.models as models
-from django.db.models import Case, When, Value, CharField, Sum, F, ExpressionWrapper , IntegerField , FloatField , DecimalField , Func
+from django.db.models import (
+    Case,
+    When,
+    Value,
+    CharField,
+    Sum,
+    F,
+    ExpressionWrapper,
+    IntegerField,
+    FloatField,
+    DecimalField,
+    Func,
+    OuterRef,
+)
 from app.fields import decimal_field
-from django.db.models.functions import Coalesce, Round 
+from django.db.models.functions import Coalesce, Round
 
 
 def addtable(writer, sheet, name, data, style="default"):
@@ -136,18 +149,27 @@ def main():
     )
     invs = pd.DataFrame(qs.iterator())
 
-    qs = models.Inventory.objects.filter(company__group=group, sales__gst_period=period).exclude(txval = 0).values("company_id","bill_id","txval").annotate(
-        # qty=F('qty') * Func(F('txval'), function='SIGN', output_field=IntegerField()),
-        hsn=F("stock__hsn"),
-        # rt=F('rt') * 2,
-        # cgst=Round(F('rt') * F('txval') / 100,precision=3),
-        # sgst=Round(F('rt') * F('txval') / 100,precision=3),
-    ).values("company_id","bill_id","hsn") #"qty",,"hsn","rt","cgst","sgst","txval"
+    qs = (
+        models.Inventory.objects.filter(company__group=group, sales__gst_period=period)
+        .exclude(txval=0)
+        .values("company_id", "bill_id", "txval")
+        .annotate(
+            qty=F("qty")
+            * Func(F("txval"), function="SIGN", output_field=IntegerField()),
+            hsn=models.Stock.objects.filter(
+                company_id=OuterRef("company_id"), name=OuterRef("stock_id")
+            ).values("hsn")[:1],
+            rt=F("rt") * 2,
+            cgst=Round(F("rt") * F("txval") / 100, precision=3),
+            sgst=Round(F("rt") * F("txval") / 100, precision=3),
+        )
+        .values("company_id", "bill_id", "qty", "hsn", "rt", "cgst", "sgst", "txval")
+    )
     print(invs)
     items = pd.DataFrame(qs.iterator())
     print(items)
     exit(0)
-    
+
     gst_portal = pd.read_sql(
         f"select * from gstr1_portal where period = '{period}'", con=conn
     )
