@@ -23,7 +23,6 @@ from django.db.models import (
 from app.fields import decimal_field
 from django.db.models.functions import Coalesce, Round
 
-
 def addtable(writer, sheet, name, data, style="default"):
     def style(name, df):
         workbook = writer.book
@@ -58,7 +57,6 @@ def addtable(writer, sheet, name, data, style="default"):
         style(name[i], data[i])
         row += 3 + len(data[i].index)
 
-
 def diff_dataframes(
     df1: pd.DataFrame,
     df2: pd.DataFrame,
@@ -87,20 +85,16 @@ def diff_dataframes(
         diff_df[col] = diff_df[col1].fillna(col2)
     return filter_cols(only_left), filter_cols(only_right), filter_cols(diff_df)
 
-
 @transaction.atomic
 def main():
-    cur = connection.cursor()
-    conn = connection.connection
     month_arg = MonthArgs(month=9, year=2025)
     period = str(month_arg)
-    # models.Sales.objects.filter(date__let).update(gst_period=None)
     group = Group.objects.get(name="devaki")
     coalesce_zero = lambda expr: Coalesce(
         expr, 0, output_field=decimal_field(decimal_places=3)
     )
 
-    qs = models.Sales.objects.filter(gst_period=period, company__group=group).annotate(
+    invs_qs = models.Sales.objects.filter(gst_period=period, company__group=group).annotate(
         gst_type=Case(
             When(ctin__isnull=True, then=Value("b2c")),
             default=Case(
@@ -133,7 +127,7 @@ def main():
         ),
         name=F("party__name"),
     )
-    qs = qs.values(
+    invs_qs = invs_qs.values(
         "company_id",
         "date",
         "inum",
@@ -147,9 +141,9 @@ def main():
         "cgst",
         "name",
     )
-    invs = pd.DataFrame(qs.iterator())
+    invs = pd.DataFrame(invs_qs.iterator())
 
-    qs = (
+    items_qs = (
         models.Inventory.objects.filter(company__group=group, sales__gst_period=period)
         .exclude(txval=0)
         .values("company_id", "bill_id", "txval")
@@ -165,14 +159,10 @@ def main():
         )
         .values("company_id", "bill_id", "qty", "hsn", "rt", "cgst", "sgst", "txval")
     )
-    print(invs)
-    items = pd.DataFrame(qs.iterator())
-    print(items)
-    exit(0)
+    items = pd.DataFrame(items_qs.iterator())
 
-    gst_portal = pd.read_sql(
-        f"select * from gstr1_portal where period = '{period}'", con=conn
-    )
+    gst_qs = models.GSTR1Portal.objects.filter(period=period, group=group).values()
+    gst_portal = pd.DataFrame(gst_qs.iterator())
 
     registered_invs = invs[invs["gst_type"].isin(["b2b", "cdnr"]) & (invs["cgst"] != 0)]
     missing, extra, mismatch = diff_dataframes(
@@ -192,7 +182,6 @@ def main():
     )
 
     # Changes
-
     registered_zero_rate = registered_invs.merge(
         gst_portal[["inum", "txval", "cgst"]],
         on="inum",
@@ -480,7 +469,6 @@ def main():
     } | nil_rated_json
     with open(f"gstr1_{period}.json", "w+") as f:
         json.dump(gst_json, f, indent=4)
-
 
 main()
 exit(0)
