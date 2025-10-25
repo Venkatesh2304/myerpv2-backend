@@ -69,22 +69,33 @@ class Inventory(CompanyModel) :
       bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
       pur_bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
       adj_bill_id = models.CharField(max_length=20,null=True,blank=True,db_index=True)
+      #Create a foriegn object for stock 
+      stock = models.ForeignObject(
+            "Stock",
+            null=True,
+            on_delete=models.DO_NOTHING,
+            from_fields=("company", "stock_id"),
+            to_fields=("company", "name"),
+      )
       # Relations to Sales, Purchase, StockAdjustment via (company, <id>)
       sales = models.ForeignObject(
             "Sales",
             on_delete=models.CASCADE,
+            null=True,
             related_name="inventory",
             from_fields=("company", "bill_id"),
             to_fields=("company", "inum"),
       )
       purchase = models.ForeignObject(
             "Purchase",
+            null=True,
             on_delete=models.CASCADE,
             from_fields=("company", "pur_bill_id"),
             to_fields=("company", "inum"),
       )
       stock_adjustment = models.ForeignObject(
             "StockAdjustment",
+            null=True,
             on_delete=models.CASCADE,
             from_fields=("company", "adj_bill_id"),
             to_fields=("company", "inum"),
@@ -100,6 +111,7 @@ class Sales(CompanyModel, PartyVoucher, GstVoucher) :
       party = models.ForeignObject(
             "Party",
             on_delete=models.DO_NOTHING,
+            null = True,
             from_fields=("company", "party_id"),
             to_fields=("company", "code"),
       )

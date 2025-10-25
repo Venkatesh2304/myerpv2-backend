@@ -64,7 +64,6 @@ class BaseImport(Generic[ArgsT]):
         cls.update_reports(company, args)
         cls.run_atomic(company, args)
 
-
 class DateImport(abc.ABC, BaseImport[DateRangeArgs]):
     arg_type = DateRangeArgs
 
@@ -92,7 +91,6 @@ class DateImport(abc.ABC, BaseImport[DateRangeArgs]):
                                                                 date >= '{fromd_str}' AND date <= '{tod_str}'"""
             )
         return cur
-
 
 class SimpleImport(abc.ABC, BaseImport[EmptyArgs]):
     arg_type = EmptyArgs
@@ -266,7 +264,6 @@ class SalesImport(DateImport):
         )
         models.Inventory.objects.bulk_create(model_inventory_objs, batch_size=1000)
 
-
 class MarketReturnImport(DateImport):
     reports = [models.DmgShtReport]
     model = models.Sales
@@ -341,7 +338,6 @@ class MarketReturnImport(DateImport):
         models.Sales.objects.bulk_create(sales_objects.values())
         models.Inventory.objects.bulk_create(inventory_objects)
 
-
 class StockImport(SimpleImport):
     reports = [models.StockHsnRateReport]
     model = models.Stock
@@ -368,7 +364,6 @@ class StockImport(SimpleImport):
             update_fields=["hsn", "rt"],
             unique_fields=["company_id", "name"],
         )
-
 
 class PartyImport(SimpleImport):
     reports = [models.PartyReport]
