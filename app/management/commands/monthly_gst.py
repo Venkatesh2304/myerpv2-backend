@@ -136,13 +136,13 @@ def main():
     )
     invs = pd.DataFrame(qs.iterator())
 
-    qs = models.Inventory.objects.filter(company__group=group, sales__gst_period=period).exclude(txval = 0).values("company_id","bill_id").annotate(
+    qs = models.Inventory.objects.filter(company__group=group, sales__gst_period=period).exclude(txval = 0).values("company_id","bill_id","txval").annotate(
         qty=F('qty') * Func(F('txval'), function='SIGN', output_field=IntegerField()),
         # hsn=F("stock__hsn"),
-        # rt=F('rt') * 2,
-        # cgst=Round(F('rt') * F('txval') / 100,precision=3),
-        # sgst=Round(F('rt') * F('txval') / 100,precision=3),
-    ).values("company_id","bill_id","qty") #,"hsn","rt","cgst","sgst","txval"
+        rt=F('rt') * 2,
+        cgst=Round(F('rt') * F('txval') / 100,precision=3),
+        sgst=Round(F('rt') * F('txval') / 100,precision=3),
+    ).values("company_id","bill_id","qty","rt","cgst","sgst","txval") #,"hsn","rt","cgst","sgst","txval"
     print(invs)
     items = pd.DataFrame(qs.iterator())
     print(items)
