@@ -7,8 +7,10 @@ charset-normalizer==3.4.4
 click==8.3.0
 curlify==3.0.0
 Django==5.2.7
+django-cors-headers==4.9.0
 django-stubs==5.2.7
 django-stubs-ext==5.2.7
+djangorestframework==3.16.1
 dnspython==2.8.0
 et_xmlfile==2.0.0
 greenlet==3.2.4
