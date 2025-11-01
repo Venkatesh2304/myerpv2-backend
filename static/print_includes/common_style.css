@@ -1,0 +1,666 @@
+﻿.menuheader {
+    width: 100%;
+    height: 80px;
+    background-color: #e09f68;
+    margin-bottom: 0px;
+    color: #fff
+}
+
+.menufooter {
+    height: 30px;
+    width: 100%;
+    background-color: #e09f68;
+    margin-bottom: 0px;
+    color: #000
+}
+#txtGstin {
+    text-transform:uppercase;
+}
+.navbarmodultitle {
+    color: #fff !important;
+}
+.bg-primary {
+    color: #fff;
+    background-color: #2189e2 !important;
+}
+.borderless td, .borderless th {
+    border: none !important;
+}
+
+.logoh2 {
+    font-family: "Helvetica Neue";
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px 0 20px;
+    color: #fff;
+}
+
+.headermain {
+    overflow-x: hidden;
+    background: #17608c;
+    padding: 5px 0px;
+}
+
+.headerbottom {
+    background: #cdd3e8 !important;
+    padding: 5px;
+}
+
+.copyright {
+    color: #fff;
+    padding-top: 3px;
+    margin: 0;
+    font-size: 13px;
+}
+
+.footerbottom {
+    background: #17608c;
+    padding: 5px;
+}
+
+.dashboardcontainerfluid {
+    padding: 0px !important;
+}
+
+.navbar-nav > li > a {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.formtitle {
+    text-align: center;
+    color: #1069b5;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.btn-default {
+    color: #1364ce !important;
+    background: none !important;
+    border: none !important;
+    padding: 8px 15px !important;
+}
+.btn-default:hover {
+    background-color: #EEEEEE !important;
+    padding:8px 10px;
+} 
+
+.glyphiconcss {
+    font-size: 25px;
+}
+
+.huge {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.huge_test {
+    font-size: 13px;
+}
+
+.glyphiconcss_link {
+    font-size: 23px;
+}
+
+.pull-left {
+    font-size: 14px;
+}
+
+
+.panel-primary {
+    border-color: #3e7de5;
+}
+
+    .panel-primary > .panel-heading {
+        border-color: #3e7de5;
+        color: white;
+        background-color: #3e7de5;
+    }
+
+    .panel-primary > a {
+        color: #000 !important;
+    }
+
+        .panel-primary > a:hover {
+            color: #000 !important;
+        }
+
+.primary {
+    background-color: #3e7de5;
+}
+
+.panel-red {
+    border-color: #7abf5e !important;
+}
+
+    .panel-red > .panel-heading {
+        border-color: #7abf5e;
+        color: white;
+        background-color: #7abf5e;
+    }
+
+    .panel-red > a {
+        color: #000 !important;
+    }
+
+        .panel-red > a:hover {
+            color: #000 !important;
+        }
+
+.red {
+    background-color: #7abf5e;
+}
+
+.panel-yellow {
+    border-color: #fa5b5b !important;
+}
+
+    .panel-yellow > .panel-heading {
+        border-color: #fa5b5b;
+        color: white;
+        background-color: #fa5b5b;
+    }
+
+    .panel-yellow > a {
+        color: #000;
+    }
+
+        .panel-yellow > a:hover {
+            color: #000;
+        }
+
+.yellow {
+    background-color: #fa5b5b;
+}
+
+
+
+
+
+@-webkit-keyframes blink {
+    50% {
+        border-color: #ff0000;
+    }
+}
+
+.msg {
+    -webkit-animation: blink .5s step-end infinite alternate;
+}
+
+
+@-webkit-keyframes blink {
+    50% {
+        color: #ff0000;
+    }
+}
+
+
+.msg {
+    -webkit-animation: blink .5s step-end infinite alternate;
+    color: green;
+    font-size: 18px;
+}
+
+.blink {
+    font-size: 18px;
+    color: red;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    76% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.modultitle {
+    background-color: #eccd9f;
+    color: #3f1e01;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+
+.nav-side-menu {
+    overflow: auto;
+    font-family: verdana;
+    font-size: 12px;
+    font-weight: 200;
+    background-color: #EAEBEF;
+    /* width: 200px;*/
+    min-height: 500px;
+    color: #000;
+    margin-left: -15px;
+    border-right: 2px solid #d1d3e9;
+}
+
+    .nav-side-menu .brand {
+        background-color: #eccd9f;
+        line-height: 50px;
+        display: block;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .nav-side-menu .toggle-btn {
+        display: none;
+    }
+
+    .nav-side-menu ul,
+    .nav-side-menu li {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        line-height: 35px;
+        cursor: pointer;
+    }
+
+        .nav-side-menu ul :not(collapsed) .arrow:before,
+        .nav-side-menu li :not(collapsed) .arrow:before {
+            font-family: FontAwesome;
+            content: "\f078";
+            display: inline-block;
+            padding-left: 10px;
+            padding-right: 10px;
+            vertical-align: middle;
+            float: right;
+        }
+
+        .nav-side-menu ul .active,
+        .nav-side-menu li .active {
+            border-left: 0px solid #d19b3d;
+            background-color: #e09f68;
+        }
+
+        .nav-side-menu ul .sub-menu li.active,
+        .nav-side-menu li .sub-menu li.active {
+            color: #23282e;
+        }
+
+            .nav-side-menu ul .sub-menu li.active a,
+            .nav-side-menu li .sub-menu li.active a {
+                color: #000;
+            }
+
+        .nav-side-menu ul .sub-menu li,
+        .nav-side-menu li .sub-menu li {
+            background-color: #EAEBEF;
+            border: none;
+            border-bottom: 2px solid #fff;
+            margin-left: 0px;
+        }
+
+            .nav-side-menu ul .sub-menu li:hover,
+            .nav-side-menu li .sub-menu li:hover {
+                background-color: #274472;
+            }
+
+            .nav-side-menu ul .sub-menu li:before,
+            .nav-side-menu li .sub-menu li:before {
+                font-family: FontAwesome;
+                content: "\f105";
+                display: inline-block;
+                padding-left: 10px;
+                padding-right: 10px;
+                vertical-align: middle;
+            }
+
+    .nav-side-menu li {
+        padding-left: 0px;
+        border-left: 0px solid #2e353d;
+        background: #D1D4E4;
+    }
+
+
+        .nav-side-menu li a {
+            text-decoration: none;
+            color: #000;
+        }
+
+            .nav-side-menu li a:hover {
+                color: #fff;
+            }
+
+            .nav-side-menu li a i {
+                padding-left: 10px;
+                width: 20px;
+                padding-right: 20px;
+            }
+
+        .nav-side-menu li:hover {
+            border-left: 0px solid #d19b3d;
+            background-color: #f4c785;
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+            transition: all 1s ease;
+        }
+
+@media (max-width: 767px) {
+    .nav-side-menu {
+        position: relative;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+        .nav-side-menu .toggle-btn {
+            display: block;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            z-index: 10 !important;
+            padding: 3px;
+            background-color: #ffffff;
+            color: #fff;
+            width: 40px;
+            text-align: center;
+        }
+}
+
+@media {
+    .nav-side-menu .menu-list .menu-content {
+        display: block;
+    }
+}
+
+.labelentereinvoceno {
+  margin-top: 3%;
+  float:right;
+}
+
+.labelinvoicedate {
+    text-align: right;
+    margin-top: 0.45%;
+    /*margin-right: -1.5%;*/
+}
+.goexitbuttonacceptdiv {
+  margin-left: -8%;
+  -webkit-margin-start:-2%;
+}
+.acceptancetable th {
+    background: #2c4172;
+    color: #fff;
+    vertical-align: middle !important;
+}
+.slnotd {
+ text-align:center;
+ vertical-align:middle;
+}
+.invoicedatediv {
+    text-align: center;
+}
+.formdiv {
+    padding: 5px;
+    background: #f8f9fa;
+    border: 1px solid #f7edd2;
+    border-radius: 10px;
+}
+.formdiv form {
+  padding: 10px 15px; 
+}
+
+.forgotusernameformdiv {
+    padding: 5px;
+    background: #f8f9fa;
+    border: 1px solid #f7edd2;
+    border-radius: 10px;
+}
+.forgotusernameformdiv form {
+        padding: 10px 15px;
+ }
+
+.changepasswordformdiv {
+    padding: 5px;
+    background: #f8f9fa;
+    border: 1px solid #f7edd2;
+    border-radius: 10px;
+}
+.changepasswordformdiv form {
+   padding: 10px 15px;
+  }
+.form-control {
+ margin-bottom:3px;
+}
+.starmark {
+    font-size: 8px;
+    color: red;
+    vertical-align: text-top;
+}
+.starmarkp {
+    margin-top: -2.5%;
+    font-size: 14px;
+}
+.forgotpasswdformdiv {
+    padding: 5px;
+    background: #f8f9fa;
+    border: 1px solid #f7edd2;
+    border-radius: 10px;
+}
+.forgotpasswdformdiv form {
+   padding: 10px 0px;
+ }
+.forgotpasswdformrow {
+  padding: 10px 5px;
+}
+.body-content {
+  height: 100vh;
+}
+#captcha_image {
+    height: 40px;
+    margin-bottom: 5px;
+}
+.fa-sync-alt {
+    font-size: 25px;
+    vertical-align: middle;
+}
+.field-validation-error {
+    font-size: 13px;
+}
+body {
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    font-size: 14px !important;
+}
+.btn {
+ margin-bottom:3px;
+}
+.divError {
+    width:100%;
+    text-align:center !important;
+}
+#txtCaptchaCode {
+    text-transform: uppercase !important;
+    font-size: 15px;
+}
+.login-wrap {
+    top: 7%;
+    position: relative;
+    border: solid 1px #0094ff;
+    background: #f1eded;
+    border-radius: 15px !important;
+    -webkit-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+    box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+}
+.otploginul li {
+    line-height:35px;
+    font-weight:bold
+}
+.txtVerified {
+    border-bottom-right-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+.listmainmenutotp li {
+    line-height:30px;
+}
+/* Responsive css */
+@media only screen and (min-width: 300px) and (max-width: 575px) {
+    .datepickdownloadinvoices {
+        width:95% !important;
+    }
+    .logoh2 {
+        font-size: 9px !important;
+        text-align: left !important;
+        margin:0;
+    }
+    .tradenamegstinheading {
+        font-size:11px;
+    }
+}
+
+    @media only screen and (min-width: 300px) and (max-width: 767px) {
+        .copyright {
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .logoh2 {
+            font-size: 17px;
+            text-align: center;
+        }
+
+        #logo {
+            text-align: center !important;
+        }
+
+        .goexitbuttondiv {
+            text-align: center;
+            margin-top: 2%;
+        }
+
+        .labelinvoicedate {
+            text-align: center;
+            margin-top: 0%;
+        }
+
+        .goexitbuttonacceptdiv {
+            margin-left: 0%;
+        }
+
+        .acceptancetable {
+            font-size: 11px;
+        }
+
+        label {
+            font-size: 12px;
+        }
+
+        .formtitle {
+            font-size: 16px;
+        }
+
+        .table-responsive {
+            border: none !important;
+        }
+
+        .goexitbuttonacceptdiv {
+            margin-top: 2%;
+            text-align: center;
+        }
+        .mastercoderadiobtnslist {
+            font-size: 11px;
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+
+        .logoh2 {
+            font-size: 15px;
+        }
+
+        .goexitbuttonacceptdiv {
+            margin-left: 0%;
+        }
+
+        .acceptancetable {
+            font-size: 11px;
+        }
+
+        label {
+            font-size: 13px;
+        }
+
+        .formtitle {
+            font-size: 18px;
+        }
+
+        .form-control {
+            padding: 5px 4px !important;
+        }
+
+        .labelinvoicedate {
+            margin-top: 0.65%;
+        }
+
+        .invoicedatediv {
+            text-align: right;
+        }
+        .mastercoderadiobtnslist {
+            font-size: 12px;
+        }
+    }
+
+    @media only screen and (min-width: 992px) and (max-width: 1279px) {
+
+        .labelinvoicedate {
+            text-align: right;
+            margin-top: 0.60%;
+        }
+
+        .acceptancetable {
+            font-size: 12px;
+        }
+
+        label {
+            font-size: 12px;
+        }
+        .mastercoderadiobtnslist {
+            font-size: 12px;
+        }
+    }
+
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+        .invoicedatediv {
+            text-align: right;
+        }
+
+        .goexitbuttonacceptdiv {
+            margin-left: 0%;
+            -webkit-margin-start: 0%;
+        }
+    }
+
+    @media only screen and (min-width: 1200px) and (max-width: 1280px) {
+
+        .goexitbuttonacceptdiv {
+            margin-left: -4%;
+            -webkit-margin-start: -2%;
+        }
+    }
+@media only screen and (min-width: 1680px) and (max-width: 1920px) {
+    .starmarkp {
+        margin-top: -2%;
+        font-size: 14px;
+    }
+    .login-wrap {
+        top: 15%;
+    }
+}

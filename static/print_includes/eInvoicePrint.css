@@ -1,0 +1,192 @@
+﻿
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 3px;
+    line-height: 1.42857143;
+    vertical-align: middle !important;
+    font-size: 14px;
+}
+
+.thItemHeader {
+    text-align: center;
+}
+
+.thItemVal {
+    text-align: right;
+}
+
+.thItemVal1 {
+    text-align: left;
+}
+
+.bg-primary {
+    padding: 2px;
+    border-radius: 4px;
+    background-color: #274472;
+}
+.Watermark {
+    height: 500px;
+    display: block;
+    position: absolute;
+    left: 25%;
+    top: 50%;
+    z-index: 999;
+}
+.InvoiceNumberform {
+    min-height: 500px;
+    margin: 0 auto;
+}
+.enterInvoicelabel {
+    text-align: right;
+    margin-left: -3%;
+}
+.printpagebtns{
+    margin-top:-2%;
+    margin-bottom:5px;
+}
+.govtofindiatxt {
+    margin: 10px auto 0px;
+    font-size: 26px;
+    text-align: left;
+}
+.e-invoicetxt {
+    margin-top: 0px;
+    font-size: 26px;
+    text-align: left;
+}
+.printdetailsdiv {
+    border: 1px solid #dce1e4;
+    padding: 6px 10px;
+    background: #f7f8fd;
+    border-radius: 10px;
+}
+    .printdetailsdiv th {
+     text-align:center;
+    }
+    .printdetailsdiv hr {
+        margin-top: 0rem;
+        margin-bottom: 0.2rem;
+    }
+ .printdetailsdiv h4 {
+     font-size:1.3rem;
+ }
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0.2rem 1rem;
+}
+.card-body p {
+ margin-bottom:3px;
+}
+.card-header {
+    padding: 5px 8px;
+    background: #f7f0e1;
+}
+.printdetailsdiv label {
+ margin-bottom:0px;
+ font-size:14px;
+}
+.printdetailsdiv .table {
+    margin-bottom: 0.1rem;
+    color: #232425;
+}
+.divCancelReason {
+    margin-top: -2%;
+}
+.divcancelcard {
+  background: #f7f6f6;
+}
+.divprintheight {
+    height:800px;
+    overflow-y:scroll;
+}
+#plBarCodeNew img {
+    max-width: 100%;
+    height: auto;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #2094da !important;
+    border-color: #2094da !important;
+}
+.ewaybillprintmaindiv {
+    background: #F2F2F2;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+@media only screen and (min-width: 300px) and (max-width: 575px) {
+    .enterInvoicelabel {
+        text-align: left;
+        margin-left: 0%;
+    }
+    .govtofindiatxt {
+        margin: 15px auto 0px;
+        font-size: 15px;
+    }
+    .txtinvoiceNumber {
+        margin-bottom:5px;
+    }
+    .e-invoicetxt {
+        margin-top: 0px;
+        font-size: 15px;
+        text-align: left;
+    }
+    .divmodeofewaybillgenerate {
+        padding: 0px;
+        font-size: 12px !important;
+    }
+    .txtfieldforsm {
+        width: 90% !important;
+        font-size: 13px !important;
+    }
+    .radiobtnsforxs {
+        font-size:13px !important;
+    }
+    .labelradioforxs {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .govtofindiatxt {
+        margin: 10px auto 0px;
+        font-size: 24px;
+    }
+    .invoicenumberfield {
+        width: 37% !important;
+    }
+    .txtfieldforsm {
+        width: 92% !important;
+    }
+}
+
+    @media only screen and (min-width: 1600px) {
+        .InvoiceNumberform {
+            min-height: 630px;
+            margin: 0 auto;
+        }
+    }
+
+@media only screen and (min-width: 1200px) and (max-width: 1279px) {
+    .txtfieldforsm {
+        width: 50% !important;
+    }
+}
+
+    @media Print {
+        .btnprintview, .headerbottom, .footerbottom, .headermain {
+            display: none;
+        }
+
+        #divInvoiceNumber, #btnPrint, #btnCancel {
+            display: none;
+        }
+    }
+
+@media only screen and (min-width: 1280px) and (max-width: 1300px) {
+    .form-inline .form-control {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+        padding: 0px !important;
+    }
+}

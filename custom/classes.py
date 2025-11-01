@@ -35,7 +35,6 @@ import requests
 from PyPDF2 import PdfReader
 # from myerp.settings import FILES_DIR
 import os
-FILES_DIR = f"static/{os.environ['user']}"
 
 
 class WrongCredentials(Exception) :
@@ -100,7 +99,7 @@ class BaseIkea(Session) :
           self.logger.info("Login Initiated")
           self.cookies.clear()
           time_epochs = self.date_epochs()
-          preauth_res_text = self.post("/rsunify/app/user/authentication",data={'userId': self.config["username"] , 'password': self.config["pwd"], 'dbName': self.config["dbName"], 'datetime': time_epochs , 'diff': -330}).text
+          preauth_res_text = self.post("/rsunify/app/user/authentication",data={'userId': self.username , 'password': self.password, 'dbName': self.config["dbName"], 'datetime': time_epochs , 'diff': -330}).text
           if ("CLOUD_LOGIN_PASSWORD_EXPIRED" == preauth_res_text) or ("Invalid Password" == preauth_res_text) : 
              raise IkeaPasswordExpired("Ikea Password Expired")
           elif "<body>" in preauth_res_text : 
@@ -111,12 +110,12 @@ class BaseIkea(Session) :
           if response.status_code == 200 : 
              self.logger.info("Logged in successfully")
              print("Login Success")
-             self.db.update_cookies(self.cookies)
+             self.user.update_cookies(self.cookies)
           else : 
              raise Exception("Login Failed")
 
-      def __init__(self) : 
-          super().__init__()
+      def __init__(self,user:str) : 
+          super().__init__(user)
           self.headers.update({'accept': 'application/json, text/javascript, */*; q=0.01'})
           self.base_url = self.config["home"]
           retry_count = 1
@@ -125,7 +124,6 @@ class BaseIkea(Session) :
              self.login()
              retry_count += 1
              
-
       def get_buffer(self,relative_url) :
           return super().get_buffer( self.IKEA_DOWNLOAD_REPORT_URL + relative_url )
       
@@ -389,61 +387,7 @@ class Billing(IkeaDownloader) :
         beats = beats.dropna(subset="id")
     
         return beats
-    
-    # def get_collection_report(self) -> pd.DataFrame :
-    #     today = self.today.strftime("%Y/%m/%d")
-    #     return self.report("ikea/collection_report" , r'(":val10":").{10}(",":val11":").{10}(",":val12":"2018/04/01",":val13":").{10}', 
-    #                 (today,) * 3 , is_dataframe=True)
-
-    # def get_party_phone_number(self,party_code) : 
-    #     party_data =  self.get(f"/rsunify/app/partyMasterScreen/retrivePartyMasterScreenData?partyCode={party_code}").json()
-    #     return party_data["partydetails"][0][16]
-    
-    # def get_party_outstanding_bills(self, party_data):
-    #     res = self.get_creditlock(party_data)
-    #     outstanding = res["collectionPendingBillVOList"]
-    #     breakup = [[bill["pendingDays"], bill["outstanding"]] for bill in outstanding]
-    #     breakup.sort(key=lambda x: x[0], reverse=True)
-    #     breakup = "/".join([str(bill[0])+"*"+str(bill[1]) for bill in breakup])
-    #     return {"billsutilised": res["creditBillsUtilised"], "bills" : breakup}
-    
-    # def interpret(self, cr_lock_parties):
-    #     ## Find the beat to plg map 
-    #     plg_maps = self.plg_thread.result()
-    #     coll_report = self.collection_report_thread.result() # Can be None if no collection 
-
-    #     ## Collection Report 
-    #     if coll_report is not None :
-    #        coll_report["party"] = coll_report["Party Name"].str.replace(" ","")
-    #        coll_report = coll_report[~coll_report.Status.isin(["PND","CAN"])]
-    #        coll_report = coll_report.dropna(subset="Collection Date")
-    #        coll_report["Collection Date"] = pd.to_datetime( coll_report["Collection Date"] , format="%d/%m/%Y" )
-    #        coll_report["days"] = (coll_report["Collection Date"] - coll_report["Date"]).dt.days
-    #        self.logger.log_dataframe( coll_report , "Collection Report")
-        
-    #     creditlock = {}
-    #     def prepare_party_data(self: Billing,party) : 
-    #         creditlock[party] = party_data = cr_lock_parties[party]
-    #         plg_name = plg_maps[plg_maps[0] == party_data["beatId"]].iloc[0][2]
-    #         beat_name = plg_maps[plg_maps[0] == party_data["beatId"]].iloc[0][1]
-    #         party_data["showPLG"] = plg_name.replace("+", "%2B")
-    #         party_data["beat_name"] = beat_name
-    #         lock_data = self.get_party_outstanding_bills(party_data)
-    #         party_data["billsutilised"] = lock_data["billsutilised"]
-    #         party_data["bills"] = lock_data["bills"]
-    #         coll_str = "No Collection"
-    #         if coll_report is not None : 
-    #            coll_data = coll_report[coll_report.party == party]
-    #            if len(coll_data.index)  :  
-    #               coll_str = "/".join( f'{round(row["days"].iloc[0])}*{ round(row["Coll. Amt"].sum()) }' for billno,row in coll_data.groupby("Bill No") ) 
-            
-    #         party_data["coll_str"] = coll_str
-    #         party_data["ph"] = self.get_party_phone_number(party_data['partyCode'])
-
-    #     self.parllel(prepare_party_data , zip(cr_lock_parties))
-    #     self.logger.info(f"CreditLock :: \n{creditlock}")
-    #     return creditlock
-        
+          
     def get_creditlock(self,party_data) : 
         get_crlock_url = f'/rsunify/app/billing/partyplgdatas?partyCode={party_data["partyCode"]}&parCodeRef={party_data["parCodeRef"]}&parHllCode={party_data["parHllCode"]}&plgFlag=true&salChnlCode=&showPLG={party_data["showPLG"]}&isMigration=true'
         return self.get(get_crlock_url).json()
@@ -679,24 +623,24 @@ class Gst(Session) :
      base_url = "https://gst.gov.in"
      home = "https://gst.gov.in"
      load_cookies = True
+     rtn_types_ext = {"gstr1":"zip","gstr2a":"zip","gstr2b":"json"}
 
-     def __init__(self) : 
-          super().__init__()
+     def __init__(self,user:str) : 
+          super().__init__(user)
           base_path = Path(__file__).parent
-          self.dir = str( (base_path / ("data/gst/" + self.user_config["dir"])).resolve() )
-          self.rtn_types_ext = {"gstr1":"zip","gstr2a":"zip","gstr2b":"json"}
+          self.dir = str( (base_path / ("data/gst/" + self.user.user)).resolve() )
 
      def captcha(self) : 
           self.cookies.clear()
           self.get('https://services.gst.gov.in/services/login')
           login = self.get('https://services.gst.gov.in/pages/services/userlogin.html')
           captcha = self.get('https://services.gst.gov.in/services/captcha?rnd=0.7395713643528166').content
-          self.db.update_cookies(self.cookies)
+          self.user.update_cookies(self.cookies)
           return captcha
           
      def login(self,captcha) :
           data =  { "captcha": captcha , "deviceID": None ,"mFP": "{\"VERSION\":\"2.1\",\"MFP\":{\"Browser\":{\"UserAgent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36\",\"Vendor\":\"Google Inc.\",\"VendorSubID\":\"\",\"BuildID\":\"20030107\",\"CookieEnabled\":true},\"IEPlugins\":{},\"NetscapePlugins\":{\"PDF Viewer\":\"\",\"Chrome PDF Viewer\":\"\",\"Chromium PDF Viewer\":\"\",\"Microsoft Edge PDF Viewer\":\"\",\"WebKit built-in PDF\":\"\"},\"Screen\":{\"FullHeight\":864,\"AvlHeight\":816,\"FullWidth\":1536,\"AvlWidth\":1536,\"ColorDepth\":24,\"PixelDepth\":24},\"System\":{\"Platform\":\"Win32\",\"systemLanguage\":\"en-US\",\"Timezone\":-330}},\"ExternalIP\":\"\",\"MESC\":{\"mesc\":\"mi=2;cd=150;id=30;mesc=739342;mesc=770243\"}}" ,
-                    "password": self.config["pwd"] , "type": "username" , "username": self.config["username"] }
+                    "password": self.password , "type": "username" , "username": self.username }
           res = self.post("https://services.gst.gov.in/services/authenticate" ,headers = {'Content-type': 'application/json'},json = data).json()
           if "errorCode" in res.keys() : 
               if res["errorCode"] == "SWEB_9000" : 
@@ -708,7 +652,7 @@ class Gst(Session) :
               else : 
                   raise Exception("Unkown Exception")
           auth =  self.get("https://services.gst.gov.in/services/auth/",headers = {'Referer': 'https://services.gst.gov.in/services/login'})
-          self.db.update_cookies(self.cookies)
+          self.user.update_cookies(self.cookies)
      
      def is_logged_in(self) : 
          return len(self.getuser()) != 0 
@@ -902,7 +846,6 @@ class Gst(Session) :
                     return None 
          raise Exception("GST Get error timed out")          
      
-     
      def get_period_summary(self,period) : 
          #https://return.gst.gov.in/returns/auth/api/gstr1/summary?rtn_prd=012025
             data = self.get(f"https://return.gst.gov.in/returns/auth/api/gstr1/summary?rtn_prd={period}",
@@ -916,8 +859,6 @@ class Gst(Session) :
             else : 
                 raise Exception("GST Get Summary Failed Json data is None")
             
-            
-
           
 def myHash(str) : 
   hash_object = hashlib.md5(str.encode())
@@ -943,29 +884,25 @@ class Einvoice(Session) :
       base_url = "https://einvoice1.gst.gov.in"
       home = "https://einvoice1.gst.gov.in"
       load_cookies = True
-      
-      def __init__(self):
-           super().__init__()
-           self.form = self.config.get("form",{})
-           
-   
+ 
       def captcha(self) : 
           self.cookies.clear()
           self.cookies.set("ewb_ld_cookie",value = "292419338.20480.0000" , domain = "ewaybillgst.gov.in")             
           self.form = extractForm( self.get( self.base_url ).text )
           img = self.get("/get-captcha-image").content
-          self.db.update_cookies( self.cookies )
-          self.db.update_user("form",json.dumps(self.form))
+          self.user.update_cookies( self.cookies )
+          self.user.config["form"] = self.form 
+          self.user.save()
           return img 
           
       def login(self,captcha) :
           r = get_curl("einvoice/login")
-          if type(self.form) == str : self.form = json.loads(self.form)
           salt = self.get("/Home/GetKey").json()["key"]
-          md5pwd = hashlib.sha256((myHash(self.config["pwd"]) + salt).encode()).hexdigest()       
-          sha_pwd =  sha256_hash(self.config["pwd"])
+          md5pwd = hashlib.sha256((myHash(self.password) + salt).encode()).hexdigest()       
+          sha_pwd =  sha256_hash(self.password)
           sha_salt_pwd =  sha256_hash(sha_pwd + salt)
-          r.data =  self.form | {'UserLogin.UserName': self.config["username"], 
+          form:dict = self.config.get("form",{}) # type: ignore
+          r.data =  form | {'UserLogin.UserName': self.username, 
                                  'UserLogin.Password': sha_salt_pwd , 
                                  "CaptchaCode" : captcha, 
                                  "UserLogin.HiddenPasswordSha":sha_pwd,
@@ -975,21 +912,19 @@ class Einvoice(Session) :
           error_div  = BeautifulSoup(response.text, 'html.parser').find("div",{"class":"divError"})
           error = error_div.text.strip() if (not is_success) and (error_div is not None) else ""
           if is_success : 
-              self.db.update_cookies( self.cookies )
+              self.user.update_cookies(self.cookies)
           return is_success,error 
 
       def is_logged_in(self) : 
           res = self.get("/Home/MainMenu")
-          if "/Home/MainMenu" not in res.url : #reload failed
-              self.db.update_user("_cookies","{}")
-              return False
-          return True 
+          return "/Home/MainMenu" in res.url
 
-      def upload(self,json_data)  :  
+      def upload(self,json_data:str)  :  
           bulk_home = self.get("/Invoice/BulkUpload").text
           files = { "JsonFile" : ("eway.json", StringIO(json_data) ,'application/json') }
           form = extractForm(bulk_home)
           upload_home = self.post("/Invoice/BulkUpload" ,  files = files , data = form ).text
+          with open("a.html","w+") as f : f.write(upload_home)
           success = pd.read_excel( self.get("/Invoice/ExcelUploadedInvoiceDetails").content )
           failed = pd.read_excel( self.get("/Invoice/FailedInvoiceDetails").content )
           return success , failed 
@@ -1002,6 +937,7 @@ class Einvoice(Session) :
           irn_gen_by_me_excel_bytesio = self.get('/MisRpt/ExcelGenerratedIrnDetails?noofRec=1&Actn=GEN').content
           return irn_gen_by_me_excel_bytesio 
           
+      #Unverified
       def getinvs(self) : 
           form = extractForm( self.get("/MisRpt").text )
           fdate = datetime.datetime.strptime(form["FromDate"] ,"%d/%m/%Y")
@@ -1019,6 +955,7 @@ class Einvoice(Session) :
           return pd.concat(df) if len(df) > 0 else None
       
       ## Only works in Linux
+      #Not working use gst module instead
       def getpdf(self,irn) : 
           form = extractForm( self.get("https://einvoice1.gst.gov.in/Invoice/EInvoicePrint/Print").text )
           form = form | {"ModeofPrint": "IRN" , "PrintOption": "IRN","submit": "Print",
@@ -1027,8 +964,9 @@ class Einvoice(Session) :
           html = re.sub(r'src=".*/(.*?)"','src="\\1"',html)
           html = re.sub(r'href=".*/(.*?)"','href="\\1"',html)
           with open("print_includes/bill.html","w+") as f  : f.write(html)
-          os.system("google-chrome --headless --disable-gpu --print-to-pdf=print_includes/bill.pdf print_includes/bill.html")
+        #   os.system("google-chrome --headless --disable-gpu --print-to-pdf=print_includes/bill.pdf print_includes/bill.html")
       
+      #Unverified
       def upload_eway_bill(self,json_path) : 
         self.get("/SignleSignon/EwayBill").text
         res = self.get("https://ewaybillgst.gov.in/BillGeneration/BulkUploadEwayBill.aspx")
@@ -1044,217 +982,3 @@ class Einvoice(Session) :
         form = extractForm(res.text) | {"ctl00$ContentPlaceHolder1$hdnConfirm": "Y"}
         res = self.post("https://ewaybillgst.gov.in/BillGeneration/BulkUploadEwayBill.aspx",files = files,data =form)        
         with open("a.html","w+") as f : f.write(res.text)
-
-
-    
-
-
-class Eway1(Session) : 
-      key = "eway"
-      base_url = "https://ewaybillgst.gov.in"
-      home = "https://ewaybillgst.gov.in"
-      load_cookies = True 
-
-      def __init__(self) : 
-          super().__init__() 
-          self.cookies.set("ewb_ld_cookie",value = "292419338.20480.0000" , domain = "ewaybillgst.gov.in")         
-      
-      def captcha(self) : 
-          self.cookies.clear()
-          self.cookies.set("ewb_ld_cookie",value = "292419338.20480.0000" , domain = "ewaybillgst.gov.in")             
-          self.form = extractForm( self.get( '/Login.aspx' ).text )
-          img = self.get("/Captcha.aspx").content
-          print(self.form)
-          self.db.update_cookies( self.cookies )
-          self.db.update_user("form",json.dumps(self.form))
-          return img 
-          
-      def login(self,captcha) : 
-          r = get_curl("eway/login")
-          if type(self.form) == str : self.form = json.loads(self.form)
-          print( self.post('/Login.Aspx/GetKey') )
-          del self.form["btnCaptchaImage"]
-          del self.form["btnLogin"]
-          del self.form["__LASTFOCUS"]
-          salt = self.form["hidSalt"]
-          pwd = hashlib.sha256((myHash(self.config["pwd"]) + salt).encode()).hexdigest()       
-          r.data =  self.form | {'__EVENTTARGET':'btnLogin','txt_username': self.config["username"], 'txt_password': pwd , "txtCaptcha" : captcha}
-          response  = r.send(self)
-          is_success = (response.url == f"{self.base_url}/Home/MainMenu")
-          error_div  = BeautifulSoup(response.text, 'html.parser').find("div",{"class":"divError"})
-          error = error_div.text.strip() if (not is_success) and (error_div is not None) else ""
-          print( r.data )
-          print(self.config["pwd"],self.config["username"])
-          print(response.text)
-          if is_success : self.db.update_cookies( self.cookies )
-          return is_success,error 
-
-      def get_captcha(self):
-          ewaybillTaxPayer = "p5k4foiqxa1kkaiyv4zawf0c"   
-          self.cookies.set("ewaybillTaxPayer",value = ewaybillTaxPayer, domain = "ewaybillgst.gov.in" , path = "/")
-          return super().get_captcha()
-
-      def is_logged_in(self) : 
-           res = self.get("https://ewaybillgst.gov.in/mainmenu.aspx") #check if logined correctly .
-           if res.url == "https://ewaybillgst.gov.in/login.aspx" : 
-               return False 
-           else : return True 
-    
-      def upload(self,json_data) : 
-          if not self.is_logged_in() : return jsonify({ "err" : "login again."}) , 501 
-          bulk_home = self.get("https://ewaybillgst.gov.in/BillGeneration/BulkUploadEwayBill.aspx").text
-
-          files = { "ctl00$ContentPlaceHolder1$FileUploadControl" : ("eway.json", StringIO(json_data) ,'application/json')}
-          form = extractForm(bulk_home)
-          form["ctl00$lblContactNo"] = ""
-          try : del form["ctl00$ContentPlaceHolder1$btnGenerate"] , form["ctl00$ContentPlaceHolder1$FileUploadControl"]
-          except : pass 
-
-          upload_home = self.post("https://ewaybillgst.gov.in/BillGeneration/BulkUploadEwayBill.aspx" ,  files = files , data = form ).text
-          form = extractForm(upload_home)
-          
-          generate_home = self.post("https://ewaybillgst.gov.in/BillGeneration/BulkUploadEwayBill.aspx" , data = form ).text 
-          soup = BeautifulSoup(generate_home, 'html.parser')
-          table = str(soup.find(id="ctl00_ContentPlaceHolder1_BulkEwayBills"))
-          try :
-              excel = pd.read_html(StringIO(table))[0]
-          except : 
-             if "alert('Json Schema" in upload_home :  #json schema is wrong 
-                 with open("error_eway.json","w+") as f :  f.write(json_data)
-                 logging.error("Json schema is wrong")
-                 return {"status" : False , "err" : "Json Schema is Wrong"}
-          try : err = parseEwayExcel(excel)
-          except Exception as e : 
-                logging.error("Eway Parser failed")
-                excel.to_excel("error_eway.xlsx")
-          data = { "download" : excel.to_csv(index=False) }
-          return data
-
-### DEPRECEATED
-# def myHash(str) : 
-#   hash_object = hashlib.md5(str.encode())
-#   md5_hash = hash_object.hexdigest()
-#   return hashlib.sha256(md5_hash.encode()).hexdigest()
-
-# def parseEwayExcel(data) : 
-#     err_map = { "No errors" : lambda x : x == "" , "Already Generated" :  lambda x : "already generated" in x }
-#     err_list = defaultdict(list)
-#     for bill in data.iterrows() : 
-#         err = bill[1]["Errors"]
-#         Type = None
-#         for err_typ , err_valid in err_map.items() : 
-#             if type(err) == str and err_valid(err) :
-#                Type = err_typ 
-#                break 
-#         if Type == None : 
-#            Type = "Unknown error"
-#         err_list[Type].append( [ bill[1]["Doc No"] , err  ])
-#     return err_list
-
-# class ESession(Session) : 
-#       def __init__(self,key,home,_user,_pwd,_salt,_captcha) :  
-#           self.key = key 
-#           self.db = db 
-#           self.home = home 
-#           super().__init__()
-#           self._captcha  = True 
-#           self._captcha_field = _captcha
-#           self.headers.update({ "Referer": home })
-#           if not hasattr(self,"form") : self.form = {} 
-#           else : 
-#             self.form = json.loads(self.form.replace("'",'"')) if isinstance(self.form,str) else self.form 
-#             self.hash_pwd = hashlib.sha256((myHash(self.pwd) + self.form[_salt]).encode()).hexdigest()          
-#             self.form[_pwd]  , self.form[_user]  = self.hash_pwd , self.username
-    
-#           self._login_err = (   lambda x : (x.url == "https://einvoice1.gst.gov.in/Home/Login" , x.text) ,
-#                                 [( lambda x : x[0] and "alert('Invalid Login Credentials" in x[1]  , {"status" : False , "err" : "Wrong Credentials"} ) , 
-#                                 ( lambda x :  x[0] and "alert('Invalid Captcha" in x[1]  , {"status" : False , "err" : "Wrong Captcha"} ) ,
-#                                 ( lambda x :  x[0] and True  , {"status" : False , "err" : "Unkown error"} )] )
-
-# class Einvoice(ESession) : 
-   
-#       def __init__(self) :  
-#           super().__init__("einvoice","https://einvoice1.gst.gov.in","UserLogin.UserName","UserLogin.Password","UserLogin.Salt","CaptchaCode")
-#           self.cookies.set("ewb_ld_cookie",value = "292419338.20480.0000" , domain = "ewaybillgst.gov.in")             
-#           self._login =  ("https://einvoice1.gst.gov.in/Home/Login", self.form)
-#           self._get_captcha = "https://einvoice1.gst.gov.in/get-captcha-image"
-       
-#       def is_logged_in(self) : 
-#         res = self.get("https://einvoice1.gst.gov.in/Home/MainMenu") #check if logined correctly .
-#         if "https://einvoice1.gst.gov.in/Home/MainMenu" not in res.url : #reload faileD
-#               self.update("cookies",None)
-#               return False
-#         return True 
-    
-#       def upload(self,json_data) : 
-#           if not self.is_logged_in() : return jsonify({ "err" : "login again."}) , 501 
-#           bulk_home = self.get("https://einvoice1.gst.gov.in/Invoice/BulkUpload").text
-#           files = { "JsonFile" : ("eway.json", StringIO(json_data) ,'application/json') }
-#           form = extractForm(bulk_home)
-    
-#           upload_home = self.post("https://einvoice1.gst.gov.in/Invoice/BulkUpload" ,  files = files , data = form ).text
-#           success_excel = pd.read_excel(self.download("https://einvoice1.gst.gov.in/Invoice/ExcelUploadedInvoiceDetails"))
-#           failed_excel =  pd.read_excel(self.download("https://einvoice1.gst.gov.in/Invoice/FailedInvoiceDetails"))
-#           failed_excel.to_excel("failed.xlsx")
-#           data = {  "download" :  success_excel.to_csv(index = False) ,  "success" : len(success_excel.index) , 
-#                     "failed" : len(failed_excel.index) , "failed_data" : failed_excel.to_csv(index=False) } 
-#           return  jsonify(data) 
-
-# class Eway(ESession) : 
-
-#       def __init__(self) :  
-#           super().__init__("eway","https://ewaybillgst.gov.in","txt_username","txt_password","HiddenField3","txtCaptcha")
-#           self.cookies.set("ewb_ld_cookie",value = "292419338.20480.0000" , domain = "ewaybillgst.gov.in")         
-#           self._login =  ("https://ewaybillgst.gov.in/login.aspx", self.form)
-#           self._get_captcha = "https://ewaybillgst.gov.in/Captcha.aspx"
-      
-#       def get_captcha(self):
-#           ewaybillTaxPayer = "p5k4foiqxa1kkaiyv4zawf0c"   
-#           self.cookies.set("ewaybillTaxPayer",value = ewaybillTaxPayer, domain = "ewaybillgst.gov.in" , path = "/")
-#           return super().get_captcha()
-
-#       def website(self) : 
-#             for i in range(30) : 
-#               try :
-#                   return self.get("https://ewaybillgst.gov.in/login.aspx",timeout = 3)
-#               except :
-#                  logging.debug("Retrying Eway website")
-#                  continue
-#             raise Exception("EwayBill Page Not loading")          
-            
-#       def is_logged_in(self) : 
-#            res = self.get("https://ewaybillgst.gov.in/mainmenu.aspx") #check if logined correctly .
-#            if res.url == "https://ewaybillgst.gov.in/login.aspx" : 
-#                #with open("error_eway_login.html","w+") as f : f.write(res.text)
-#                return False 
-#            else : return True 
-    
-#       def upload(self,json_data) : 
-#           if not self.is_logged_in() : return jsonify({ "err" : "login again."}) , 501 
-#           bulk_home = self.get("https://ewaybillgst.gov.in/BillGeneration/BulkUploadEwayBill.aspx").text
-
-#           files = { "ctl00$ContentPlaceHolder1$FileUploadControl" : ("eway.json", StringIO(json_data) ,'application/json')}
-#           form = extractForm(bulk_home)
-#           form["ctl00$lblContactNo"] = ""
-#           try : del form["ctl00$ContentPlaceHolder1$btnGenerate"] , form["ctl00$ContentPlaceHolder1$FileUploadControl"]
-#           except : pass 
-
-#           upload_home = self.post("https://ewaybillgst.gov.in/BillGeneration/BulkUploadEwayBill.aspx" ,  files = files , data = form ).text
-#           form = extractForm(upload_home)
-          
-#           generate_home = self.post("https://ewaybillgst.gov.in/BillGeneration/BulkUploadEwayBill.aspx" , data = form ).text 
-#           soup = BeautifulSoup(generate_home, 'html.parser')
-#           table = str(soup.find(id="ctl00_ContentPlaceHolder1_BulkEwayBills"))
-#           try :
-#               excel = pd.read_html(StringIO(table))[0]
-#           except : 
-#              if "alert('Json Schema" in upload_home :  #json schema is wrong 
-#                  with open("error_eway.json","w+") as f :  f.write(json_data)
-#                  logging.error("Json schema is wrong")
-#                  return {"status" : False , "err" : "Json Schema is Wrong"}
-#           try : err = parseEwayExcel(excel)
-#           except Exception as e : 
-#                 logging.error("Eway Parser failed")
-#                 excel.to_excel("error_eway.xlsx")
-#           data = { "download" : excel.to_csv(index=False) }
-#           return data

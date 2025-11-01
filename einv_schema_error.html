@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice Bulk Upload - nic.einvoice.web</title>
+    <!-- css files -->
+        <link href="/css/commonstyle.min.css" rel="stylesheet" defer />
+
+    <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="/lib/font-awesome/css/all.css" rel="stylesheet" defer />
+
+    
+</head>
+<body>
+    <!-- Header -->
+    <header id="header" class="headermain">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Logo -->
+                <div class="col-lg-5 col-md-4 col-sm-6 col-xl-5 form-inline">
+                    <a href="#"><img class="img-fluid" align="middle" src="/Images/ind.png" alt="Logo"></a>
+                    <h2 class="logoh2 pl-2">
+                        GOODS AND SERVICES TAX<br />
+                        e - INVOICE SYSTEM
+                    </h2>
+                </div>
+                <div id="logo" class="col-lg-2 col-md-2 col-sm-2 col-xl-2 form-inline">
+                      <h2 class="logoh2 pl-2"> <b>e-Invoice 1 Portal</b></h2>
+                    <!-- /Logo -->
+                    <!-- Gstlogo -->
+                </div>
+                <div id="logo" class="col-lg-5 col-md-6 col-sm-4 col-xl-5 text-right">
+                    <a href="#"><img class="img-fluid pt-xl-3 pt-lg-3 pt-md-2 pt-sm-3" src="/images/Gstlogo.png" alt="Logo"></a>
+                    <a href="#"><img class="img-fluid pt-xl-3 pt-lg-3 pt-md-2 pt-sm-3" src="/Images/nic-logo.png" alt="Nic Logo"></a>
+                </div>
+
+                <!-- /Gstlogo -->
+
+
+            </div>
+        </div>
+    </header>
+    <!-- /Header -->
+    <!-- Lower Header opened -->
+    <div id="lower-header" class="headerbottom">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 col-4">
+                    <ul class="nav navbar-nav homeprofileiconul">
+                        <li class="pr-2">
+                            <a href="/Home/MainMenu"><i class="fa fa-home"></i></a>
+                        </li>
+                        <li class="pl-2 pr-3"><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-user"></i></a></li>
+                                <li class="btn btn-sm btn-primary py-0">
+                                    <a class="text-white" href="/SignleSignon/EwayBill"> <i class="fas fa-truck-moving"></i> e-Way bill Portal  </a>
+                                </li>
+                    </ul>
+                </div>
+
+                <div class="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-8 text-center">
+
+                    <p class="mb-0 tradenamegstinheading">GSTIN:33AAPFD1365C1ZR - Name: DEVAKI ENTERPRISES</p>
+
+                </div>
+
+                <div class="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-8 text-center">
+
+                    <p class="mb-0 tradenamegstinheading"></p>
+
+                </div>
+
+
+
+                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-3">
+                            <ul class="nav navbar-nav float-right">
+                                <li>
+                            <a  href="/Home/Logout"><i class="fa fa-power-off"></i></a>
+                                </li>
+                            </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Lower Header closed -->
+
+
+    <div class="body-content">
+
+        <link href="/css/eGen.css" rel="stylesheet" />
+
+
+
+
+<input type="hidden" id="hiddenPageName" value="BulkUpload" />
+
+<link href="/css/Loading.css" rel="stylesheet" />
+<script src="/lib/jquery/dist/jquery.js"></script>
+<div class="loading">
+    Loading&#8251;
+</div>
+
+
+<div class="container-fluid bulkfileuploaddiv fileuploadmaindiv" id="maindiv">
+    <div class="col-md-12 col-xl-12 col-lg-12 col-sm-12 col-12">
+        <h4 class="formtitle"><b class="einvoicetitle">Invoice Bulk Upload</b></h4>
+        <p class="float-right starmarkp">[<i class="fas fa-star-of-life starmark"></i>indicates mandatory fields for e-invoice]</p>
+
+<form action="/Invoice/BulkUpload" enctype="multipart/form-data" method="post">    <div class="form-row">
+        <div class="card">
+             <input type="text" name="name" id="blockUser" hidden="hidden" />
+            <div class="card-header text-center">
+                        <strong class="font16">Upload e-Invoice JSON File</strong>
+            </div>
+            <div class="card-body mt-1 p-1 mb-1 text-center">
+                <label class="text-left mr-2 mt-2 required">
+                    Upload e-Invoice JSON File (Less than 2 MB): <a href="#" title="Upload JSON file generated using an offline tool.">
+                                <i class="fa fa-question-circle text-primary font16"></i>
+                    </a>
+                </label>
+
+                        <div class="custom-file col-md-4 col-sm-6 col-lg-4 col-xl-3 col-7 mt-1 verticalaligntop" >
+                    <input type="file" class="custom-file-input" id="JsonFile" name="JsonFile" />
+                    <label class="custom-file-label text-left">Choose file</label>
+                </div>
+                        <input type="submit" name="submit" value="Upload" class="btn btn-sm btn-info mt-1 ml-2 verticalalignmiddle" id="uploadBtn" /><br />
+                <span class="text-danger field-validation-valid" data-valmsg-for="JsonFile" data-valmsg-replace="true"></span>
+                <span id="upload_file_name" class="text-danger"></span>
+
+            </div>
+
+        </div>
+    </div> 
+    <div class="text-center">
+        <p class="mt-1 mb-0 text-danger font-weight-bold"><strong>Note:</strong> For preparation of e-Invoice JSON file for bulk generation, Please go to the <span class="text-info">"Bulk Generation Tools"</span> under <span class="text-info">Help -> Tools </span>in the homepage of eInvoice portal. </p>
+    </div>
+            <div>
+            </div>
+            <div>
+                            <div class="form-row divDeserializationError">
+                                <div class="card mt-1 mb-3">
+                                    <div class="card-header text-center">
+                                        <strong class="font16"> JSON Schema Error.</strong>
+                                    </div>
+
+                                    <div class="card-body mt-0">
+                                        <div class="table-responsive col-xl-6 col-lg-7 col-md-8 col-12 col-sm-10 margin0autoOverflowYauto">
+                                            <table class="tblError table table-bordered table-danger mb-0">
+                                                <thead>
+                                                    <tr class="height40">
+                                                        <th class="text-center font16 darkBlue" colspan="5" >
+                                                            Error Details
+                                                            <button class="btnErrorClose btn-sm btn-danger float-right fas fa-window-close"></button>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tr class="height40">
+                                                    <td><strong>Invoice No</strong></td>
+                                                    <td><strong>Invoice Date</strong></td>
+                                                    <td><strong>Section Name</strong></td>
+                                                    <td><strong>Error Code</strong> </td>
+                                                    <td><strong>Error Desc</strong> </td>
+                                                </tr>
+
+
+                                                    <tr class="height40">
+                                                        <td>AA026565</td>
+                                                        <td>09/09/2025</td>
+                                                        <td>Invoice Item</td>
+                                                        <td>SCHEMA ERROR</td>
+                                                        <td>The field Product Description must be a string with a minimum length of 3 and a maximum length of 300.</td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+<input name="__RequestVerificationToken" type="hidden" value="CfDJ8JpTKZ0lxSRDoYf_Eu9dZII3aM9_t3EDYickcHS_gBVff7wTyWgyEMDYPCp2FoOgyXo5F7fRt0_qlGb-zM7R43K4VR44MIhrk66KaRwqBce0ThJ4r4xTDEfS27ZbUap6g3BtMTZiH6bYQdz3_soddw0gGR71ajHdCuOfzdoFjm-x6ITvbSBGRhydBQjCIxPQ0Q" /></form>                           <br /><br /><br /><br />
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="modal fade positionabsoluteTop50" id="alertdiv" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content logincontainer2">
+
+
+                <div class="modal-body">
+                    <div class="text-center">
+                        <p class="mt-1 mb-0 font-weight-bold">
+                            This user is blocked from generation of eInvoices. Either complete Two Factor Authentication or complete Deferment of Two Factor Authentication
+                        </p>
+                    </div>
+                    <div class="text-center">
+
+                        <button type="submit" class="btn btn-primary" id="okBtn" formaction="/Home/MainMenu">
+                            OK
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+
+
+    <!-- Lower Footer -->
+    <div id="lower-footer" class="navbar-fixed-bottom fixed-bottom footerbottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-4 col-xl-6 col-12">
+                    <div class="content text-sm-left">
+                        <p class="copyright">Version 1.01</p>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-sm-8 col-xl-6 col-12">
+                    <div class="content text-right">
+                        <p class="copyright">© 2022 - Powered By National Informatics Centre.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Lower Footer -->
+
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    
+<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <link href="/lib/jqueryui/jquery-ui.css" rel="stylesheet" />
+    <link href="/css/commonstyle.min.css" rel="stylesheet" />
+    <script src="/lib/jqueryui/jquery-ui.js"></script>
+    <script src="/js/common.min.js"></script>
+
+
+
+</body>
+</html>

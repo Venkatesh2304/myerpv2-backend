@@ -46,7 +46,7 @@ class BaseImport(Generic[ArgsT]):
         for report in cls.reports:
             # TODO: Better ways to log and handle errors
             inserted_row_counts[report.__name__] = report.update_db(
-                IkeaDownloader(), company, args
+                IkeaDownloader(company.pk), company, args
             )
 
     @classmethod
@@ -127,10 +127,10 @@ class SalesImport(DateImport):
         inventory_qs = models.IkeaGSTR1Report.objects.filter(
             company=company, date__gte=args.fromd, date__lte=args.tod
         )
-
+        
         # Sales
-        sales_objs = sales_qs.filter(type="sales")
-        sales_inventory_objs = inventory_qs.filter(type="sales")
+        sales_objs = sales_qs.filter(type="salesx")
+        sales_inventory_objs = inventory_qs.filter(type="salesx")
 
         # Sales Return
         date_original_inum_to_cn: defaultdict[tuple, list[str]] = defaultdict(list)
@@ -244,6 +244,19 @@ class SalesImport(DateImport):
             if value != 0
         )
         models.Discount.objects.bulk_create(model_discount_objs, batch_size=1000)
+
+        #Insert Stock 
+        stock_objs = (
+            models.Stock(
+                company_id=company.pk,
+                name=ikea_gstr_obj.stock_id,
+                hsn=ikea_gstr_obj.hsn,
+                rt=ikea_gstr_obj.rt,
+                desc=ikea_gstr_obj.desc,
+            )
+            for ikea_gstr_obj in inventory_qs.distinct("stock_id").iterator()
+        )
+        models.Stock.objects.bulk_create(stock_objs,update_conflicts=True,update_fields=["hsn","rt","desc"],unique_fields=["company_id","name"])
 
         # Insert inventory
         ikea_gstr_objs = itertools.chain(
@@ -397,16 +410,16 @@ class PartyImport(SimpleImport):
 class GstFilingImport:
     imports: list[Type[BaseImport]] = [
         SalesImport,
-        PartyImport,
-        StockImport,
-        MarketReturnImport,
+        # PartyImport,
+        # StockImport,
+        # MarketReturnImport,
     ]
 
     @classmethod
     def report_update_thread(
         cls, report: CompanyReportModel, company: Company, args: ReportArgs
     ):
-        inserted_count = report.update_db(IkeaDownloader(), company, args)
+        inserted_count = report.update_db(IkeaDownloader(company.pk), company, args)
         print(f"Report {report.__name__} updated with {inserted_count} rows")
         return inserted_count
 

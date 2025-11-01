@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> - nic.einvoice.web</title>
+    <!-- css files -->
+            <link href="{{path}}/common_style.css" rel="stylesheet" />
+
+    <link href="{{path}}/bootstrap.css" rel="stylesheet" />
+    <link href="{{path}}/all.css" rel="stylesheet" />
+    <style>
+        .homeprofileiconul {
+            flex-direction: row;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header" class="headermain">
+        <script type="text/javascript" language="javascript">
+            function deleteAllCookies() {
+                var cookies = document.cookie.split(";");
+
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    var eqPos = cookie.indexOf("=");
+                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GM";
+                }
+                return true;
+            }
+
+
+            function DisableBackButton() {
+                window.history.forward()
+            }
+            DisableBackButton();
+            window.onload = DisableBackButton;
+            window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
+            window.onunload = function () { void (0) }
+        </script>
+    </header>
+    <!-- /Header -->
+    <!-- Lower Header opened -->
+
+    <!-- Lower Header closed -->
+
+
+    <div class="body-content">
+
+        
+
+        <link href="{{path}}/Loading.css" rel="stylesheet" />
+<script src="{{path}}/jquery.js"></script>
+
+<script type="text/javascript">
+    function displayLoadingSymbol() {
+        $('.loading').show();
+    }
+    $(window).on('beforeunload', function () {
+        displayLoadingSymbol();
+    });
+    $(document).on('submit', 'form', function () {
+        displayLoadingSymbol();
+    });
+</script>
+<div class="loading">
+    Loading&#8251;
+</div>
+
+
+<div class="container-fluid">
+    <img src="cnl.png" class="ImgCnl Watermark" id="ImgCnl" style="display:none" />   
+    {% for form in forms%}
+        {{ form|safe }}
+        <div style="break-after:page"></div>
+    {% endfor %}
+</div>
+
+<div class="modal fade" id="MyPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errortit"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+    <!-- Lower Footer -->
+    <div id="lower-footer" class="navbar-fixed-bottom fixed-bottom footerbottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-4 col-xl-6 col-12">
+                    <div class="content text-sm-left">
+                        <p class="copyright">Version 1.01</p>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-sm-8 col-xl-6 col-12">
+                    <div class="content text-right">
+                        <p class="copyright">© 2022 - Powered By National Informatics Centre.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Lower Footer -->
+
+    <script src="jquery.js"></script>
+    <script src="bootstrap.js"></script>
+
+    
+
+    <link href="{{path}}/eInvoicePrint.css" rel="stylesheet" />
+    <script src="{{path}}/ValidateInvoice.js"></script>
+    <link href="{{path}}/Print.css" rel="stylesheet" media="print" />
+    <script src="{{path}}/jquery-ui.js"></script>
+    <script src="{{path}}/qrcode.js"></script>
+    <script src="{{path}}/jquery-barcode.min.js"></script>
+    <link href="{{path}}/jquery-ui.css" rel="stylesheet" />
+
+ <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".ImgCnl").css('display', 'none');
+            $(".ImgPreview").css('display', 'none');
+            $(".divConfirm").css('display', 'none');
+            //$(".ImgTrial").css('display', 'none');            
+            //document.getElementById("ImgCnl").style.visibility = "hidden";
+            var hdnAction = $(".hdnAction").val();
+            $(".divInvoiceNumber").css('display', 'none');
+            $(".divCancelReason").css('display', 'none');
+            $(".divInvoicePrint").css('display', 'none');
+            if (hdnAction == "Dir") {
+                generateQRCode();
+                generatebarcode();
+                $(".divInvoicePrint").css('display', 'flex');
+                $(".btnDownload").css("display", "block");
+                $(".btnEwaybill").css("display", "block");
+                var InforErrMsg = $("#hdnEwbErrorMsg").val();
+                if (InforErrMsg.length > 0) {
+                    alert(InforErrMsg);
+                }
+
+            }
+            else if (hdnAction == "Print" || hdnAction == "Cancel") {
+                $(".divInvoiceNumber").css('display', 'none');
+                $('.divAckNo').css('display', 'none');
+                 $('.divIRN').css('display', 'none');
+                var qrCodeGen = $('#qrCodeGen').val();
+                if ($(".txtinvoiceNumber").val() == "")
+                {
+                    if (hdnAction == "Cancel") {
+                        // $('.hdnModeofPrint').val("ACK");
+                        $('.cancelheading').css('display', 'block');
+                        $('.printheading').css('display', 'none');
+
+                        //$('.divmodeofPrint').css('display', 'none');
+                       // $('.divIRN').css('display', 'none');
+                       //  $('.divAckNo').css('display', 'flex');
+                    }
+                    $(".divInvoiceNumber").css('display', 'block');
+                }
+                else
+                {
+                    $(".divInvoiceNumber").css('display', 'none');
+                    $(".divInvoicePrint").css('display', 'flex');
+                    if (hdnAction == "Cancel")
+                    {
+                        $('.hdnModeofPrint').val("ACK");
+                        $('.cancelheading').css('display', 'block');
+                        $('.printheading').css('display', 'none');
+                        $('.divmodeofPrint').css('display', 'none');
+                        $('.divIRN').css('display', 'none');
+                        $(".ScrollDivPrint").css("height", "500px").css("overflow-y", "scroll").css("overflow-x", "hidden").css("padding", "10px");
+                        $(".divPrintBtn").css('display', 'none');
+                        $(".divCancelReason").css('display', 'block');
+                        $(".txtCnlRemarak").attr("required", true);
+                    }
+                    else {
+                         $(".btnDownload").css("display", "block");
+                    }
+                    generateQRCode();
+                    generatebarcode();
+                }
+            }
+            else if (hdnAction == "Cancelled") {
+                    generateQRCode();
+                    generatebarcode();
+                $(".divInvoicePrint").css('display', 'flex');
+                $(".btnDownload").css("display", "block");
+                $(".divCancelReason").css('display', 'none');
+                $(".ImgCnl").css('display', 'block');
+               // document.getElementById("ImgCnl").style.visibility = 'visible';
+            }
+            else if (hdnAction = "Error") {
+                $(".divInvoiceNumber").css('display', 'none');
+                $(".divCancelReason").css('display', 'none');
+                $(".divInvoicePrint").css('display', 'none');
+            }
+            $(document).on("click", ".btnErrorClose", function (event) {
+                if (event != null && event.target != null) {
+                    var isConfirm = confirm('Are you sure to close Error Deatils?');
+                    if (isConfirm) {
+                         $('.divError').css('display', 'none');
+                        var url = '/Home/MainMenu';
+                        window.location.href = url;
+                    }
+                }
+                return false;
+            });
+            $('.PrintOption').click(function () {
+                $('.divAckNo').css('display', 'none');
+            $('.divIRN').css('display', 'none');
+                var selVal = $(this).val();
+                $('.hdnModeofPrint').val(selVal);
+                if (selVal == "ACK") {
+                    $('.divAckNo').css('display', 'flex');
+                    $('.divIRN').css('display', 'none');
+                }
+                else {
+                    //if (hdnAction != "Cancel") {
+                        $('.divAckNo').css('display', 'none');
+                        $('.divIRN').css('display', 'flex');
+                    //}
+                    //else {
+                    //     radiobtn = document.getElementById("PrintOption");
+                    //    radiobtn.checked = true;
+
+                    //}
+                }
+            });
+        });
+        function ModelPopUp(title, text) {
+            $("#MyPopup").clearQueue();
+
+            $('#errortit').html(title);
+
+            $('.modal-body').html(text);
+
+            $("#MyPopup").modal("show");
+
+        }
+
+        function generateQRCode() {
+            var typeNumber =22;
+            var errorCorrectionLevel = 'L';
+            document.querySelectorAll('#qrCodeGen').forEach( (e,i) => { 
+                var qr = qrcode(typeNumber, errorCorrectionLevel);
+                qr.addData(e.value);
+                qr.make();
+                document.querySelectorAll('#plBarCodeNew')[i].innerHTML = qr.createImgTag(2, 0);
+            })
+        }
+
+        function generatebarcode() {
+            $(".barcode").each((i,e) => { 
+                $(e).barcode( document.querySelectorAll('#barcodeGen')[i].value, "code128") 
+                console.log( e  , document.querySelectorAll('#barcodeGen')[i].value )
+            })
+        }
+
+        $(document).on("click", ".btnDownload", function (event) {
+            download();
+            return false;
+        });
+
+        $(document).on("click", ".btnEwaybill", function (event) {
+            alert("This Option will be Available at Next Version");
+            return false;
+            // $(".hdnAction").val("EWAYBILL");
+        });
+
+        $('.btngo').click(function () {
+
+            if ($('.PrintOption:checked').val() == "ACK") {
+
+                if ($('#txtinvoiceNumber').val() == "") {
+                    var message = "<ul><li>Please Provide Ack No </li></ul>";
+                    ModelPopUp("Alert", message);
+                    return false;
+                }
+
+                if ($('#txtinvoiceNumber').val().length > 0) {
+
+                    var inputVal = $('#txtinvoiceNumber').val();
+                    var numericReg = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
+                    if (!numericReg.test(inputVal)) {
+
+                        alert("Invalid Data Format");
+
+                        return false;
+                    }
+                }
+
+            }
+            if ($('.PrintOption:checked').val() == "IRN") {
+                if (!$('#IRNtxtinvoiceNumber').val()) {
+                    var message = "<ul><li>Please Provide IRN</li></ul>";
+                    ModelPopUp("Alert", message);
+                    return false;
+                }
+            }
+        });
+        
+        function download() {
+            var action = $("#hdnAction").val();
+
+            if (action == "Cancelled" || hdnAction == "Cancel") {
+                var text = $("#hdnModeofPrint").val();
+            }
+            else {
+                var text = $("#hdnJson").val();
+            }
+            var filename = "eInv_" + $("#hdnack").val();
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + JSON.stringify(encodeURIComponent(text)));
+            element.setAttribute('download', filename + '.JSON');
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+            return false;
+        }
+    </script>
+
+
+</body>
+</html>

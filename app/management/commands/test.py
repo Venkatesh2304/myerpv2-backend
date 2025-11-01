@@ -1,10 +1,9 @@
 import time
-from app.company_models import Group
+from app.company_models import User
 from app.erp_import import *
 from app.report_models import *
 from app.erp_models import *
 import datetime
-
 from custom.classes import Gst, IkeaDownloader
 from django.db import connection
 import tracemalloc
@@ -50,11 +49,11 @@ args_dict = {
     DateRangeArgs: DateRangeArgs(fromd=fromd,tod=tod),
     EmptyArgs: EmptyArgs(),
 }
-group,_ = Group.objects.get_or_create(name="devaki")
-company,_ = Company.objects.get_or_create(name="devaki_hul",group = group)
+user = User.objects.get(username="devaki")
+company,_ = Company.objects.get_or_create(name="devaki_hul",user = user)
 company.save()
 
-# i = IkeaDownloader()
+i = IkeaDownloader(company.pk)
 GstFilingImport.run(company=company,args_dict=args_dict)
 exit(0)
 
@@ -68,7 +67,7 @@ while not g.is_logged_in():
     print("login status :",status)
 
 month_arg = MonthArgs(month=9,year=2025)
-GSTR1Portal.update_db(g,group,month_arg)
+GSTR1Portal.update_db(g,user,month_arg)
 
 
 # GstFilingImport.run(args_dict=args_dict)

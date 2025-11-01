@@ -52,7 +52,7 @@ class Party(CompanyModel) :
 class Stock(CompanyModel) : 
       name = CharField(max_length=20)  # removed db_index (part of composite PK)
       hsn = CharField(max_length=20,null=True)
-      desc = CharField(max_length=20,null=True,blank=True)
+      desc = CharField(max_length=200,null=True,blank=True)
       rt = decimal_field(decimal_places=1)
       standard_rate = decimal_field()
       pk = CompositePrimaryKey("company", "name")
@@ -117,6 +117,13 @@ class Sales(CompanyModel, PartyVoucher, GstVoucher) :
       )
       class Meta: # type: ignore
         verbose_name_plural = 'Sales'
+
+      class SalesUserManager(models.Manager):
+            def for_user(self, user):
+                  # Returns only sales related to the user’s company
+                  return self.get_queryset().filter(company__user=user)
+      user_objects = SalesUserManager()
+      objects = models.Manager()
 
 class Discount(CompanyModel): 
       bill_id = models.CharField(max_length=20)

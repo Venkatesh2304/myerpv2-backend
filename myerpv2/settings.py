@@ -37,14 +37,25 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "app"
+    "rest_framework",
+    "corsheaders",
+    "app",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "app.auth_backends.CsrfExemptSessionAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -75,16 +86,17 @@ WSGI_APPLICATION = "myerpv2.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-     'default': {
-        'ENGINE':   'django.db.backends.postgresql',
-        'NAME':     'myerpv2all',
-        'USER':     'postgres',
-        'PASSWORD': 'Ven2004',
-        'HOST':     'localhost',
-        'PORT':     '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "myerpv2all",
+        "USER": "postgres",
+        "PASSWORD": "Ven2004",
+        "HOST": "localhost",
+        "PORT": "5432",
     },
 }
 
+AUTH_USER_MODEL = 'app.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -109,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
 
 USE_TZ = False
@@ -125,44 +137,55 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
-        'sql_file': {
-            'class': 'logging.FileHandler',
-            'filename': 'sql.log',  # path to your log file
-            'formatter': 'verbose',  # optional
-        },
-    },
-    'formatters': {
-        'verbose': {
-            'format': '[{levelname}] {asctime} {name} {message}',
-            'style': '{',
+        "sql_file": {
+            "class": "logging.FileHandler",
+            "filename": "sql.log",  # path to your log file
+            "formatter": "verbose",  # optional
         },
     },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['sql_file'],  # log to file
-            'level': 'DEBUG',          # log all queries
-            'propagate': False,        # prevent duplicate logging
+    "formatters": {
+        "verbose": {
+            "format": "[{levelname}] {asctime} {name} {message}",
+            "style": "{",
+        },
+    },
+    "loggers": {
+        "django.db.backends": {
+            "handlers": ["sql_file"],  # log to file
+            "level": "DEBUG",  # log all queries
+            "propagate": False,  # prevent duplicate logging
         },
     },
 }
+
+# CORS (for Node frontend)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+CORS_ALLOW_CREDENTIALS = True
 
 from django.db.migrations.state import ModelState
 from typing import Generic
 
 _original_render = ModelState.render
 
+CORS_EXPOSE_HEADERS = ['Content-Disposition']
+
 def _patched_render(self, apps):
     # remove any Generic bases before creating the model class
     self.bases = tuple(
-        base for base in self.bases
+        base
+        for base in self.bases
         if not (isinstance(base, type) and issubclass(base, Generic))
     )
     return _original_render(self, apps)
+
 
 ModelState.render = _patched_render

@@ -4,6 +4,7 @@ import re
 from io import BytesIO
 import json
 from logging import Handler
+from typing import Generic, TypeVar
 from urllib.parse import urljoin, urlparse
 import requests
 import curlify
@@ -16,6 +17,7 @@ import shutil
 from pymongo import MongoClient
 from .std import get_mongo
 import urllib3
+from app.company_models import UserSession
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ## DB FIELDS
@@ -82,7 +84,6 @@ class UserDB:
             for cookie in cookies
         ]
         self.update_user(DB_COOKIE_FIELD, json.dumps(cookies))
-
 
 class Logger(logging.Logger):
     def __init__(self, name, level=logging.NOTSET):
@@ -181,10 +182,8 @@ class Logger(logging.Logger):
     def info(self, msg):
         super().info("<div>" + str(msg).replace("\n", "<br/>") + "</div>")
 
-
 class StatusCodeError(Exception):
     pass
-
 
 class Session(requests.Session, ABC):
 
@@ -193,15 +192,14 @@ class Session(requests.Session, ABC):
     base_url = None
     load_cookies = False
     force_base_url = False
-    is_second_level_config = False
+    key: str
+    user:UserSession
+    username:str
+    password:str
+    config:dict[str,str]
+    
 
-    @property
-    @abstractmethod
-    def key():
-        pass
-
-    def __init__(self):
-
+    def __init__(self,user:str):
         super().__init__()
         self.headers.update(
             {
@@ -220,51 +218,15 @@ class Session(requests.Session, ABC):
             file_handler.setFormatter(formatter)
             self.logger.addHandler(file_handler)
 
-        # Fetch username (mutliple methods)
-        if "user" in os.environ:
-            self.user = os.environ["user"]
-            print("User for Session : ",self.user)
-            self.logger.debug(
-                f"User {self.user} has fetched using enviroment variables"
-            )
 
-        elif "project.toml" in os.listdir():
-            project_config = toml.load(open("project.toml"))
-            if "user" in project_config:
-                self.user = project_config["user"]
-                self.logger.debug(f"User {self.user} has fetched using project.toml")
-            else:
-                raise Exception("Project config(.toml) doesnt have user attribute")
-
-        else : 
-            try :
-                self.user = get_jwt_identity()
-                self.logger.debug(f"User {self.user} has fetched using jwt")
-            except RuntimeError :
-                self.logger.warning("Not in flask enivornment and user variable not setup")
-                self.user = input("Enter the username : ")
-                previous_config = {}
-                with open("project.toml", "w+") as f:
-                    f.write(toml.dumps(previous_config | {"user": self.user}))
-                self.logger.info(
-                    "User has been added to the project.toml and fetched from input"
-                )
-
-        # Fetch data & cookies from DB
-        self.setup()
-
-    def setup(self):
-        self.db = UserDB(user_db, self.user, self.key)
-        self.user_config = self.db.get_user()
-        self.config = self.user_config[self.key]
-        if type(self.config) == str : 
-            self.is_second_level_config = True
-            self.config = self.db.get_second_level_config()
-        self.previous_cookies = self.db.get_cookies()
-        if self.load_cookies and self.previous_cookies : 
-            for name,value,domain,path in self.previous_cookies : 
-                self.cookies.set(name,value,domain=domain,path=path)
-
+        self.user = UserSession.objects.get(user=user,key=self.key)
+        self.username = self.user.username
+        self.password = self.user.password
+        self.config = self.user.config
+        if self.load_cookies and self.user.cookies : 
+            for cookie in self.user.cookies : 
+                self.cookies.set(cookie["name"],cookie["value"],domain=cookie["domain"],path=cookie["path"])
+    
     def request(self, method, url, *args, **kwargs):
         url = urljoin(self.base_url, url)
         res = super().request(method, url, *args, **kwargs)
@@ -279,11 +241,7 @@ class Session(requests.Session, ABC):
                     """
         )
 
-    def change_credentials(self, username, password):
-        self.db.update_user("username", username)
-        self.db.update_user("pwd", password)
-        self.setup()
-
+   
     def get_buffer(self, url: str) -> BytesIO:
         return BytesIO(self.get(url).content)
 

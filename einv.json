@@ -1,0 +1,54 @@
+[
+    {
+        "Version": "1.1",
+        "TranDtls": {
+            "TaxSch": "GST",
+            "SupTyp": "B2B"
+        },
+        "DocDtls": {
+            "Typ": "CRN",
+            "No": "AA026562",
+            "Dt": "08/09/2025"
+        },
+        "BuyerDtls": {
+            "Gstin": "33ADGFS4122E1ZI",
+            "LglNm": "SANGAVI  MEGA MART-D",
+            "Pos": "33",
+            "Addr1": "BIG BAZAAR STREET,Near Gandhi MarketTHIRUCHIIRAPALLI",
+            "Pin": 620008,
+            "Loc": "TRICHY",
+            "Stcd": "33"
+        },
+        "ValDtls": {
+            "AssVal": 16638.1,
+            "CgstVal": 1497.43,
+            "SgstVal": 1497.43,
+            "TotInvVal": 19633.0
+        },
+        "ItemList": [
+            {
+                "Qty": 400,
+                "IsServc": "N",
+                "HsnCd": "34025000",
+                "PrdDesc": "Preparations put up for retail sale",
+                "Unit": "PCS",
+                "UnitPrice": 41.6,
+                "TotAmt": 16638.1,
+                "AssAmt": 16638.1,
+                "GstRt": 18.0,
+                "TotItemVal": 19632.96,
+                "CgstAmt": 1497.43,
+                "SgstAmt": 1497.43,
+                "SlNo": "1"
+            }
+        ],
+        "SellerDtls": {
+            "Loc": "TRICHY",
+            "Pin": 620010,
+            "Stcd": "33",
+            "Addr1": "F/4 , INDUSTRISAL ESTATE , ARIYAMANGALAM",
+            "Gstin": "33AAPFD1365C1ZR",
+            "LglNm": "DEVAKI ENTERPRISES"
+        }
+    }
+]

@@ -16,7 +16,7 @@ from django.apps import apps
 from myerpv2 import settings
 from app.sql import engine
 from typing import TypeVar, Generic
-from app.company_models import Company, Group
+from app.company_models import Company, User
 from app.fields import decimal_field
 
 @dataclass
@@ -411,27 +411,27 @@ class PartyReport(EmptyReportModel):
         db_table = "party_report"
 
 
-class GroupReportModel(BaseReportModel[ArgsT]):
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, db_index=True)
+class UserReportModel(BaseReportModel[ArgsT]):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
 
     class Meta:
         abstract = True
 
     @classmethod
-    def delete_before_insert(cls, group: Group,args: ArgsT):
+    def delete_before_insert(cls, user: User,args: ArgsT):
         raise NotImplementedError("delete_before_insert method not implemented.")
 
     @classmethod
     def update_db(
-        cls, fetcher_obj: object, group: Group, args: ArgsT
+        cls, fetcher_obj: object, user: User, args: ArgsT
     ) -> int | None:
         df = cls.Report.get_dataframe(fetcher_obj, args)
-        df["group_id"] = group.pk
-        cls.delete_before_insert(group,args)
+        df["user_id"] = user.pk
+        cls.delete_before_insert(user,args)
         inserted_rows = cls.save_to_db(df)
         return inserted_rows
 
-class GSTR1Portal(GroupReportModel[MonthArgs]):
+class GSTR1Portal(UserReportModel[MonthArgs]):
     arg_type = MonthArgs
     period = models.CharField(max_length=6, verbose_name="Period (MMYYYY)")
     date = models.DateField(verbose_name="Invoice Date")
@@ -472,8 +472,8 @@ class GSTR1Portal(GroupReportModel[MonthArgs]):
         db_table = "gstr1_portal"
 
     @classmethod
-    def delete_before_insert(cls, group: Group,args: MonthArgs):
-        cls.objects.filter(group = group,period = str(args)).delete()
+    def delete_before_insert(cls, user: User,args: MonthArgs):
+        cls.objects.filter(user = user,period = str(args)).delete()
 
 # System check for models
 @register()
