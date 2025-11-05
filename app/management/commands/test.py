@@ -53,7 +53,11 @@ user = User.objects.get(username="devaki")
 company,_ = Company.objects.get_or_create(name="devaki_hul",user = user)
 company.save()
 
+
 i = IkeaDownloader(company.pk)
+# PartyReport.update_db(i,company,EmptyArgs())
+exit(0)
+
 GstFilingImport.run(company=company,args_dict=args_dict)
 exit(0)
 

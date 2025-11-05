@@ -42,11 +42,11 @@ def create_einv_json(
         .prefetch_related("inventory", "party")
     )
     einvs = []
-    for sale in sales_qs[:1]:
+    for sale in sales_qs:
         doc_dtls = {
             "Typ": sale.einv_type,  # type: ignore
             "No": sale.inum,
-            "Dt": (sale.date if date_fn is None else date_fn(sale)).strftime(
+            "Dt": (sale.date if date_fn is None else date_fn(sale.date)).strftime(
                 "%d/%m/%Y"
             ),
         }
@@ -81,7 +81,7 @@ def create_einv_json(
                 )
 
             hsn = stock.hsn
-            desc = stock.desc or ""
+            desc = stock.desc or None
             qty = abs(inv.qty)
             unitprice = abs(round(inv.txval / qty, 2)) if qty else 0
             cgst = abs(round(inv.rt * inv.txval / 100, 2))
@@ -94,7 +94,7 @@ def create_einv_json(
                     "IsServc": "N",
                     "HsnCd": hsn,
                     "PrdDesc": desc,
-                    "Unit": "PCS",
+                    "Unit": "NOS",
                     "UnitPrice": unitprice,
                     "TotAmt": txval,
                     "AssAmt": txval,

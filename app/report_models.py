@@ -67,6 +67,7 @@ class BaseReport(Generic[ArgsT]):
     
     @classmethod
     def basic_preprocessing(cls, df: pd.DataFrame) -> pd.DataFrame:
+
         if cls.ignore_last_nrows > 0:
             df = df.iloc[: -cls.ignore_last_nrows]
         if cls.column_map:
@@ -390,13 +391,12 @@ class PartyReport(EmptyReportModel):
     class Report(EmptyReportModel.Report):
         fetcher = IkeaDownloader.party_master
         column_map = {
-            "Party Name": "name",
-            "Address": "addr",
-            "Party Code": "code",
+            "PARTY NAME": "name",
+            "ADDRESS": "addr",
+            "PARTY CODE": "code",
             "Beat": "beat",
-            "GSTIN Number": "ctin",
-            "Party Master Code": "master_code",
-            "Phone": "phone",
+            "GSTIN NUMBER": "ctin",
+            "Party Master Code": "master_code"
         }
         dropna_columns = ["code"]
         @classmethod

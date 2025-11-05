@@ -1,0 +1,54 @@
+[
+    {
+        "Version": "1.1",
+        "TranDtls": {
+            "TaxSch": "GST",
+            "SupTyp": "B2B"
+        },
+        "DocDtls": {
+            "Typ": "CRN",
+            "No": "SAT09674",
+            "Dt": "31/10/2025"
+        },
+        "BuyerDtls": {
+            "Gstin": "33CDEPP5719C1ZR",
+            "LglNm": "J B Super Market-D",
+            "Pos": "33",
+            "Addr1": "78,Madurai Main Road,MelapudhurTrichy",
+            "Pin": 620008,
+            "Loc": "TRICHY",
+            "Stcd": "33"
+        },
+        "ValDtls": {
+            "AssVal": 43.69,
+            "CgstVal": 1.09,
+            "SgstVal": 1.09,
+            "TotInvVal": 45.87
+        },
+        "ItemList": [
+            {
+                "Qty": 1,
+                "IsServc": "N",
+                "HsnCd": "21039030",
+                "PrdDesc": "MAY.CHEEZ RS 50",
+                "Unit": "PCS",
+                "UnitPrice": 43.69,
+                "TotAmt": 43.69,
+                "AssAmt": 43.69,
+                "GstRt": 5.0,
+                "TotItemVal": 45.87,
+                "CgstAmt": 1.09,
+                "SgstAmt": 1.09,
+                "SlNo": "1"
+            }
+        ],
+        "SellerDtls": {
+            "Loc": "TRICHY",
+            "Pin": 620010,
+            "Stcd": "33",
+            "Addr1": "F/4 , INDUSTRISAL ESTATE , ARIYAMANGALAM",
+            "Gstin": "33AAPFD1365C1ZR",
+            "LglNm": "DEVAKI ENTERPRISES"
+        }
+    }
+]

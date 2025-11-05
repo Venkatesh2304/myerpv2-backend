@@ -99,10 +99,11 @@ def excel_response(sheets:list[tuple],filename:str) :
 @api_view(["POST"])
 @check_login(Einvoice)
 def einvoice_damage_stats(request):
+
     period = request.data.get("period")
     invs = list(
         models.Sales.user_objects.for_user(request.user).filter(
-            gst_period=period, ctin__isnull=False
+            gst_period=period, ctin__isnull=False, type="damage"
         )
     )
     company_stats = defaultdict(lambda: {"amt": 0, "filed": 0, "not_filed": 0})
@@ -131,17 +132,27 @@ def einvoice_damage_stats(request):
 def einvoice_damage_file(request):
     period = request.data.get("period")
     qs = models.Sales.user_objects.for_user(request.user).filter(
-        gst_period=period, ctin__isnull=False, type="salesreturn"
-    )  # ,type = "damage"
+        gst_period=period, ctin__isnull=False, type="damage"
+    )
     e = Einvoice(request.user.get_username())
     seller_json = e.config["seller_json"]
     month, year = int(period[:2]), int(period[-4:])
     last_day_of_period = datetime.date(year, month, calendar.monthrange(year, month)[1])
     today = datetime.date.today()
     date_fn = lambda date: (last_day_of_period if (today - date).days >= 28 else date)
-    date_fn = lambda date: date.date
     json_data = create_einv_json(qs, seller_json=seller_json, date_fn=date_fn)
+    with open("damage_einv.json","w+") as f :
+        f.write(json_data)
     success, failed = e.upload(json_data)
+    duplicate_irns = failed[failed["Error Code"] == 2150]
+    for _, row in duplicate_irns.iterrows():
+        error = row["Error Date"]
+        irn = re.findall(r'([a-f0-9]{64})', error)
+        if not irn: continue
+        models.Sales.user_objects.for_user(request.user).filter(
+            inum=row["Invoice No"]
+        ).update(irn=irn[0])
+
     for _, row in success.iterrows():
         models.Sales.user_objects.for_user(request.user).filter(
             inum=row["Doc No"]
@@ -189,7 +200,7 @@ def einvoice_damage_excel(request):
                     "IRN": inv.irn or "",
                 }
             )
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(data).astype(dtype = {"Taxable Value": float , "CGST" : float , "Amount" : float} )
         sheets.append((sheet_name, df))
 
     return excel_response(sheets, f"damage_{period}.xlsx")
@@ -199,7 +210,7 @@ def einvoice_damage_excel(request):
 def einvoice_damage_pdf(request):
     period = request.data.get("period")
     qs = models.Sales.user_objects.for_user(request.user).filter(
-        gst_period=period, type="salesreturn", ctin__isnull=False
+        gst_period=period, type="damage", ctin__isnull=False
     )
     tform = template.Template(open("app/templates/einvoice_print_form.html").read())
     username = request.user.get_username()

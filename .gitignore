@@ -6,3 +6,7 @@ sql.log
 .~*
 __pycache__/
 *.pyc
+static/*
+!static/
+!static/print_includes/
+!static/print_includes/**

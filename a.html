@@ -165,11 +165,11 @@
                                                 </tr>
                                                 <tr class="height40">
                                                     <td>Invoices uploaded successfully :</td>
-                                                    <td class="darkslateblueTextalignright"><strong>0</strong></td>
+                                                    <td class="darkslateblueTextalignright"><strong>1</strong></td>
                                                 </tr>
                                                 <tr class="height40">
                                                     <td>Failed to upload:</td>
-                                                    <td class="darkslateblueTextalignright"><strong>1</strong></td>
+                                                    <td class="darkslateblueTextalignright"><strong>0</strong></td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -178,44 +178,49 @@
                             </div>
             </div>
             <div>
-            </div>
-            <div>
                             <div class="form-row divData">
                                 <div class="card mt-1">
                                     <div class="card-header text-center">
-                                        <strong class="font16"> Failed Invoice Details.</strong>
+                                        <strong class="font16"> Successfully Uploaded Invoice Details.</strong>
                                     </div>
-                                    <div class="card-body mt-1">
-
-                                        <div class="table-responsive col-xl-12 col-lg-12 col-md-12 col-12 col-sm-12 p-0 inbulkupload" >
-                                                            <div>
-                                                                <a class="float-right btn btn-outline-danger btn-sm mr-1 btnnoloading" href="/Invoice/FailedInvoiceDetails">Download Excel <i class="fa fa-download"></i></a>
-                                                            </div>
-                                                            <table class="table table-bordered table-striped mb-0" id="tblGrid">
-                                                            <tr class="text-center text-white backgroundce8c5e">
-                                                                    <th width="70">Sl. No</th>
-                                                                    <th>Invoice No</th>
-                                                                    <th class="width100">Invoice Date</th>
-                                                                    <th>Buyer GSTIN</th>
-                                                                    <th>Invoice Value</th>
-                                                                    <th>Error Code</th>
-                                                                    <th>Error Details</th>
-                                                            </tr>
-                                                                    <tr>
-                                                                        <td class="text-center"><span>1</span></td>
-                                                                        <td class="text-center">AA026565</td>
-                                                                        <td>09/09/2025</td>
-                                                                        <td>33AXMPA3477G1ZK</td>
-                                                                        <td>91.0</td>
-                                                                        <td>2305</td>
-                                                                        <td>IRN cannot be generated with document date prior to 30 days from today for suppliers with turnover above 20 Cr</td>
-
-                                                                    </tr>
-                                                            </table>
-                                                        </div>
-                                    </div>
+                                    <div class="card-body p-1 mt-0">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-12 col-sm-12 text-right pt-1 pb-1">
+                                            <a class="btn btn-outline-primary btn-sm mr-1 btnnoloading" href="/Invoice/ZipFileDownload">Download Signed JSON <i class="fa fa-download"></i></a>
+                                            <a class="btn btn-outline-info btn-sm mr-1 btnnoloading" href="/Invoice/ExcelUploadedInvoiceDetails">Download Excel <i class="fa fa-download"></i></a>
+                                            <a class="btnPdf btn btn-outline-warning btn-sm mr-1 btnnoloading" href="/Invoice/BulkPrint">Download Print PDF <i class="fa fa-download"></i></a>
+                                           </div>
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-12 col-sm-12 p-0 inbulkupload" >
+                                                <table class="table table-bordered table-striped table-responsive mb-0">
+                                                    <tr class="text-white bg-info text-center">
+                                                        <th width="70">Sl. No</th>
+                                                        <th>Invoice No</th>
+                                                    <th class="width100">Invoice Date</th>
+                                                        <th>Buyer GSTIN</th>
+                                                        <th>Invoice Value</th>
+                                                        <th>Ack No</th>
+                                                        <th>Ack Date</th>
+                                                        <th>IRN</th>
+                                                        <th>EWB No./ If Any Errors While Creating EWB.</th>
+                                                    </tr>
+                                                        <tr>
+                                                            <td class="text-center"><span>1</span></td>
+                                                            <td>SAT09674</td>
+                                                            <td>31/10/2025</td>
+                                                            <td>33CDEPP5719C1ZR</td>
+                                                            <td>45.87</td>
+                                                            <td>152523599056781</td>
+                                                           
+                                                             <td> 05-11-2025</td>
+                                                            <td class="wordbreak">39ba1fa6b6d67083b6e53578dc338b5eea978b85981450eed42ac65bac85d329</td>
+                                                            <td></td>
+                                                        </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
+            </div>
+            <div>
             </div>
             <div>
                         <div class="form-row divData">
@@ -228,7 +233,7 @@
                             </div>
                         </div>
             </div>
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8JpTKZ0lxSRDoYf_Eu9dZIJvUNH-UqXvD1jZAcWQdIjhGDFTF3MC1_hpC51hwyOm1LISa_S__lfx-CTapMn1TddvKSKgqqwPgBXXIcL76AYsxP_-DJL-4Arc4xJrJIYzC9LgBbbALMKVg4GiGmdd6ZKMZG870_h4XgdINzgkHqjYGajBLX-K47T9ZSsqcm1brg" /></form>                           <br /><br /><br /><br />
+<input name="__RequestVerificationToken" type="hidden" value="CfDJ8JpTKZ0lxSRDoYf_Eu9dZIL06jnJqtHrsyC1jznwNFCKit1J89W6JpwQ-snnlFfxIdvUscSAWJgGXdY1ICkIWX6K617oevPUK47N2vtRbC-umfwu8JyIpt_4V6TjMrPNTfhxzBQ1sp0AVaYNG-1ywBEhUiYNvEV-OsMUoitD56XQP87u4FAjthzqqGAhcjDcCA" /></form>                           <br /><br /><br /><br />
     </div>
 </div>
 

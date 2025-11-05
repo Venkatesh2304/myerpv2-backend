@@ -129,8 +129,8 @@ class SalesImport(DateImport):
         )
         
         # Sales
-        sales_objs = sales_qs.filter(type="salesx")
-        sales_inventory_objs = inventory_qs.filter(type="salesx")
+        sales_objs = sales_qs.filter(type="sales")
+        sales_inventory_objs = inventory_qs.filter(type="sales")
 
         # Sales Return
         date_original_inum_to_cn: defaultdict[tuple, list[str]] = defaultdict(list)
@@ -292,6 +292,7 @@ class MarketReturnImport(DateImport):
     @classmethod
     @transaction.atomic
     def run_atomic(cls, company: Company, args: DateRangeArgs):
+        cls.delete_before_insert(company, args)
 
         stock_rt_subquery = models.Stock.objects.filter(
             company=company, name=OuterRef("stock_id")
@@ -344,12 +345,27 @@ class MarketReturnImport(DateImport):
                     stock_id=mr.stock_id,
                     qty=mr.qty,
                     rt=rt,
-                    txval=txval,
+                    txval=-txval,
                 )
             )
 
         models.Sales.objects.bulk_create(sales_objects.values())
         models.Inventory.objects.bulk_create(inventory_objects)
+        # Upsert stock description
+        stock_objs = (
+            models.Stock(
+                company_id=company.pk,
+                name=mr.stock_id,
+                desc=mr.desc,
+            )
+            for mr in market_returns.distinct("stock_id").iterator()
+        )
+        models.Stock.objects.bulk_create(
+            stock_objs,
+            update_conflicts=True,
+            update_fields=["desc"],
+            unique_fields=["company_id", "name"],
+        )
 
 class StockImport(SimpleImport):
     reports = [models.StockHsnRateReport]
@@ -400,7 +416,7 @@ class PartyImport(SimpleImport):
         )
         models.Party.objects.bulk_create(
             objs,
-            batch_size=2000,
+            batch_size=1000,
             update_conflicts=True,
             update_fields=["addr", "master_code", "name", "phone", "ctin"],
             unique_fields=["company_id", "code"],
@@ -410,9 +426,9 @@ class PartyImport(SimpleImport):
 class GstFilingImport:
     imports: list[Type[BaseImport]] = [
         SalesImport,
-        # PartyImport,
-        # StockImport,
-        # MarketReturnImport,
+        PartyImport,
+        StockImport,
+        MarketReturnImport,
     ]
 
     @classmethod

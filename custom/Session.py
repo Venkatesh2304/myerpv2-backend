@@ -241,7 +241,6 @@ class Session(requests.Session, ABC):
                     """
         )
 
-   
     def get_buffer(self, url: str) -> BytesIO:
         return BytesIO(self.get(url).content)
 
