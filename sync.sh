@@ -5,6 +5,5 @@ git reset --hard origin/main
 source .venv/bin/activate
 pip install -r requirements.txt 
 python3 manage.py migrate
-echo "==> Collecting static files"
 deactivate
 sudo systemctl restart myerpv2-gunicorn.service
