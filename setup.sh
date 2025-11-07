@@ -67,7 +67,7 @@ else
 fi
 
 echo "==> Ensuring gunicorn is installed"
-python -c "import gunicorn" 2>/dev/null || pip install gunicorn
+pip install gunicorn
 
 
 echo "==> Ensuring PostgreSQL database '$DB_NAME' exists"
@@ -85,9 +85,8 @@ else
 fi
 unset PGPASSWORD
 
-echo "==> Creating systemd service ($SERVICE_NAME) if missing"
-if [ ! -f "$SERVICE_PATH" ]; then
-  $SUDO bash -c "cat > '$SERVICE_PATH'" <<EOF
+echo "==> Creating or updating systemd service ($SERVICE_NAME)"
+$SUDO bash -c "cat > '$SERVICE_PATH'" <<EOF
 [Unit]
 Description=Gunicorn for $PROJECT_NAME Django project
 After=network.target
@@ -108,15 +107,10 @@ PrivateTmp=true
 WantedBy=multi-user.target
 EOF
 
-  $SUDO systemctl daemon-reload
-  $SUDO systemctl enable "$SERVICE_NAME"
-  $SUDO systemctl start "$SERVICE_NAME"
-else
-  echo "Service already exists. Ensuring it's enabled and started."
-  $SUDO systemctl daemon-reload
-  $SUDO systemctl enable "$SERVICE_NAME" || true
-  $SUDO systemctl restart "$SERVICE_NAME" || $SUDO systemctl start "$SERVICE_NAME" || true
-fi
+echo "==> Reloading and restarting systemd service"
+$SUDO systemctl daemon-reload
+$SUDO systemctl enable "$SERVICE_NAME"
+$SUDO systemctl restart "$SERVICE_NAME"
 
 echo "==> Setup complete."
 $SUDO systemctl status "$SERVICE_NAME" --no-pager || true
