@@ -1,10 +1,11 @@
+from io import BytesIO
 import time
 from app.company_models import User
 from app.erp_import import *
 from app.report_models import *
 from app.erp_models import *
 import datetime
-from custom.classes import Gst, IkeaDownloader
+from custom.classes import Einvoice, Gst, IkeaDownloader
 from django.db import connection
 import tracemalloc
 
@@ -50,11 +51,24 @@ args_dict = {
     EmptyArgs: EmptyArgs(),
 }
 user = User.objects.get(username="devaki")
-company,_ = Company.objects.get_or_create(name="devaki_hul",user = user)
+company,_ = Company.objects.get_or_create(name="devaki_urban",user = user)
 company.save()
+
+e = Einvoice(company.user.username)
+# print(e.getinvs())
+# exit(0)
+bytes = e.get_filed_einvs(datetime.date(2025,11,7))
+df = pd.read_excel(BytesIO(bytes))
+print(df)
+with open("einvs.xlsx",'wb+') as f:
+     f.write(bytes)
+exit(0)
+
+
 
 
 i = IkeaDownloader(company.pk)
+
 # PartyReport.update_db(i,company,EmptyArgs())
 exit(0)
 

@@ -1,3 +1,4 @@
+import decimal
 import json
 import os
 import re
@@ -24,6 +25,8 @@ from django.db.models import (
 from app.fields import decimal_field
 from app.einvoice import DecimalEncoder
 from django.db.models.functions import Coalesce, Round
+
+from custom.classes import Gst
 
 def addtable(writer, sheet, name, data, style="default"):
     def style(name, df):
@@ -87,9 +90,9 @@ def diff_dataframes(
         diff_df[col] = diff_df[col1].fillna(col2)
     return filter_cols(only_left), filter_cols(only_right), filter_cols(diff_df)
 
-def generate(user:models.User,period:str,gstin:str) :
+def generate(user:models.User,period:str,gst:Gst) -> dict[str,pd.DataFrame]:
     os.makedirs(f"static/{user.username}", exist_ok=True)
-    
+    gstin = gst.config["gstin"]
     coalesce_zero = lambda expr: Coalesce(
         expr, 0, output_field=decimal_field(decimal_places=3)
     )
@@ -140,6 +143,7 @@ def generate(user:models.User,period:str,gstin:str) :
         "zero_rate_txval",
         "cgst",
         "name",
+        "irn"
     )
     invs = pd.DataFrame(invs_qs.iterator())
 
@@ -153,18 +157,18 @@ def generate(user:models.User,period:str,gstin:str) :
             hsn=models.Stock.objects.filter(
                 company_id=OuterRef("company_id"), name=OuterRef("stock_id")
             ).values("hsn")[:1],
-            rt=F("rt") * 2,
             cgst=Round(F("rt") * F("txval") / 100, precision=3),
             sgst=Round(F("rt") * F("txval") / 100, precision=3),
         )
         .values("company_id", "bill_id", "qty", "hsn", "rt", "cgst", "sgst", "txval")
     )
     items = pd.DataFrame(items_qs.iterator()).rename(columns={"bill_id": "inum"})
+    items["rt"] = items["rt"] * 2
 
     gst_qs = models.GSTR1Portal.objects.filter(period=period, user=user).values()
     gst_portal = pd.DataFrame(gst_qs.iterator())
 
-    registered_invs = invs[invs["gst_type"].isin(["b2b", "cdnr"]) & (invs["cgst"] != 0)]
+    registered_invs = invs[invs["gst_type"].isin(["b2b", "cdnr"])]
     missing, extra, mismatch = diff_dataframes(
         registered_invs[
             ["inum", "name", "date", "ctin", "txval", "zero_rate_txval", "cgst"]
@@ -180,6 +184,12 @@ def generate(user:models.User,period:str,gstin:str) :
         )
         | ((df["cgst_ikea"] - df["cgst_einv"]).abs() > 0.5),
     )
+    #Filter missing invoices (which are yet ot be pushed to gst portal but has an irn)
+    missing = missing[missing["cgst"] != 0]
+    missing = missing.merge(invs[["inum","irn"]],on="inum",how="left")
+    yet_to_be_pushed = missing[missing["irn"].notnull()]
+    missing = missing[missing["irn"].isnull()]
+    del missing["irn"] #This is an empty column
 
     # Changes
     registered_zero_rate = registered_invs.merge(
@@ -205,6 +215,36 @@ def generate(user:models.User,period:str,gstin:str) :
     ]["zero_rate_txval"].sum()
 
     summary = items.merge(invs[["inum", "gst_type", "type"]], on="inum", how="left")
+
+    #Add extra einvoices to summary
+    extra_einvs_items_data = []
+    for _,row in extra.iterrows() : 
+        inum = row["inum"]
+        doctype =  "INV" if row["txval"] > 0 else "CRN"
+        inv = gst.get_einv_data( gstin , row.date.strftime("%m%Y") ,  doctype , inum )
+        if inv is None :
+            #TODO: Raise excpetion
+            print(f"""WARNING : EINVOICE DATA NOT FOUND FOR {inum} , SKIPPING WHICH IS POPULATED IN THE PORTAL
+                      SO, MANUALLY POPULATE THE HSN FOR THIS""")
+            continue
+        df = pd.DataFrame([ i for i in inv["ItemList"] ])
+        df["inum"] = inum
+        if doctype == "CRN" : df[["Qty","AssAmt","CgstAmt","SgstAmt"]] = -df[["Qty","AssAmt","CgstAmt","SgstAmt"]]
+        extra_einvs_items_data.append(df)
+
+    extra_einvs_items = pd.DataFrame(columns=["inum","qty","hsn","rt","txval","cgst","sgst"])
+    if extra_einvs_items_data : #If Non Empty list
+        extra_einvs_items = pd.concat(extra_einvs_items_data)
+        extra_einvs_items = extra_einvs_items.rename(columns={"AssAmt":"txval","CgstAmt":"cgst","SgstAmt":"sgst",
+                                                                        "HsnCd":"hsn","GstRt":"rt","Qty":"qty"})
+        extra_einvs_items = extra_einvs_items[["inum","qty","hsn","rt","txval","cgst","sgst"]]
+        extra_einvs_items["company_id"] = "extra_einvoice"
+        extra_einvs_items["gst_type"] = extra_einvs_items["txval"].apply(lambda x : "b2b" if x > 0 else "cdnr")
+        extra_einvs_items["type"] = "extra_einvoice"
+        for col in ["txval","cgst","sgst"] : 
+            extra_einvs_items[col] = extra_einvs_items[col].astype(str).apply(lambda x : decimal.Decimal(x)) # type: ignore
+        summary = pd.concat([summary,extra_einvs_items],ignore_index=True)
+
     gst_type_stats = (
         summary.groupby("gst_type").agg({"txval": "sum", "cgst": "sum"}).round(2)
     )
@@ -215,6 +255,10 @@ def generate(user:models.User,period:str,gstin:str) :
         gst_type_stats.loc[gst_type, "txval"] -= zero_txval
     gst_type_stats.loc["registered_zero_rate"] = {"txval": total_registered_zero_rate, "cgst": 0}  # type: ignore
     gst_type_stats = gst_type_stats.reset_index()
+
+    gst_company_type_stats = summary.groupby(
+        ["company_id", "gst_type"], as_index=False
+    ).agg({"txval": "sum", "cgst": "sum"})
 
     gst_company_type_invoice_type_total_stats = summary.groupby(
         ["company_id", "gst_type", "type"], as_index=False
@@ -261,8 +305,8 @@ def generate(user:models.User,period:str,gstin:str) :
     addtable(
         writer=writer,
         sheet="Einvoice",
-        name=["MISSING", "EXTRA", "MISMATCH"],
-        data=[missing, extra, mismatch],
+        name=["MISSING", "EXTRA", "MISMATCH", "YET TO BE PUSHED (GST)"],
+        data=[missing, extra, mismatch, yet_to_be_pushed],
     )
     addtable(
         writer=writer,
@@ -365,6 +409,11 @@ def generate(user:models.User,period:str,gstin:str) :
     for hsn_name, gst_types in hsn_splits:
         hsn_json_items = []
         hsn_items = items[items.inum.isin(invs[invs["gst_type"].isin(gst_types)].inum)]
+        
+        #Add hsn of extra einvoices also
+        if hsn_name == "hsn_b2b":
+            hsn_items = pd.concat([hsn_items , extra_einvs_items[["inum","hsn","rt","qty","txval","cgst","sgst"]]],ignore_index=True)
+
         hsn_items = hsn_items.groupby(by=["hsn", "rt"], as_index=False).agg(
             {"txval": "sum", "qty": "sum", "cgst": "sum", "sgst": "sum"}
         )
@@ -468,4 +517,13 @@ def generate(user:models.User,period:str,gstin:str) :
     with open(f"static/{user.username}/{period}.json", "w+") as f:
         json.dump(gst_json, f, indent=4,cls = DecimalEncoder)
     
-    return gst_company_type_invoice_type_total_stats
+    return {
+        "gst_company_type_stats": gst_company_type_stats,
+        "missing": missing,
+        "extra": extra,
+        "mismatch": mismatch,
+        "yet_to_be_pushed": yet_to_be_pushed,
+        "gst_type_stats": gst_type_stats,
+        "registered_zero_rate": registered_zero_rate,
+        "rt_stats": rt_stats,
+    }

@@ -1,3 +1,4 @@
+import datetime
 import json
 import pandas as pd
 import app.models as models
@@ -14,10 +15,22 @@ class DecimalEncoder(json.JSONEncoder):
             return float(obj)  # or str(obj)
         return super().default(obj)
 
+def einv_json_to_str(einv_json: list) -> str:
+    return json.dumps(einv_json, cls=DecimalEncoder, indent=4)
+
+def change_einv_dates(einv_json: list, fallback_date: datetime.date) -> list:
+    today = datetime.date.today()
+    for einv in einv_json:
+        date = datetime.datetime.strptime(
+                einv["DocDtls"]["Dt"], "%d/%m/%Y"
+            ).date()        
+        einv["DocDtls"]["Dt"] = (fallback_date if (today - date).days >= 28 else date).strftime("%d/%m/%Y")
+    return einv_json
 
 def create_einv_json(
-    queryset: QuerySet[models.Sales], seller_json, date_fn=None
-) -> str:
+    queryset: QuerySet[models.Sales], seller_json
+) -> list:
+    """Note: This is vulnerable to Discounts like Outlet Payout"""
     sales_qs = (
         queryset.filter(ctin__isnull=False, irn__isnull=True)
         .annotate(
@@ -42,13 +55,11 @@ def create_einv_json(
         .prefetch_related("inventory", "party")
     )
     einvs = []
-    for sale in sales_qs:
+    for sale in sales_qs[:1]:
         doc_dtls = {
             "Typ": sale.einv_type,  # type: ignore
             "No": sale.inum,
-            "Dt": (sale.date if date_fn is None else date_fn(sale.date)).strftime(
-                "%d/%m/%Y"
-            ),
+            "Dt": sale.date.strftime("%d/%m/%Y"),
         }
 
         buyer = sale.party
@@ -68,7 +79,9 @@ def create_einv_json(
             "AssVal": round(sale.txval, 2),  # type: ignore
             "CgstVal": round(sale.cgst, 2),  # type: ignore
             "SgstVal": round(sale.cgst, 2),  # type: ignore
-            "TotInvVal": round(sale.amt, 2),
+            "TotInvVal": round(sale.txval + 2*sale.cgst,2),
+            "RndOffAmt": round(sale.roundoff, 2),
+            "Discount": round(sale.discount, 2),
         }
 
         items = []
@@ -116,4 +129,4 @@ def create_einv_json(
             **seller_json,
         }
         einvs.append(einv)
-    return json.dumps(einvs, indent=4, cls=DecimalEncoder)
+    return einvs 

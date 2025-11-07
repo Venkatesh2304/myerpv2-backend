@@ -72,5 +72,5 @@ while not g.is_logged_in():
     status = g.login(captcha_input)
     print("Login status : ", status)
 print("Einvoice Logged in successfully")
-today_einvs_bytesio = BytesIO(g.get_today_einvs())
+today_einvs_bytesio = BytesIO(g.get_filed_einvs())
 today_einvs_df = pd.read_excel(today_einvs_bytesio)

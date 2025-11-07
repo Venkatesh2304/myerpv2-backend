@@ -11,7 +11,7 @@ from app.company_models import Company, UserSession
 
 # user = User.objects.create_user(username='devaki', password='1')
 # company = Company.objects.create(name="devaki_hul",user = user,gst_types = ["sales","salesreturn","claimservice","damage"])
-company = Company.objects.create(name="devaki_rural",user_id = 'devaki',gst_types = ["sales","salesreturn","claimservice","damage"])
+# company = Company.objects.create(name="devaki_rural",user_id = 'devaki',gst_types = ["sales","salesreturn","claimservice","damage"])
 
 
 #Ikea Session
@@ -27,10 +27,9 @@ UserSession(
         "auto_delivery_process" : True
     },
 ).save(force_insert=False)
-i = IkeaDownloader("devaki_rural")
+# i = IkeaDownloader("devaki_rural")
 
-print(i.get("/rsunify/app/billing/getUserId").text)
-exit(0)
+# print(i.get("/rsunify/app/billing/getUserId").text)
 
 
 # #Gst Session
@@ -53,7 +52,6 @@ UserSession(
 #     status = g.login(captcha_input)
 #     print("Login status : ",status)
 # print("Gst Logged in successfully")
-
 UserSession(
     user="devaki",
     key="einvoice",

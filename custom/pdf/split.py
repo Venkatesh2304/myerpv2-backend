@@ -1,4 +1,5 @@
 import glob
+from io import BytesIO
 import os
 import PyPDF2
 import re 
@@ -48,23 +49,24 @@ class LastPageFindMethods :
           return len(page_find) != 0 
       return pattern_match
 
-def split_using_last_page(fname,find_last_page_method,get_pdf_name,filter_file=None):
+def split_using_last_page(fname,find_last_page_method,get_pdf_name,temp_buffer = False):
+    files = {}
     with open(fname, 'rb') as file:
-        pdf_reader = PyPDF2.PdfFileReader(file)
-        total_pages = pdf_reader.numPages     
+        pdf_reader = PyPDF2.PdfReader(file)
+        total_pages = len(pdf_reader.pages)
         curr_page = 0   
         first_page_text = ""
         for page_num in range(total_pages):
-            page = pdf_reader.getPage(page_num)            
-            page_text = page.extractText()
+            page = pdf_reader.pages[page_num]
+            page_text = page.extract_text()
             curr_page += 1 
             is_last_page = find_last_page_method(curr_page,page_text)  #To make it work for only one bill 
             
             if curr_page == 1 : 
-               pdf_writer = PyPDF2.PdfFileWriter() 
+               pdf_writer = PyPDF2.PdfWriter() 
                first_page_text = page_text
            
-            pdf_writer.addPage(page)
+            pdf_writer.add_page(page)
             
             if is_last_page :
                curr_page = 0 
@@ -77,8 +79,13 @@ def split_using_last_page(fname,find_last_page_method,get_pdf_name,filter_file=N
                except Exception as e : 
                  print("Debug Info :",page_text)
                  raise e 
-               if ".pdf" not in fname : fname += ".pdf"
-               if filter_file is not None and not filter_file(fname) : continue 
-               _create_directory_for_file(fname)
-               with open(fname, 'wb') as output_file:
-                   pdf_writer.write(output_file)
+                
+               if temp_buffer : 
+                    output_buffer = BytesIO()
+                    pdf_writer.write(output_buffer)
+                    files[fname] =  output_buffer
+               else : 
+                    _create_directory_for_file(fname)
+                    with open(fname, 'wb') as output_file:
+                        pdf_writer.write(output_file)
+    return files

@@ -12,9 +12,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from app import gst
-from app.einvoice import create_einv_json
+from app.einvoice import change_einv_dates, create_einv_json, einv_json_to_str
 from custom import Session
-from custom.classes import Gst, Einvoice  # type: ignore
+from custom.classes import Gst, Einvoice, IkeaDownloader  # type: ignore
 from django.http import FileResponse, HttpResponse, JsonResponse
 import app.models as models
 from django.db import connection
@@ -25,6 +25,9 @@ from django.db.models.functions import Abs, Round
 import pandas as pd
 from custom.pdf.split import (LastPageFindMethods,
                                         split_using_last_page)
+from multiprocessing.pool import ThreadPool
+from zipfile import ZipFile, ZIP_DEFLATED
+from io import BytesIO
 
 T = TypeVar("T", bound=Session.Session)
 P = ParamSpec("P")
@@ -36,8 +39,10 @@ def check_login(
     def decorator(func: Callable[P, R]) -> Callable[P, R | Response]:
         @wraps(func)
         def wrapper(*args: P.args, **kwargs: P.kwargs):
-            client = Client("devaki")
+            request = args[0]
+            client = Client(request.user.get_username()) # type: ignore
             if not client.is_logged_in():  # type: ignore
+                print("Client not logged in")
                 return Response({"key": client.key}, status=501)
             return func(*args, **kwargs)
 
@@ -95,80 +100,150 @@ def excel_response(sheets:list[tuple],filename:str) :
     resp["Content-Disposition"] = f'attachment; filename="{filename}"'
     return resp
 
-#Einvoice Damage APIs
+#Einvoice APIs
+def load_irns(request,gst = True,einvoice = True):
+    period = request.data.get("period")
+    username = request.user.get_username()
+    irn_mapping = {}
+    if gst : 
+        #Update using Gst data for the period
+        gst_client = Gst(username)
+        models.GSTR1Portal.update_db(gst_client, request.user, period)
+        irn_mapping |= {
+            inv.inum: inv.irn
+            for inv in models.GSTR1Portal.objects.filter(user=request.user, period=period)
+        }
+    if einvoice : 
+        # Update using einvoice (last 3 days)
+        einvoice_client = Einvoice(username)
+        for days_ago in range(3) : 
+            date = datetime.date.today() - datetime.timedelta(days=days_ago)
+            einv_data = einvoice_client.get_filed_einvs(date = date)
+            for _,row in einv_data.iterrows() : 
+                irn_mapping[row["Doc No"]] = row["IRN"]
+
+    invs = list(models.Sales.user_objects.for_user(request.user).filter(inum__in=irn_mapping.keys(), gst_period=period))
+    for inv in invs : 
+        inv.irn = irn_mapping.get(inv.inum)
+    models.Sales.objects.bulk_update(invs,["irn"])
+
 @api_view(["POST"])
 @check_login(Einvoice)
-def einvoice_damage_stats(request):
+@check_login(Gst)
+def einvoice_reload(request):
+    load_irns(request)
+    return Response({"ok": True})
 
+@api_view(["POST"])
+@check_login(Einvoice)
+def einvoice_stats(request):
     period = request.data.get("period")
-    invs = list(
-        models.Sales.user_objects.for_user(request.user).filter(
-            gst_period=period, ctin__isnull=False, type="damage"
-        )
-    )
-    company_stats = defaultdict(lambda: {"amt": 0, "filed": 0, "not_filed": 0})
-    for inv in invs:
+    type = request.data.get("type")
+    
+    invs = models.Sales.user_objects.for_user(request.user).filter(
+            gst_period=period, ctin__isnull=False, inventory__rt__gt = 0)
+    if type != "all" : invs = invs.filter(type=type)
+    invs = invs.distinct()
+    
+    company_type_wise_stats = defaultdict(lambda: {"amt": 0, "filed": 0, "not_filed": 0})
+    for inv in invs.iterator():
         if inv.irn:
-            company_stats[inv.company_id]["filed"] += 1
+            company_type_wise_stats[(inv.company_id,inv.type)]["filed"] += 1
         else:
-            company_stats[inv.company_id]["not_filed"] += 1
-            company_stats[inv.company_id]["amt"] += abs(inv.amt)
+            company_type_wise_stats[(inv.company_id,inv.type)]["not_filed"] += 1
+            company_type_wise_stats[(inv.company_id,inv.type)]["amt"] += abs(inv.amt)
 
     # Make a Total entry , if more than one company present
-    if len(company_stats) > 1:
-        total_filed = sum(stats["filed"] for stats in company_stats.values())
-        total_not_filed = sum(stats["not_filed"] for stats in company_stats.values())
-        total_amt = sum(stats["amt"] for stats in company_stats.values())
-        company_stats["total"] = {
+    if len(company_type_wise_stats) > 1:
+        total_filed = sum(stats["filed"] for stats in company_type_wise_stats.values())
+        total_not_filed = sum(stats["not_filed"] for stats in company_type_wise_stats.values())
+        total_amt = sum(stats["amt"] for stats in company_type_wise_stats.values())
+        company_type_wise_stats[("total","")] = {
             "filed": total_filed,
             "not_filed": total_not_filed,
             "amt": total_amt,
         }
-
-    return JsonResponse({"stats": company_stats})
+    stats = [{"company" : company, "type" : type , **stat} for (company,type) , stat in company_type_wise_stats.items()]
+    stats.sort(key=lambda x: (x["company"] != "total", x["not_filed"]),reverse=True)
+    return JsonResponse({"stats": stats})
 
 @api_view(["POST"])
 @check_login(Einvoice)
-def einvoice_damage_file(request):
+def file_einvoice(request):
     period = request.data.get("period")
+    type = request.data.get("type")
     qs = models.Sales.user_objects.for_user(request.user).filter(
-        gst_period=period, ctin__isnull=False, type="damage"
+        gst_period=period, ctin__isnull=False, type=type, irn__isnull=True
     )
     e = Einvoice(request.user.get_username())
     seller_json = e.config["seller_json"]
     month, year = int(period[:2]), int(period[-4:])
+    first_day_of_period = datetime.date(year, month, 1)
     last_day_of_period = datetime.date(year, month, calendar.monthrange(year, month)[1])
-    today = datetime.date.today()
-    date_fn = lambda date: (last_day_of_period if (today - date).days >= 28 else date)
-    json_data = create_einv_json(qs, seller_json=seller_json, date_fn=date_fn)
-    with open("damage_einv.json","w+") as f :
+
+    sales_qs = qs.filter(type__in=["sales","salesreturn"])
+    json_data = []
+    if sales_qs.exists():
+        company_to_inums = defaultdict(list)
+        for inv in sales_qs:
+            company_to_inums[inv.company_id].append(inv.inum)
+        for company,inums in company_to_inums.items() : 
+            ikea_downloader = IkeaDownloader(company)
+            ikea_einv_json:BytesIO = ikea_downloader.einvoice_json(first_day_of_period,last_day_of_period,inums)
+            if ikea_einv_json is None : 
+                continue
+            data = json.loads(ikea_einv_json.getvalue())
+            json_data += [ entry for entry in data if entry["DocDtls"]["No"] in inums ]
+
+    inums_from_ikea_einv_json = [ entry["DocDtls"]["No"] for entry in json_data ]
+    qs = qs.exclude(inum__in=inums_from_ikea_einv_json)
+    json_data += create_einv_json(qs, seller_json=seller_json)
+    print(json_data)
+    
+    json_data = change_einv_dates(json_data, fallback_date=last_day_of_period)
+    json_data = einv_json_to_str(json_data)
+    with open("einv.json","w+") as f :
         f.write(json_data)
+
     success, failed = e.upload(json_data)
+    print(failed)
+    error_column = "Error Date" #Note : this might be different in future
+    #Error handling
+    # Handle duplicate IRNs and update the irns in Sales
     duplicate_irns = failed[failed["Error Code"] == 2150]
     for _, row in duplicate_irns.iterrows():
-        error = row["Error Date"]
+        error = row[error_column]
         irn = re.findall(r'([a-f0-9]{64})', error)
         if not irn: continue
         models.Sales.user_objects.for_user(request.user).filter(
             inum=row["Invoice No"]
         ).update(irn=irn[0])
 
+    # Handle wrong gstin or cancelled gstin and move the sales invoices to ctin null
+    wrong_gstin = failed[(failed["Error Code"] >= 3074) & (failed["Error Code"] <= 3079)]
+    for _, row in wrong_gstin.iterrows():
+        inv:models.Sales = models.Sales.user_objects.for_user(request.user).get(
+            inum=row["Invoice No"]
+        )
+        inv.update_and_log("ctin", None, row[error_column])
+
+
     for _, row in success.iterrows():
         models.Sales.user_objects.for_user(request.user).filter(
             inum=row["Doc No"]
         ).update(irn=row["IRN"])
     sheets = [("failed", failed), ("success", success)]
-    return excel_response(sheets, f"damage_einvoice_{datetime.date.today()}.xlsx")
+    return excel_response(sheets, f"einvoice_{datetime.date.today()}.xlsx")
 
 @api_view(["POST"])
-@check_login(Einvoice)
-def einvoice_damage_excel(request):
+def einvoice_excel(request):
     period = request.data.get("period")
-    damage_qs = models.Sales.user_objects.for_user(request.user).filter(
-        gst_period=period, type="damage"
+    type = request.data.get("type")
+    qs = models.Sales.user_objects.for_user(request.user).filter(
+        gst_period=period, type=type
     )
     # Registered and unregisterted (ctin not null and null)
-    damage_qs = damage_qs.annotate(
+    qs = qs.annotate(
         txval=Round(Abs(Sum("inventory__txval")), 2),
         cgst=Round(
             Abs(Sum(models.F("inventory__txval") * models.F("inventory__rt") / 100)), 2
@@ -176,13 +251,13 @@ def einvoice_damage_excel(request):
         party_name=F("party__name"),
     ).order_by("company_id", "inum")
 
-    if not damage_qs.exists():
+    if not qs.exists():
         return Response(
-            {"error": "No damage invoices found for the given period"}, status=404
+            {"error": f"No invoices found for the given period for type : {type}"}, status=404
         )
 
-    registerd = damage_qs.filter(ctin__isnull=False)
-    unregistered = damage_qs.filter(ctin__isnull=True)
+    registerd = qs.filter(ctin__isnull=False)
+    unregistered = qs.filter(ctin__isnull=True)
     sheets: list[tuple] = []
     for sheet_name, qs in [("registered", registerd), ("unregistered", unregistered)]:
         data = []
@@ -203,23 +278,29 @@ def einvoice_damage_excel(request):
         df = pd.DataFrame(data).astype(dtype = {"Taxable Value": float , "CGST" : float , "Amount" : float} )
         sheets.append((sheet_name, df))
 
-    return excel_response(sheets, f"damage_{period}.xlsx")
+    return excel_response(sheets, f"{type}_{period}.xlsx")
 
 @api_view(["POST"])
 @check_login(Gst)
-def einvoice_damage_pdf(request):
+def einvoice_pdf(request):
     period = request.data.get("period")
+    type = request.data.get("type")
+    load_irns(request,gst = True,einvoice=False)
     qs = models.Sales.user_objects.for_user(request.user).filter(
-        gst_period=period, type="damage", ctin__isnull=False
-    )
+        gst_period=period, type=type, ctin__isnull=False, irn__isnull=False
+    ).prefetch_related("party")
+    if qs.count() > 200 : 
+        return Response(
+            {"error": "Cannot generate more than 200 invoices at a time."}, status=400
+        )
     tform = template.Template(open("app/templates/einvoice_print_form.html").read())
     username = request.user.get_username()
     gst = Gst(username)
     gstin = gst.config["gstin"]
     path = "static/print_includes"
-    os.system(f"rm -rf static/{username}/bill_pdf")
-    os.makedirs(f"static/{username}/bill_pdf",exist_ok=True)
-    os.system(f"rm static/{username}/bills.zip")
+
+    if os.path.exists(f"static/{username}/bills.zip") : 
+        os.remove(f"static/{username}/bills.zip")
     
     def fetch_inv(row) :     
         doctype = "INV" if row.type in ("sales","claimservice") else "CRN"
@@ -230,9 +311,10 @@ def einvoice_damage_pdf(request):
         c = template.Context(data | {"path" : path })
         forms.append(tform.render(c))
 
-    from multiprocessing.pool import ThreadPool
     invs = list(qs)
-    BATCH_SIZE = 20 
+    BATCH_SIZE = 20
+    files = {}
+    inums_to_party = { inv.inum : (inv.party.name if inv.party else "unknown")  for inv in invs }
     for i in range(0,len(invs),BATCH_SIZE) : 
         forms = []
         fetch_inv_pool = ThreadPool() # Fetch the invoice or retrive if availabe in DB . 
@@ -244,31 +326,41 @@ def einvoice_damage_pdf(request):
         with open(f"bill.html","w+") as f : f.write( thtml.render(c) )
         os.system(f"google-chrome --headless --disable-gpu --print-to-pdf=bill.pdf bill.html")    
         find_last_page = LastPageFindMethods.create_pattern_method("Digitally Signed by NIC-IRP")
-        get_pdf_name = lambda text : f"static/{username}/bill_pdf/" + (re.findall(r"Document No  : ([A-Z0-9a-z ]*)",text)[0].replace(" ",""))
-        split_using_last_page(f"bill.pdf",find_last_page,get_pdf_name)
+        get_pdf_name = lambda text : re.findall(r"Document No  : ([A-Z0-9a-z ]*)",text)[0].replace(" ","")
+        files |= split_using_last_page(f"bill.pdf",find_last_page,get_pdf_name,temp_buffer = True)
     
-    os.system("rm -rf bill.html bill.pdf")
-    os.system(f"zip -r -j static/{username}/bills.zip static/{username}/bill_pdf/*")
+    #Group files by parties 
+    zip_buffer = BytesIO()
+    with ZipFile(zip_buffer, "w", ZIP_DEFLATED) as zip_file:        
+        for inum,bytesio in files.items() : 
+            party = inums_to_party.get(inum,"unknown")
+            zip_file.writestr(f"{party}/{inum}.pdf", bytesio.getvalue())
+
+    with open(f"static/{username}/bills.zip", "wb") as f:
+        f.write(zip_buffer.getvalue())
+
     return FileResponse(open(f"static/{username}/bills.zip","rb"),as_attachment=True,filename=f"bills_{period}.zip")
 
 
 #Gst Monthly Return APIs
 @api_view(["POST"])
 @check_login(Gst)
+@check_login(Einvoice)
 def generate_gst_return(request):
     period = request.data.get("period")
-    gst_client = Gst(request.user.get_username())
-    models.GSTR1Portal.update_db(gst_client, request.user, period)
-    gstin = gst_client.config["gstin"]
+    load_irns(request)
+    gst_instance = Gst(request.user.get_username())
     #It creates the workings excel and json 
-    summary = gst.generate(request.user, period, gstin)
-    summary = summary.reset_index().rename(columns={"company_id" : "Company",
+    summary = gst.generate(request.user, period, gst_instance)
+    gst_company_type_stats = summary["gst_company_type_stats"].reset_index().rename(columns={"company_id" : "Company",
                                                     "gst_type" : "GST Type",
-                                                    "type" : "Invoice Type",
                                                     "txval" : "Taxable Value",
                                                     "cgst" : "CGST"})
     data = { 
-        "summary": summary.to_dict(orient="records"),
+        "summary": gst_company_type_stats.to_dict(orient="records"),
+        "missing": len(summary["missing"].index)  , 
+        "mismatch" : len(summary["mismatch"].index) ,
+        "yet_to_be_pushed" : len(summary["yet_to_be_pushed"].index) ,
     }
     return JsonResponse(data)
 

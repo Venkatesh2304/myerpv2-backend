@@ -929,24 +929,32 @@ class Einvoice(Session) :
           failed = pd.read_excel( self.get("/Invoice/FailedInvoiceDetails").content )
           return success , failed 
       
-      def get_today_einvs(self) : 
+      def get_filed_einvs(self,date) -> pd.DataFrame : 
+          """This functions works on today - 2 to today (Only 3 past days data available)"""
           form = extractForm( self.get("/MisRpt").text )
           form["submit"] = "Date"
           form["irp"] = "NIC1"
+          form["ToDate"] = date.strftime("%d/%m/%Y")
           table_html = self.post("/MisRpt/MisRptAction",data=form).text
           irn_gen_by_me_excel_bytesio = self.get('/MisRpt/ExcelGenerratedIrnDetails?noofRec=1&Actn=GEN').content
-          return irn_gen_by_me_excel_bytesio 
+          return pd.read_excel(BytesIO(irn_gen_by_me_excel_bytesio))
           
       #Unverified
       def getinvs(self) : 
           form = extractForm( self.get("/MisRpt").text )
+          form["submit"] = "Date"
+          form["irp"] = "NIC1"
           fdate = datetime.datetime.strptime(form["FromDate"] ,"%d/%m/%Y")
           todate = datetime.datetime.strptime(form["ToDate"] ,"%d/%m/%Y")
+          print(fdate,todate)
           df = []
           while todate >= fdate : 
-             table_html = self.post("https://einvoice1.gst.gov.in/MisRpt/MisRptAction",data=form | 
+             table_html = self.post("/MisRpt/MisRptAction",data=form | 
                                         {"ToDate":todate.strftime("%d/%m/%Y")}).text
              tables = pd.read_html( table_html )
+             df = pd.read_excel( BytesIO(self.get('/MisRpt/ExcelGenerratedIrnDetails?noofRec=1&Actn=GEN').content) )
+             print(df)
+             print(tables)
              if len(tables) : 
                 table = tables[0] 
                 if "Ack No." in table.columns : 

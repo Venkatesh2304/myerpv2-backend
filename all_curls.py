@@ -696,7 +696,7 @@ data = {
     'jsonObjforheaders': '[{},{}]',
     'jsonObjfileInfi': '[{"title":"E Invoice,E Invoice","reportfilename":"E_Invoice","viewpage":"Utility/eInvoiceGeneration","viewname":"E_Invoice_Generation_SP","querycount":1}]',
     'orderBy': '[Vehicle No],[Trans Date],[Doc.No]',
-    'jsonObjWhereClause': '{":val1":"20241015",":val2":"20241017",":val3":1,":val4":"",":val5":"",":val6":"",":val7":"",":val8":"SecBills",":val9":"A49554",":val10":1}',
+    'jsonObjWhereClause': '{":val1":"20241015",":val2":"20241017",":val3":1,":val4":"",":val5":"",":val6":"",":val7":"",":val8":"SecBills,SalesReturn",":val9":"A49554",":val10":1}',
 }
 
 ikea_einvoice_json = CurlRequest('POST','https://leveredge18.hulcd.com/rsunify/app/jsonController/generateJsonFile', headers=headers, data=data)

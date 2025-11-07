@@ -3,10 +3,11 @@ import app.api as api
 from .auth_api import login as auth_login, logout as auth_logout, me as auth_me
 
 urlpatterns = [
-    path("einvoice/damage/stats", api.einvoice_damage_stats, name="einvoice-damage-stats"),
-    path("einvoice/damage/file", api.einvoice_damage_file, name="einvoice-damage-file"),
-    path("einvoice/damage/excel", api.einvoice_damage_excel, name="einvoice-damage-excel"),
-    path("einvoice/damage/pdf", api.einvoice_damage_pdf, name="einvoice-damage-pdf"),
+    path("einvoice/reload", api.einvoice_reload, name="einvoice-reload"),
+    path("einvoice/stats", api.einvoice_stats, name="einvoice-stats"),
+    path("einvoice/file", api.file_einvoice, name="einvoice-file"),
+    path("einvoice/excel", api.einvoice_excel, name="einvoice-excel"),
+    path("einvoice/pdf", api.einvoice_pdf, name="einvoice-pdf"),
     path("gst/generate", api.generate_gst_return, name="generate-gst-return"),
     path("gst/summary", api.gst_summary, name="gst-summary"),
     path("gst/json", api.gst_json, name="gst-json"),

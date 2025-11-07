@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models,transaction
 from django.db.models import CharField,IntegerField,OneToOneField,FloatField,ForeignKey,DateField,BooleanField,CompositePrimaryKey
 from django.db.models import Sum,F
 
@@ -125,6 +125,20 @@ class Sales(CompanyModel, PartyVoucher, GstVoucher) :
       user_objects = SalesUserManager()
       objects = models.Manager()
 
+      @transaction.atomic
+      def update_and_log(self, field: str, value , notes: str):
+          old_value = self.__getattribute__(field)
+          self.__setattr__(field,value)
+          self.save(update_fields=[field])
+          SalesChanges.objects.create(
+                  company_id = self.company_id,
+                  bill_id = self.inum,
+                  field=field,
+                  notes=notes,
+                  old_value=old_value,
+                  new_value=value,
+          )
+
 class Discount(CompanyModel): 
       bill_id = models.CharField(max_length=20)
       sub_type = CharField(max_length=20)
@@ -156,3 +170,18 @@ class StockAdjustment(CompanyModel) :
       date = DateField()
       godown = CharField(max_length=20,null=True)
       pk = CompositePrimaryKey("company", "inum")
+
+
+class SalesChanges(CompanyModel) : 
+      bill_id = models.CharField(max_length=20,db_index=True)
+      field = CharField(max_length=20)
+      notes = CharField(max_length=200,null=True,blank=True)
+      old_value = CharField(max_length=100,null=True,blank=True)
+      new_value = CharField(max_length=100,null=True,blank=True)
+      sales = models.ForeignObject(
+            "Sales",
+            on_delete=models.CASCADE,
+            null=True,
+            from_fields=("company", "bill_id"),
+            to_fields=("company", "inum"),
+      )
