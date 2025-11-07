@@ -22,7 +22,7 @@ source "$VENV_DIR/bin/activate"
 echo "==> Freezing venv to requirements.txt"
 pip freeze > requirements.txt
 git add requirements.txt 
-git commit -m "Update requirements.txt"
+git commit -m "Update requirements.txt" || true
 
 echo "==> Pushing to remote"
 git push origin main -f
