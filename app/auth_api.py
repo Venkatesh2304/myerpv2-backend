@@ -9,6 +9,7 @@ def login(request):
     username = request.data.get("username", "")
     password = request.data.get("password", "")
     user = authenticate(request, username=username, password=password)
+    print("Authenticating user:", user , username)
     if not user:
         return Response({"ok": False, "error": "invalid_credentials"}, status=400)
     dj_login(request, user)
