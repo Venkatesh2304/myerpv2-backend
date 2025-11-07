@@ -25,7 +25,7 @@ git add requirements.txt
 git commit --amend --no-edit
 
 echo "==> Pushing to remote"
-git push
+git push origin main
 
 echo "==> SSH to server"
 ssh -i "$SSH_KEY" "$REMOTE_HOST" bash <<EOF
