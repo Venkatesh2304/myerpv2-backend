@@ -85,6 +85,11 @@ else
 fi
 unset PGPASSWORD
 
+# Django migrations
+echo "==> Applying Django migrations"
+python manage.py migrate --noinput
+
+
 echo "==> Creating or updating systemd service ($SERVICE_NAME)"
 $SUDO bash -c "cat > '$SERVICE_PATH'" <<EOF
 [Unit]
