@@ -29,7 +29,7 @@ git push origin main -f
 
 echo "==> SSH to server"
 ssh -i "$SSH_KEY" "$REMOTE_HOST" bash <<EOF
-  set -euo pipefail
+  set -eu
   cd "$REMOTE_BACKEND_DIR"
   echo "[Remote] Running sync.sh..."
   bash sync.sh

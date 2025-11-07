@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-set -euo pipefail
-git pull -ff
+set -eu
+# git pull -ff
 
 PYTHON="python3.10"
 PROJECT_NAME="myerpv2" #For the service name
@@ -76,19 +76,26 @@ if ! command -v psql >/dev/null 2>&1; then
   exit 1
 fi
 export PGPASSWORD="Ven2004"
+psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "DROP DATABASE $DB_NAME"
 DB_EXISTS="$(psql -h localhost -U postgres -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" || echo "")"
+IS_NEW_DB=0
 if [ "$DB_EXISTS" != "1" ]; then
   echo "Creating database $DB_NAME..."
   psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE $DB_NAME"
+  IS_NEW_DB=1
 else
   echo "Database already exists. Skipping creation."
 fi
-unset PGPASSWORD
 
 # Django migrations
 echo "==> Applying Django migrations"
 python manage.py migrate --noinput
 
+if [ "$IS_NEW_DB" == "1" ]; then
+  echo "Dumping initial data into $DB_NAME..."
+  psql -h localhost -U postgres -d "$DB_NAME" -f "dump.sql" | true
+fi
+unset PGPASSWORD
 
 echo "==> Creating or updating systemd service ($SERVICE_NAME)"
 $SUDO bash -c "cat > '$SERVICE_PATH'" <<EOF
