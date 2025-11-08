@@ -32,7 +32,7 @@ for company in Company.objects.filter(user=user):
     print(f"Processing GST for Company: {company.name} for Period: {period}")
     i = IkeaDownloader(company.pk)
     GstFilingImport.run(company=company,args_dict=args_dict)
-    qs = models.Sales.objects.filter(type__in = company.gst_types,date__gte = fromd,date_lte = tod)
+    qs = models.Sales.objects.filter(type__in = company.gst_types,date__gte = fromd,date__lte = tod)
     if company.name in GST_PERIOD_FILTER :
         qs = GST_PERIOD_FILTER[company.name](qs)
     qs.update(gst_period = period)
