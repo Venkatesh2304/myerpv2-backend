@@ -951,6 +951,8 @@ class Einvoice(Session) :
           form["irp"] = "NIC1"
           form["ToDate"] = date.strftime("%d/%m/%Y")
           table_html = self.post("/MisRpt/MisRptAction",data=form).text
+          if "<td>2154</td>" in table_html :
+              return None
           irn_gen_by_me_excel_bytesio = self.get('/MisRpt/ExcelGenerratedIrnDetails?noofRec=1&Actn=GEN').content
           return pd.read_excel(BytesIO(irn_gen_by_me_excel_bytesio))
           

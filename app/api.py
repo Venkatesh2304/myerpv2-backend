@@ -121,6 +121,8 @@ def load_irns(request,gst = True,einvoice = True):
         for days_ago in range(3) : 
             date = datetime.date.today() - datetime.timedelta(days=days_ago)
             einv_data = einvoice_client.get_filed_einvs(date = date)
+            if einv_data is None : 
+                continue
             for _,row in einv_data.iterrows() : 
                 irn_mapping[row["Doc No"]] = row["IRN"]
 
