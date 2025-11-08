@@ -36,5 +36,5 @@ for company in Company.objects.filter(user=user):
     if company.name in GST_PERIOD_FILTER :
         qs = GST_PERIOD_FILTER[company.name](qs)
     qs.update(gst_period = period)
-
+    
 exit(0)
