@@ -98,7 +98,7 @@ psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "ALTER DATABASE $DB_NAME SET
 chmod +x *.sh
 #Add monthly cron job
 echo "==> Setting up cron job :($JOB_TAG)"
-(crontab -l 2>/dev/null | grep -v "$JOB_TAG"; echo "$CRON_SCHEDULE $CRON_CMD # $JOB_TAG") | crontab -
+(sudo crontab -l 2>/dev/null | grep -v "$JOB_TAG"; echo "$CRON_SCHEDULE $CRON_CMD # $JOB_TAG") | sudo crontab -
 
 # Django migrations
 echo "==> Applying Django migrations"
