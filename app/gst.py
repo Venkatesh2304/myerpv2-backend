@@ -209,7 +209,7 @@ def generate(user:models.User,period:str,gst:Gst) -> dict[str,pd.DataFrame]:
     is_cgst_match = (
         registered_zero_rate["cgst_ikea"] - registered_zero_rate["cgst_einv"] < 0.5
     )
-    registered_zero_rate["is_zero_rate"] = is_txval_match & is_cgst_match
+    registered_zero_rate["is_zero_rate"] = (is_txval_match & is_cgst_match)
     total_registered_zero_rate = registered_zero_rate[
         registered_zero_rate.is_zero_rate
     ]["zero_rate_txval"].sum()
@@ -249,7 +249,7 @@ def generate(user:models.User,period:str,gst:Gst) -> dict[str,pd.DataFrame]:
         summary.groupby("gst_type").agg({"txval": "sum", "cgst": "sum"}).round(2)
     )
     for gst_type in ["b2b", "cdnr"]:
-        zero_txval = registered_zero_rate[registered_zero_rate["gst_type"] == gst_type][
+        zero_txval = registered_zero_rate[(registered_zero_rate["gst_type"] == gst_type) & registered_zero_rate.is_zero_rate][
             "zero_rate_txval"
         ].sum()
         gst_type_stats.loc[gst_type, "txval"] -= zero_txval

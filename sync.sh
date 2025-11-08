@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-git stash
+git stash --include-untracked
 git pull --ff
 chmod +x *.sh
 source .venv/bin/activate
