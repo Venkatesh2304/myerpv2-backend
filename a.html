@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MainMenu - nic.einvoice.web</title>
+    <!-- css files -->
+        <link href="/css/commonstyle.min.css" rel="stylesheet" defer />
+
+    <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="/lib/font-awesome/css/all.css" rel="stylesheet" defer />
+
+    
+</head>
+<body>
+    <!-- Header -->
+    <header id="header" class="headermain">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Logo -->
+                <div class="col-lg-5 col-md-4 col-sm-6 col-xl-5 form-inline">
+                    <a href="#"><img class="img-fluid" align="middle" src="/Images/ind.png" alt="Logo"></a>
+                    <h2 class="logoh2 pl-2">
+                        GOODS AND SERVICES TAX<br />
+                        e - INVOICE SYSTEM
+                    </h2>
+                </div>
+                <div id="logo" class="col-lg-2 col-md-2 col-sm-2 col-xl-2 form-inline">
+                      <h2 class="logoh2 pl-2"> <b>e-Invoice 1 Portal</b></h2>
+                    <!-- /Logo -->
+                    <!-- Gstlogo -->
+                </div>
+                <div id="logo" class="col-lg-5 col-md-6 col-sm-4 col-xl-5 text-right">
+                    <a href="#"><img class="img-fluid pt-xl-3 pt-lg-3 pt-md-2 pt-sm-3" src="/images/Gstlogo.png" alt="Logo"></a>
+                    <a href="#"><img class="img-fluid pt-xl-3 pt-lg-3 pt-md-2 pt-sm-3" src="/Images/nic-logo.png" alt="Nic Logo"></a>
+                </div>
+
+                <!-- /Gstlogo -->
+
+
+            </div>
+        </div>
+    </header>
+    <!-- /Header -->
+    <!-- Lower Header opened -->
+    <div id="lower-header" class="headerbottom">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 col-4">
+                    <ul class="nav navbar-nav homeprofileiconul">
+                        <li class="pr-2">
+                            <a href="/Home/MainMenu"><i class="fa fa-home"></i></a>
+                        </li>
+                        <li class="pl-2 pr-3"><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-user"></i></a></li>
+                                <li class="btn btn-sm btn-primary py-0">
+                                    <a class="text-white" href="/SignleSignon/EwayBill"> <i class="fas fa-truck-moving"></i> e-Way bill Portal  </a>
+                                </li>
+                    </ul>
+                </div>
+
+                <div class="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-8 text-center">
+
+                    <p class="mb-0 tradenamegstinheading">GSTIN:33AAPFD1365C1ZR - Name: DEVAKI ENTERPRISES</p>
+
+                </div>
+
+                <div class="col-xl-4 col-lg-5 col-md-5 col-sm-5 col-8 text-center">
+
+                    <p class="mb-0 tradenamegstinheading">Account : Main User</p>
+
+                </div>
+
+
+
+                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-3">
+                            <ul class="nav navbar-nav float-right">
+                                <li>
+                            <a  href="/Home/Logout"><i class="fa fa-power-off"></i></a>
+                                </li>
+                            </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Lower Header closed -->
+
+
+    <div class="body-content">
+
+        
+<link href="/css/sidebar.css" rel="stylesheet" />
+<script src="/js/common.min.js"></script>
+
+<input type="hidden" id="hiddenPageName" value="MainMenuPart" />
+<div class="container-fluid dashboardcontainerfluid">
+
+    <input type="hidden" id="userLevel" name="UserProfile.Level" value="M" />
+
+    <input type="hidden" id="tempDataUserProfile"  />
+
+    <input type="hidden" id="tempDataDashboard" />
+  
+
+    <div class="row">
+        <div class="col-xl-2 col-lg-3 col-md-3 sidemenudiv">
+            <div class="side-menu">
+                <nav class="navbar navbar-default" role="navigation">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <div class="brand-wrapper">
+                            <!-- Hamburger -->
+                            <button type="button" class="navbar-toggle">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="fa fa-bars"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Menu -->
+                    <div class="side-menu-container">
+                        <ul class="nav navbar-nav" id="accordion">
+
+                            <li class="panel panel-default active mb-0">
+                                <a class="btn btn-link parentmenu" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <i class="fa fa-file-invoice"></i> e-Invoice <i class="fa fa-caret-down caretdown"></i>
+                                </a>
+                                <div id="collapseOne" class="collapse" data-parent="#accordion">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+                                                    <li><a href="/Invoice/BulkUpload"> <i class="fa fa-upload"></i> Bulk Upload</a></li>
+                                                    <li><a href="/Invoice/EInvoicePrint/Cancel"> <i class="fa fa-window-close"></i> Cancel</a></li>
+                                                <li><a href="/Invoice/EInvoicePrint/Print"> <i class="fa fa-print"></i> Print </a></li>
+                                                    <li><a href="/Invoice/BulkCancel"> <i class="fa fa-print"></i> Bulk IRN Cancel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+                                    <li class="panel panel-default active mb-0">
+                                        <a class="btn btn-link parentmenu collapsed" data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            <i class="fa fa-list-alt"></i> MIS Reports<i class="fa fa-caret-down caretdown"></i>
+                                        </a>
+
+                                        <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                            <div class="panel-body">
+                                                <ul class="nav navbar-nav">
+                                                    <li><a href="/MisRpt"> <i class="fa fa-file-invoice"></i> Generated e-Invoices</a></li>
+                                                    <li><a href="/MisRpt/CancelRpt"> <i class="fa fa-window-close"></i> Cancelled e-Invoices</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                    <li class="panel panel-default active mb-0">
+                                        <a class="btn btn-link parentmenu collapsed" data-toggle="collapse" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                            <i class="fa fa-users"></i> User Management<i class="fa fa-caret-down caretdown"></i>
+                                        </a>
+
+                                        <div id="collapseSix" class="collapse" data-parent="#accordion">
+                                            <div class="panel-body">
+                                                <ul class="nav navbar-nav">
+                                                    <li><a href="/UserAccount/CreateSubUser"> <i class="fas fa-user-plus"></i> Create Sub-User</a></li>
+                                                    <li><a href="/UserAccount/FreezeSubUser"> <i class="fas fa-user-lock"></i> Freeze Sub-User </a></li>
+                                                    <li><a href="/UserAccount/UpdateSubUser"> <i class="fas fa-user-edit"></i> Update Sub-User </a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="panel panel-default active mb-0">
+                                        <a class="btn btn-link parentmenu collapsed" data-toggle="collapse" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                            <i class="fa fa-registered"></i> API Registration<i class="fa fa-caret-down caretdown"></i>
+                                        </a>
+
+                                        <div id="collapseSeven" class="collapse">
+                                            <div class="panel-body">
+                                                <ul class="nav navbar-nav">
+                                                    <li>
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapseSeven11" aria-expanded="false" aria-controls="collapseSeven11">
+                                                            <i class="fa fa-server"></i> IP Whitelisting <i class="fa fa-caret-right caretdown"></i>
+                                                        </a>
+                                                        <div id="collapseSeven11" class="collapse" data-parent="#accordion">
+                                                            <div class="panel-body">
+                                                                <ul class="nav navbar-nav">
+                                                                    <li><a href="/APIUserAccount/APIReg"> <i class="fas fa-registered"></i> Application</a></li>
+                                                                    <li><a href="/APIUserAccount/ApiUserStatus"> <i class="fas fa-ban"></i> Status</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapseSeven12" aria-expanded="false" aria-controls="collapseSeven12">
+                                                            <i class="fa fa-user-cog"></i> User Credentials <i class="fa fa-caret-right caretdown"></i>
+                                                        </a>
+                                                        <div id="collapseSeven12" class="collapse" data-parent="#accordion">
+                                                            <div class="panel-body">
+                                                                <ul class="nav navbar-nav">
+                                                                    <li><a href="/APIUserAccount/CreateAPIUser"> <i class="fas fa-user-plus"></i> Create API User</a></li>
+                                                                    <li><a href="/APIUserAccount/FreezeAPIUser"> <i class="fas fa-user-lock"></i> Freeze API User </a></li>
+                                                                    <li><a href="/APIUserAccount/ChangeAPIUserPassword"> <i class="fas fa-key"></i> Change API Password</a></li>
+                                                                    <li><a href="/APIUserAccount/ListAPIUsers"> <i class="fas fa-list-alt"></i> List of API Users</a></li>
+                                                                    <li><a href="/APIUserAccount/ApiEndPoints"> <i class="fas fa-link"></i> API Endpoints </a></li>
+                                                                    <li><a href="/APIUserAccount/TransReg"> <i class="fas fa-user-edit"></i> Update as Transporter/Taxpayer </a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapseSeven13" aria-expanded="false" aria-controls="collapseSeven13">
+                                                            <i class="fa fa-handshake"></i> Client Credentials <i class="fa fa-caret-right caretdown"></i>
+                                                        </a>
+                                                        <div id="collapseSeven13" class="collapse" data-parent="#accordion">
+                                                            <div class="panel-body">
+                                                                <ul class="nav navbar-nav">
+                                                                    <li><a href="/APIUserAccount/ChangeAPIClientSecret"> <i class="fas fa-lock-open"></i> Change Client Secret </a></li>
+                                                                    <li><a href="/APIUserAccount/ForgotAPIClientIdSecret"> <i class="fas fa-user-lock"></i> Forgot Client Id/Secret </a></li>
+                                                                    <li><a href="/APIUserAccount/ShareClientId"> <i class="fas fa-user-lock"></i> Share Client Id </a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapseSeven14" aria-expanded="false" aria-controls="collapseSeven14">
+                                                            <i class="fa fa-certificate"></i>Encryption Certificates <i class="fa fa-caret-right caretdown"></i>
+                                                        </a>
+                                                        <div id="collapseSeven14" class="collapse" data-parent="#accordion">
+                                                            <div class="panel-body">
+                                                                <ul class="nav navbar-nav">
+                                                                    <li><a href="/APIUserAccount/DownloadEncCert"> <i class="fas fa-download"></i> Download </a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                            <li class="panel panel-default active mb-0">
+                                <a href="/UserAccount/ChangePassword" class="btn btn-link parentmenu">
+                                    <i class="fa fa-key"></i> Change Password
+                                </a>
+                            </li>
+                                    <li class="panel panel-default active mb-0">
+                                        <a href="/APIUserAccount/GePPFeedback" class="btn btn-link parentmenu">
+                                            <i class="fa fa-comments"></i> Feedback on GePP
+                                        </a>
+                                    </li>
+                                    <li class="panel panel-default active mb-0">
+                                        <a href="/UserAccount/TechPersonContacts" class="btn btn-link parentmenu">
+                                            <i class="fa fa-address-card"></i>Update Contact Details
+                                        </a>
+                                    </li>
+                                    <li class="panel panel-default active mb-0">
+                                        <a class="btn btn-link collapsed parentmenu" data-toggle="collapse" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                            <i class="fa fa-edit"></i> Update<i class="fa fa-caret-down caretdown"></i>
+                                        </a>
+
+                                        <div id="collapseEight" class="collapse" data-parent="#accordion">
+                                            <div class="panel-body">
+                                                <ul class="nav navbar-nav">
+
+                                                        <li><a href="/APIUserAccount/GstinUpdate"> <i class="fas fa-database"></i> Update GSTIN from CP</a></li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="panel panel-default active mb-0">
+                                        <a class="btn btn-link collapsed parentmenu" data-toggle="collapse" href="#collapseNine" aria-controls="collapseNine" aria-expanded="false">
+                                            <i class="fa fa-truck"> </i> e-Way Bill <i class="fa fa-caret-down caretdown"></i>
+                                        </a>
+                                        <div id="collapseNine" class="collapse" data-parent="#accordion">
+                                            <div class="panel-body">
+                                                <ul class="nav navbar-nav">
+                                                    <li><a href="/eWayBill"> <i class="fa fa-file-invoice"></i> Generate e-waybill</a></li>
+                                                    <li><a href="/eWayBill/BulkEwbGen"> <i class="fa fa-upload"></i> Bulk Upload</a></li>
+                                                    <li><a href="/eWayBill/EwaybillPrint"> <i class="fa fa-print"></i> Print e-waybill</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                            <li class="panel panel-default active mb-0">
+                                <a class="btn btn-link parentmenu collapsed" data-toggle="collapse" href="#collapseTOTP" aria-expanded="false" aria-controls="collapse15">
+                                    <i class="fa fa-cash-register "></i>2 Factor Authentication <i class="fa fa-caret-down caretdown"></i>
+                                </a>
+                                <div id="collapseTOTP" class="collapse" data-parent="#accordion">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+                                            <li><a href="/RegisterOTP/SMSReg"> <i class="fas fa-user-secret"></i> Register </a></li>
+                                            <li><a href="/RegisterOTP/SandesReg"> <i class="fas fa-user-cog"></i> Install Sandes</a></li>
+                                            <li><a href="/RegisterOTP/TOTPReg"> <i class="fas fa-user-shield"></i> Install NIC-GST-Shield </a></li>
+                                            <li> <a href="#" data-toggle="modal" data-target="#exampleModal1"><i class="fa fa-question"></i> Help </a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+                          
+
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+
+            </div>
+        </div>
+        <div class="col-xl-10 col-lg-9 col-md-9 col-sm-12">
+            <h4 class="formtitle">Dash Board</h4>
+            <div class="row" runat="server" id="dashboard_txp">
+                <div class="col-lg-1 col-md-0 col-sm-0 col-xl-2">
+                </div>
+                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-6">
+                    <div class="panel panel-primary animate">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xl-2">
+                                    <i class="fa fa-adjust glyphiconcss"></i>
+                                </div>
+                                <div class="col-xl-10 text-right">
+                                    <div class="huge">Generations<span class="clearfix"></span> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer primary">
+                                <div class="clearfix">
+                                    <table class="table borderless" border="0">
+                                        <tr>
+                                            <td>Yesterday</td>
+                                            <td class=" text-right">
+                                                <asp:Label runat="server" ID="lblGenYst">133</asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>During This month</td>
+                                            <td class=" text-right">
+                                                <asp:Label runat="server" ID="lblGenMon">405</asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-6 col-sm-6 col-xl-4">
+                    <div class="panel panel-yellow animate">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xl-2">
+                                    <i class="fa fa-share glyphiconcss"></i>
+                                </div>
+                                <div class="col-xl-10 text-right">
+                                    <div class="huge">Cancelled <span class="clearfix"></span></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer yellow">
+                                <div class="clearfix"></div>
+                                <table class="table borderless" border="0">
+                                    <tr>
+                                        <td>Yesterday</td>
+                                        <td class=" text-right">
+                                            <asp:Label runat="server" ID="lblCanYst">0</asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>During This month</td>
+                                        <td class=" text-right">
+                                            <asp:Label runat="server" ID="lblCanMon">1</asp:Label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-1 col-md-0 col-sm-0">
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12">
+                    <div class="card mt-2">
+                        <div class="card-header p-1 pl-2">
+                            <strong class="text-info font16">Notes:</strong>
+                        </div>
+
+                        <div class="card-body p-1 ">
+                            <ul class="pl-4 lh30">
+                                <li> The Bulk IRN generation facility has been enabled. You may download the tools from the portal under <span class="text-primary font-weight-bold">Help --> Tools</span>.</li>
+                                <li> The e-Waybills generated in this portal will be reflected in the e-waybill system. To Update Part-B details, cancel or extend , you may login to e-waybill system with same credentials.</li>
+                            </ul>
+                        </div>
+
+
+                    </div><br />
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+    <div class="modal fade exampleModal" id="exampleModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg maxWidth60p" role="document" >
+            <div class="modal-content">
+                <div class="modal-header p-2 bg-info">
+                    <h5 class="mb-0 col-10 p-0 text-center font-weight-bold text-white">Dear Taxpayer</h5>
+                    <div class="col-2 p-0">
+                        <button class="close text-right opacity1" type="reset" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="text-danger">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-header text-center">
+                    <h5 class="margin0Px"><strong class="text-dark verdanaRed" >Alert on 2 Factor Authentication</strong></h5>
+                </div>
+                <p class="text-justify p-2">
+                    As you are aware 2 Factor Authentication (2FA) is provisioned in e-Waybill/e-Invoice System. However you have not yet registered for the 2FA. Please register and secure your credentials. Shortly , 2FA will be made mandatory.
+                </p>
+                <div class="text-center" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button type="button" class="btn btn-primary btndiv2fahead" data-toggle="collapse" data-target="#div2faEnh" aria-expanded="true">Click here to Know More</button>
+                </div>
+                <div class="collapse" id="collapseExample" >
+                    <div class="modal-body p-2">
+                        <p class="text-justify mb-1">To enhance the security of e-Invoice/e-Way Bill , NIC is introducing <span class="text-primary font-weight-bold">2 Factor Authentication</span> for logging in to e-Invoice/e-Way Bill System.  In addition to username and password, OTP will also be authenticated for login. There are 3 different ways of receiving / generating the OTP. You may enter any of the OTP and login to system.</p>
+                        <hr class="my-1" />
+                        <ol class="pl-4 mb-2 listmainmenutotp">
+                            <li>On registered mobile number: OTP will be sent to your registered mobile number as <span class="text-primary font-weight-bold">SMS</span>. You may enter this OTP and get authenticated.</li>
+                            <li>On <span class="text-primary font-weight-bold">‘Sandes’</span>: Sandes is a messaging app provided by government so that you can send and receive messages. You may download and install the Sandes App on your registered mobile number and receive the OTP in it. <a href="/Documents/InstallSandes.pdf" target="_blank"> Click here to view the guidelines and procedure to install it.</a></li>
+                            <li>Using <span class="text-primary font-weight-bold">‘NIC-GST-Shield’</span> app: This app is provided by e-Invoice/e-Way Bill System to generate OTP and use for authentication. This app once installed and registered on your registered mobile number, you will not require internet or any dependency on mobile network. On opening the app, OTP is displayed. You may enter this OTP and continue the authentication.  <a href="/Documents/NIC_GST_Shield.pdf" target="_blank">Click here to view the guidelines and procedure to install it.</a> </li>
+                        </ol>
+
+                        <p class="text-justify">You may register or de-register this facility any time using the link <b>'2 Factor Authentication --> Register'.</b> This facility is presently being introduced on optional basis, however, in future it will be made mandatory.</p>
+                        <span class="text-primary font-weight-bold"><b>Note :</b></span>
+                        <ol class="pl-4 mb-2 listmainmenutotp">
+
+                            <li>The OTP authentication is based on individual user accounts. That is, the sub users of GSTIN will have separate authentication depending on their registered mobile number in the e-Invoice/e-Way Bill System.</li>
+                            <li>Once you have Registered for 2 Factor authentication then the same is applicable for both e-Invoice and e-Way bill system.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="modal fade" id="myModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="form-signin formtag" id="frmEmp">
+                <button class="close text-right bg-danger p-1" type="reset" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">×</span>
+                </button>
+                <div class="modal-header text-center pt-1 pb-2 pl-2 pr-2 bg-primary menuUserProfileDiv" >
+                    <h6 class="text-center mb-0">User Profile</h6>
+                </div>
+                <div class="modal-body p-0">
+                    <table class="table table-bordered mb-0 table-responsive">
+                        <tr>
+                            <td class="width130"><label class="control-label  mb-0">GST No  </label></td>
+                            <td><span class="pull-left fontBold" >33AAPFD1365C1ZR</span></td>
+                        </tr>
+                        <tr>
+                            <td><label class="control-label  mb-0"> User Name </label></td>
+                            <td><span class="pull-left fontBold" >DEVAKI9999</span></td>
+                        </tr>
+                        <tr>
+                            <td><label class="control-label  mb-0"> Trade Name </label></td>
+                            <td><span class="pull-left fontBold" >DEVAKI ENTERPRISES</span></td>
+                        </tr>
+                        <tr>
+                            <td><label class="control-label  mb-0"> Address </label></td>
+                            <td>
+                                <span class="pull-left">NO.F2/4&nbsp; &nbsp;TRICHY&nbsp;620010</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="control-label  mb-0"> Mobile No </label></td>
+                            <td><span class="pull-left">9944951444</span></td>
+                        </tr>
+                        <tr>
+                            <td><label class="control-label mb-0">e-Mail </label></td>
+                            <td><span class="pull-left">devakilever@gmail.com</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade exampleModal" id="exampleModal1" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg maxwidth60" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-2 bg-info">
+                <h5 class="mb-0 col-10 p-0 text-center font-weight-bold text-white">Dear Taxpayer</h5>
+                <div class="col-2 p-0">
+                    <button class="close text-right opacity1" type="reset" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-danger">×</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body p-2">
+                <p class="text-justify mb-1">To enhance the security of e-Invoice/e-Way Bill , NIC is introducing <span class="text-primary font-weight-bold">2 Factor Authentication</span> for logging in to e-Invoice/e-Way Bill System.  In addition to username and password, OTP will also be authenticated for login. There are 3 different ways of receiving / generating the OTP. You may enter any of the OTP and login to system.</p>
+                <hr class="my-1" />
+                <ol class="pl-4 mb-2 listmainmenutotp">
+                    <li>On registered mobile number: OTP will be sent to your registered mobile number as <span class="text-primary font-weight-bold">SMS</span>. You may enter this OTP and get authenticated.</li>
+                    <li>On <span class="text-primary font-weight-bold">‘Sandes’</span>: Sandes is a messaging app provided by government so that you can send and receive messages. You may download and install the Sandes App on your registered mobile number and receive the OTP in it. <a href="/Documents/InstallSandes.pdf" target="_blank"> Click here to view the guidelines and procedure to install it.</a></li>
+                    <li>Using <span class="text-primary font-weight-bold">‘NIC-GST-Shield’</span> app: This app is provided by e-Invoice/e-Way Bill System to generate OTP and use for authentication. This app once installed and registered on your registered mobile number, you will not require internet or any dependency on mobile network. On opening the app, OTP is displayed. You may enter this OTP and continue the authentication.  <a href="/Documents/NIC_GST_Shield.pdf" target="_blank">Click here to view the guidelines and procedure to install it.</a> </li>
+                </ol>
+
+                <p class="text-justify">You may register or de-register this facility any time using the link <b>'2 Factor Authentication --> Register'.</b> This facility is presently being introduced on optional basis, however, in future it will be made mandatory.</p>
+                <span class="text-primary font-weight-bold"><b>Note :</b></span>
+                <ol class="pl-4 mb-2 listmainmenutotp">
+
+                    <li>The OTP authentication is based on individual user accounts. That is, the sub users of GSTIN will have separate authentication depending on their registered mobile number in the e-Invoice/e-Way Bill System.</li>
+                    <li>Once you have Registered for 2 Factor authentication then the same is applicable for both e-Invoice and e-Way bill system.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade exampleModal" id="subUserPermModal1" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg maxwidth60" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-2 bg-info">
+                <p class="text-justify mb-1">
+                    Your login-id is identified as a sub-user to the GSTIN 33AAPFD1365C1ZR the e-Invoice / e-Waybill portal.
+                    Following options have been provisioned in the web portal for your login-id :
+                </p>
+                <div class="col-2 p-0">
+                    <button class="close text-right opacity1" type="reset" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-danger">×</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-header text-center">
+                <h5 class="margin0Px"><strong class="text-dark fontfamilyverdanacolordarkred">Options Enabled</strong></h5>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="table-responsive col-xl-12 col-lg-12 col-md-12 col-12 col-sm-12">
+                    <table class="table table-bordered table-striped">
+                        <tr class="text-white bg-secondary text-center">
+                            <th>OPTION</th>
+                            <th>PERMITTED</th>
+                        </tr>
+
+                        <tr>
+                            <td>Generate IRN</td>
+                            <td>Y</td>
+                        </tr>
+
+                        <tr>
+                            <td>Cancel IRN</td>
+                            <td>Y</td>
+                        </tr>
+
+                        <tr>
+                            <td>EwayBill</td>
+                            <td>Y</td>
+                        </tr>
+
+                        <tr>
+                            <td>Report</td>
+                            <td>Y</td>
+                        </tr>
+
+                        <tr>
+                            <td>Access to IRN generated by main user</td>
+                            <td></td>
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+
+    <!-- Lower Footer -->
+    <div id="lower-footer" class="navbar-fixed-bottom fixed-bottom footerbottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-4 col-xl-6 col-12">
+                    <div class="content text-sm-left">
+                        <p class="copyright">Version 1.01</p>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-sm-8 col-xl-6 col-12">
+                    <div class="content text-right">
+                        <p class="copyright">© 2022 - Powered By National Informatics Centre.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Lower Footer -->
+
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    
+
+
+
+</body>
+</html>

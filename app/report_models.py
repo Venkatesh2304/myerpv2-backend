@@ -44,6 +44,7 @@ class MonthArgs(ReportArgs):
 
 class BaseReport(Generic[ArgsT]):    
     fetcher = None  # type: ignore
+    max_retry = 1
     # Preprocessing options
     column_map: dict = {}
     ignore_last_nrows = 0
@@ -67,17 +68,15 @@ class BaseReport(Generic[ArgsT]):
     
     @classmethod
     def basic_preprocessing(cls, df: pd.DataFrame) -> pd.DataFrame:
-
         if cls.ignore_last_nrows > 0:
             df = df.iloc[: -cls.ignore_last_nrows]
         if cls.column_map:
             df = df.rename(columns=cls.column_map)
         if cls.date_format != "" :
-                df["date"] = pd.to_datetime(df["date"], format=cls.date_format).dt.date
+            df["date"] = pd.to_datetime(df["date"], format=cls.date_format).dt.date
         
         if cls.dropna_columns:
             df = df.dropna(subset=cls.dropna_columns, how="any")
-        
         return df
 
     @classmethod
@@ -92,6 +91,14 @@ class BaseReport(Generic[ArgsT]):
     def get_dataframe(
         cls, fetcher_cls_instance: object, args: ArgsT
     ) -> pd.DataFrame:
+        
+        for retry in range(0,cls.max_retry-1) : 
+            try : 
+                df = cls.fetch_raw_dataframe(fetcher_cls_instance, args)
+                break
+            except Exception as e :
+                print("Retrying fetching data due to error :",e)
+
         df = cls.fetch_raw_dataframe(fetcher_cls_instance, args)
         df = cls.basic_preprocessing(df)
         df = cls.custom_preprocessing(df)
@@ -175,7 +182,6 @@ class DateReportModel(CompanyReportModel[DateRangeArgs]):
                         with open(cache_path,"rb") as f :
                             df = pickle.load(f)
                             is_loaded_from_cache = True
-                   
             if not is_loaded_from_cache :
                 df: pd.DataFrame = cls.fetcher(fetcher_cls_instance, fromd, tod)  # type: ignore
 
@@ -267,6 +273,7 @@ class SalesRegisterReport(DateReportModel):
             "TDS-194R Per": "tds",
         }
         ignore_last_nrows = 1
+        max_retry = 2
 
         @classmethod
         def custom_preprocessing(cls, df: pd.DataFrame) -> pd.DataFrame:
@@ -401,7 +408,8 @@ class PartyReport(EmptyReportModel):
         dropna_columns = ["code"]
         @classmethod
         def custom_preprocessing(cls, df: pd.DataFrame) -> pd.DataFrame:
-            df = df.drop_duplicates(subset="code")
+            df.drop_duplicates(subset="code",inplace=True)
+            df["phone"] = 1
             strips = lambda df,val : df.str.split(val).str[0].str.strip(" \t,")
             df["phone"] = df["addr"].str.split("PH :").str[1].str.strip()
             df["addr"] = strips( strips( strips( df["addr"] , "TRICHY" )  , "PH :" ) , "N.A" )

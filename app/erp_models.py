@@ -180,7 +180,7 @@ class SalesChanges(CompanyModel) :
       new_value = CharField(max_length=100,null=True,blank=True)
       sales = models.ForeignObject(
             "Sales",
-            on_delete=models.CASCADE,
+            on_delete=models.DO_NOTHING,
             null=True,
             from_fields=("company", "bill_id"),
             to_fields=("company", "inum"),

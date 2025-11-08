@@ -14,7 +14,7 @@ from rest_framework import status
 from app import gst
 from app.einvoice import change_einv_dates, create_einv_json, einv_json_to_str
 from custom import Session
-from custom.classes import Gst, Einvoice, IkeaDownloader  # type: ignore
+from custom.classes import Gst, Einvoice, IkeaDownloader, WrongCredentials  # type: ignore
 from django.http import FileResponse, HttpResponse, JsonResponse
 import app.models as models
 from django.db import connection
@@ -83,9 +83,11 @@ def captcha_login(request):
     try:
         client.login(captcha_text)  # type: ignore
         ok = client.is_logged_in()
+    except WrongCredentials as e:
+        return Response({"ok": False, "error": "invalid_credentials", "message" : str(e)}, status = 200)
     except Exception as e:
         return Response({"ok": False, "error": str(e)}, status=400)
-    return Response({"ok": bool(ok)}, status=200)
+    return Response({"ok": bool(ok) , "error" : "" if ok else "invalid_captcha"}, status=200)
 
 def excel_response(sheets:list[tuple],filename:str) : 
     buf = BytesIO()
@@ -373,3 +375,34 @@ def gst_summary(request):
 def gst_json(request):
     period = request.data.get("period")
     return FileResponse(open(f"static/{request.user.get_username()}/{period}.json","rb"),as_attachment=True,filename=f"gst_{period}.json")
+
+
+@api_view(["GET","POST"])
+def usersession_update(request):
+
+    if request.method == "GET":
+        sessions = models.UserSession.objects.all().values("key", "user", "username", "password")
+        grouped = {}
+        for s in sessions:
+            k = s["key"]
+            grouped.setdefault(k, []).append(
+                {
+                    "user": s["user"],
+                    "username": s["username"],
+                    "password": s["password"],
+                }
+            )
+        return JsonResponse(grouped)
+
+    # POST
+    key = request.data.get("key")
+    user = request.data.get("user")
+    new_username = request.data.get("username")
+    new_password = request.data.get("password")
+
+    session = models.UserSession.objects.get(key=key, user=user)
+    session.username = new_username
+    session.password = new_password
+    session.save(update_fields=["username", "password"])
+
+    return JsonResponse({"status": "updated", "key": session.key, "user": session.user})

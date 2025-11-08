@@ -9,13 +9,14 @@ from custom.classes import IkeaDownloader
 import datetime
 from dateutil.relativedelta import relativedelta
 import sys
+from django.db.models import Q
 
 GST_PERIOD_FILTER = {
     "devaki_urban" : lambda qs : qs.exclude(type = "damage", party_id  = "P150") #NAIDU HALL DAMAGE EXCLUDE
 }
 
-username = sys.argv[2]
-user = User.objects.get(username=username)
+usernames_or_companies = sys.argv[2:]
+companies = Company.objects.filter(Q(user_id__in = usernames_or_companies) | Q(name__in = usernames_or_companies)).distinct()
 
 today = datetime.date.today()
 prev_month = today - relativedelta(months=1)
@@ -28,7 +29,7 @@ args_dict = {
     EmptyArgs: EmptyArgs(),
 }
 
-for company in Company.objects.filter(user=user):
+for company in companies :
     print(f"Processing GST for Company: {company.name} for Period: {period}")
     i = IkeaDownloader(company.pk)
     GstFilingImport.run(company=company,args_dict=args_dict)

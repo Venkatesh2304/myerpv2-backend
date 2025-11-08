@@ -2,6 +2,7 @@ from collections import defaultdict
 import copy
 import datetime
 from io import BytesIO
+import warnings
 import dateutil.relativedelta as relativedelta
 import json
 import random
@@ -33,8 +34,10 @@ from .std import add_image_to_bills
 from urllib.parse import urlencode
 import requests 
 from PyPDF2 import PdfReader
-# from myerp.settings import FILES_DIR
 import os
+
+warnings.filterwarnings("ignore", category=UserWarning, module=re.escape('openpyxl.styles.stylesheet'))
+
 
 
 class WrongCredentials(Exception) :
@@ -45,6 +48,7 @@ class IkeaPasswordExpired(WrongCredentials) :
 
 class IkeaWrongCredentails(WrongCredentials) :
     pass
+
 
 
 class BaseIkea(Session) : 
@@ -84,7 +88,7 @@ class BaseIkea(Session) :
       def download_dataframe(self,key,skiprows=0,sheet=None) -> pd.DataFrame : 
           kwargs = {} if sheet is None else {"sheet_name":sheet}
           durl = get_curl(key).send(self).text
-          return pd.read_excel( self.get_buffer(durl) , skiprows = skiprows , **kwargs )
+          return pd.read_excel( self.get_buffer(durl) , skiprows = skiprows , **kwargs , engine="openpyxl")
        
       def is_logged_in(self) :
          try : 
@@ -618,6 +622,9 @@ class GstWrongCredentails(WrongCredentials) :
 class GstExpiredCredentails(WrongCredentials) :
     pass
 
+class GstMultipleWrongAttempts(WrongCredentials) :
+    pass
+
 class Gst(Session) : 
      key = "gst"
      base_url = "https://gst.gov.in"
@@ -649,8 +656,11 @@ class Gst(Session) :
                   raise GstWrongCredentails("Invalid Username or Password")
               elif res["errorCode"] == "AUTH_9033" : 
                   raise GstExpiredCredentails("Password Expired , kindly change password")
+              elif res["errorCode"] == "SWEB_9014" :
+                  raise GstMultipleWrongAttempts("You have entered a wrong password for 3 consecutive times")
               else : 
-                  raise Exception("Unkown Exception")
+                  print(res)
+                  raise Exception("Unknown Exception")
           auth =  self.get("https://services.gst.gov.in/services/auth/",headers = {'Referer': 'https://services.gst.gov.in/services/login'})
           self.user.update_cookies(self.cookies)
      
@@ -908,15 +918,23 @@ class Einvoice(Session) :
                                  "UserLogin.HiddenPasswordSha":sha_pwd,
                                  "UserLogin.PasswordMD5":md5pwd}
           response  = r.send(self)
+          with open("a.html","w+") as f : f.write(response.text)
           is_success = (response.url == f"{self.base_url}/Home/MainMenu")
           error_div  = BeautifulSoup(response.text, 'html.parser').find("div",{"class":"divError"})
           error = error_div.text.strip() if (not is_success) and (error_div is not None) else ""
           if is_success : 
               self.user.update_cookies(self.cookies)
-          return is_success,error 
+          else : 
+              if "captcha" not in error.lower() : 
+                  raise EinvoiceWrongCredentials(error)
+          return is_success 
 
       def is_logged_in(self) : 
-          res = self.get("/Home/MainMenu")
+          try : 
+            res = self.get("/Home/MainMenu")
+          except Exception as e :
+              print("Exception Occured on is_logged_in :",e) 
+              return False
           return "/Home/MainMenu" in res.url
 
       def upload(self,json_data:str)  :  

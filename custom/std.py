@@ -56,7 +56,7 @@ def moc_range(fromd=datetime(2018,4,1),tod=datetime.now(),slash=False) :
     fromd -= timedelta(days=21)
     tod -= timedelta(days=21) 
     tod += relativedelta(day=31)
-    return [ (dt + relativedelta(months=1)).strftime(f"%m{'/' if slash else ''}%Y") for dt in pd.date_range(fromd,tod,freq="1M").to_list() ]
+    return [ (dt + relativedelta(months=1)).strftime(f"%m{'/' if slash else ''}%Y") for dt in pd.date_range(fromd,tod,freq="1ME").to_list() ]
 
 def month_range(fromd,tod,slash=False) : 
     fromd = datetime.strptime(fromd,"%m%Y")

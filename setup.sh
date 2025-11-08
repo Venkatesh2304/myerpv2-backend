@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -eu
-# git pull -ff
+git pull -ff
 
 PYTHON="python3.10"
 PROJECT_NAME="myerpv2" #For the service name
@@ -14,9 +14,8 @@ SERVICE_PATH="/etc/systemd/system/$SERVICE_NAME"
 
 #Cron job details
 JOB_TAG="monthly_gst"
-CRON_SCHEDULE="40 12 * * *"
-CRON_CMD="$PROJECT_DIR/cron.sh >> $PROJECT_DIR/cron.log 2>&1"
-
+CRON_SCHEDULE="0 23 3 * *" # At 23:00 on day-of-month 3
+CRON_CMD="$PROJECT_DIR/cron.sh devaki > $PROJECT_DIR/cron.log 2>&1"
 
 echo "==> Checking for $PYTHON"
 if ! command -v "$PYTHON" >/dev/null 2>&1; then

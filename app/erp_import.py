@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import decimal
 import itertools
 import time
+import traceback
 import tracemalloc
 from typing import Generic, Type
 from django.db import connection, transaction
@@ -436,16 +437,15 @@ class GstFilingImport:
         cls, report: CompanyReportModel, company: Company, args: ReportArgs
     ):
         inserted_count = report.update_db(IkeaDownloader(company.pk), company, args)
-        print(f"Report {report.__name__} updated with {inserted_count} rows")
+        print(f"Report {report.__name__} updated")
         return inserted_count
 
     @classmethod
     def run(cls, company: Company, args_dict: dict[Type[ReportArgs], ReportArgs]):
         reports_to_update = []
-        s = time.time()
+        start_time = time.time()
         for import_class in cls.imports:
             reports_to_update.extend(import_class.reports)  # type: ignore
-        # reports_to_update = []
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = []
             for report_model in reports_to_update:
@@ -455,13 +455,27 @@ class GstFilingImport:
             for future in as_completed(futures):
                 try:
                     result = future.result()  # This re-raises any exception
-                    print(result)
                 except Exception as e:
-                    print(e)
-        print("Reports Completed in :", time.time() - s)
+                    traceback.print_exc()
+                    print("Error : ",e)
+        time_taken = round(time.time() - start_time,2)
+        print("Reports Completed in :", time_taken)
         print("Reports Imported. Starting Data Import..")
         for import_class in cls.imports:
             arg = args_dict[import_class.arg_type]  # type: ignore
-            s = time.time()
+            start_time = time.time()
             import_class.run_atomic(company, arg)
-            print(import_class, time.time() - s)
+            time_taken = round(time.time() - start_time,2)
+            print(import_class.__name__, time_taken)
+        
+        #Implement the changes from SalesChanges to Sales table
+        date_args:DateRangeArgs = args_dict[DateRangeArgs] # type: ignore
+        sales_changes_qs = models.SalesChanges.objects.filter(company=company,sales__date__lte = date_args.tod,
+                                                              sales__date__gte = date_args.fromd).order_by("id")
+        for change in sales_changes_qs : 
+            try :
+                sales_obj = models.Sales.objects.get(company=company,inum=change.bill_id)
+                sales_obj.__setattr__(change.field,change.new_value)
+                sales_obj.save(update_fields=[change.field])
+            except models.Sales.DoesNotExist :
+                print(f"Sales Object with inum {change.bill_id} not found for applying changes.")

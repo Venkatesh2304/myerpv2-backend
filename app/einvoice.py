@@ -55,7 +55,7 @@ def create_einv_json(
         .prefetch_related("inventory", "party")
     )
     einvs = []
-    for sale in sales_qs[:1]:
+    for sale in sales_qs:
         doc_dtls = {
             "Typ": sale.einv_type,  # type: ignore
             "No": sale.inum,

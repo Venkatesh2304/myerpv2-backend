@@ -2,6 +2,7 @@ from django.urls import path
 import app.api as api
 from .auth_api import login as auth_login, logout as auth_logout, me as auth_me
 
+
 urlpatterns = [
     path("einvoice/reload", api.einvoice_reload, name="einvoice-reload"),
     path("einvoice/stats", api.einvoice_stats, name="einvoice-stats"),
@@ -17,4 +18,5 @@ urlpatterns = [
     path("login", auth_login, name="auth-login"),
     path("logout", auth_logout, name="auth-logout"),
     path("me", auth_me, name="auth-me"),
+    path("usersession", api.usersession_update, name="usersession"),
 ]
