@@ -14,7 +14,7 @@ SERVICE_PATH="/etc/systemd/system/$SERVICE_NAME"
 
 #Cron job details
 JOB_TAG="monthly_gst"
-CRON_SCHEDULE="39 12 * * *"
+CRON_SCHEDULE="40 12 * * *"
 CRON_CMD="$PROJECT_DIR/cron.sh >> $PROJECT_DIR/cron.log 2>&1"
 
 if [ "${EUID:-$(id -u)}" -ne 0 ]; then
