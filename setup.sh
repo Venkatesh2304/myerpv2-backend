@@ -6,15 +6,16 @@ PYTHON="python3.10"
 PROJECT_NAME="myerpv2" #For the service name
 DB_NAME="myerpv2all"
 
-#Cron job details
-JOB_TAG="monthly_gst"
-CRON_SCHEDULE="30  8 * *"
-CRON_CMD="/home/ubuntu/myscript.sh >> /home/ubuntu/myscript.log 2>&1"
 
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 VENV_DIR="$PROJECT_DIR/.venv"
 SERVICE_NAME="$PROJECT_NAME-gunicorn.service"
 SERVICE_PATH="/etc/systemd/system/$SERVICE_NAME"
+
+#Cron job details
+JOB_TAG="monthly_gst"
+CRON_SCHEDULE="43 11 * * *"
+CRON_CMD="$PROJECT_DIR/cron.sh >> $PROJECT_DIR/cron.log 2>&1"
 
 if [ "${EUID:-$(id -u)}" -ne 0 ]; then
   SUDO="sudo"
@@ -95,6 +96,8 @@ fi
 psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "ALTER DATABASE $DB_NAME SET datestyle TO 'ISO, DMY'"
 
 #Add monthly cron job
+echo "==> Setting up cron job :($JOB_TAG)"
+chmod +x cron.sh
 (crontab -l 2>/dev/null | grep -v "$JOB_TAG"; echo "CRON_TZ=Asia/Kolkata $CRON_SCHEDULE $CRON_CMD # $JOB_TAG") | crontab -
 
 # Django migrations
