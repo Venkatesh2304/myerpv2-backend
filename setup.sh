@@ -76,7 +76,6 @@ if ! command -v psql >/dev/null 2>&1; then
   exit 1
 fi
 export PGPASSWORD="Ven2004"
-# psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "DROP DATABASE $DB_NAME"
 DB_EXISTS="$(psql -h localhost -U postgres -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" || echo "")"
 IS_NEW_DB=0
 if [ "$DB_EXISTS" != "1" ]; then
