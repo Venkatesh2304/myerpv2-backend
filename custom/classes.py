@@ -38,8 +38,6 @@ import os
 
 warnings.filterwarnings("ignore", category=UserWarning, module=re.escape('openpyxl.styles.stylesheet'))
 
-
-
 class WrongCredentials(Exception) :
     pass
 
@@ -48,7 +46,6 @@ class IkeaPasswordExpired(WrongCredentials) :
 
 class IkeaWrongCredentails(WrongCredentials) :
     pass
-
 
 
 class BaseIkea(Session) : 
