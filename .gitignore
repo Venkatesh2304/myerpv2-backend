@@ -12,3 +12,4 @@ static/*
 !static/print_includes/**
 captcha.png
 .venv/
+cron.log
