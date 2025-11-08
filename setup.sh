@@ -14,7 +14,7 @@ SERVICE_PATH="/etc/systemd/system/$SERVICE_NAME"
 
 #Cron job details
 JOB_TAG="monthly_gst"
-CRON_SCHEDULE="42 11 * * *"
+CRON_SCHEDULE="46 11 * * *"
 CRON_CMD="$PROJECT_DIR/cron.sh >> $PROJECT_DIR/cron.log 2>&1"
 
 if [ "${EUID:-$(id -u)}" -ne 0 ]; then
@@ -98,7 +98,7 @@ psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "ALTER DATABASE $DB_NAME SET
 #Add monthly cron job
 echo "==> Setting up cron job :($JOB_TAG)"
 chmod +x cron.sh
-(crontab -l 2>/dev/null | grep -v "$JOB_TAG"; echo "CRON_TZ=Asia/Kolkata $CRON_SCHEDULE $CRON_CMD # $JOB_TAG") | crontab -
+(crontab -l 2>/dev/null | grep -v "$JOB_TAG"; echo "$CRON_SCHEDULE $CRON_CMD # $JOB_TAG") | crontab -
 
 # Django migrations
 echo "==> Applying Django migrations"
