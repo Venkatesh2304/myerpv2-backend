@@ -86,6 +86,10 @@ else
   echo "Database already exists. Skipping creation."
 fi
 
+#SET DATESTYLE
+psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "ALTER DATABASE $DB_NAME SET datestyle TO 'ISO, DMY'"
+
+
 # Django migrations
 echo "==> Applying Django migrations"
 python manage.py migrate --noinput
