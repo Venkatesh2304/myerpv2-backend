@@ -17,11 +17,6 @@ JOB_TAG="monthly_gst"
 CRON_SCHEDULE="40 12 * * *"
 CRON_CMD="$PROJECT_DIR/cron.sh >> $PROJECT_DIR/cron.log 2>&1"
 
-if [ "${EUID:-$(id -u)}" -ne 0 ]; then
-  SUDO="sudo"
-else
-  SUDO=""
-fi
 
 echo "==> Checking for $PYTHON"
 if ! command -v "$PYTHON" >/dev/null 2>&1; then
@@ -34,8 +29,8 @@ if [ ! -d "$VENV_DIR" ]; then
   if ! "$PYTHON" -m venv "$VENV_DIR" 2>/dev/null; then
     echo "python3.10 venv module not available. Attempting to install..."
     if command -v apt-get >/dev/null 2>&1; then
-      $SUDO apt-get update -y
-      $SUDO apt-get install -y python3.10-venv
+      sudo apt-get update -y
+      sudo apt-get install -y python3.10-venv
       "$PYTHON" -m venv "$VENV_DIR" || true
     fi
   fi
@@ -75,7 +70,6 @@ fi
 echo "==> Ensuring gunicorn is installed"
 pip install gunicorn
 
-
 echo "==> Ensuring PostgreSQL database '$DB_NAME' exists"
 if ! command -v psql >/dev/null 2>&1; then
   echo "Error: psql not found. Install PostgreSQL client tools and retry."
@@ -111,7 +105,7 @@ fi
 unset PGPASSWORD
 
 echo "==> Creating or updating systemd service ($SERVICE_NAME)"
-$SUDO bash -c "cat > '$SERVICE_PATH'" <<EOF
+sudo bash -c "cat > '$SERVICE_PATH'" <<EOF
 [Unit]
 Description=Gunicorn for $PROJECT_NAME Django project
 After=network.target
@@ -133,9 +127,9 @@ WantedBy=multi-user.target
 EOF
 
 echo "==> Reloading and restarting systemd service"
-$SUDO systemctl daemon-reload
-$SUDO systemctl enable "$SERVICE_NAME"
-$SUDO systemctl restart "$SERVICE_NAME"
+sudo systemctl daemon-reload
+sudo systemctl enable "$SERVICE_NAME"
+sudo systemctl restart "$SERVICE_NAME"
 
 echo "==> Setup complete."
-$SUDO systemctl status "$SERVICE_NAME" --no-pager || true
+sudo systemctl status "$SERVICE_NAME" --no-pager || true
