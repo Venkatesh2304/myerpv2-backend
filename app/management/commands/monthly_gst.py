@@ -14,7 +14,7 @@ GST_PERIOD_FILTER = {
     "devaki_urban" : lambda qs : qs.exclude(type = "damage", party_id  = "P150") #NAIDU HALL DAMAGE EXCLUDE
 }
 
-username = sys.argv[1]
+username = sys.argv[2]
 user = User.objects.get(username=username)
 
 today = datetime.date.today()
