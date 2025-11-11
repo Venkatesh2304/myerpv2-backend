@@ -9,7 +9,7 @@ from app.company_models import Company, UserSession
 # UserSession.objects.filter(user='devaki_hul').delete()
 
 user = User.objects.create_user(username='murugan', password='1')
-# company = Company.objects.create(name="devaki_hul",user = user,gst_types = ["sales","salesreturn","claimservice","damage"])
+company = Company.objects.create(name="murugan_hul",user = user,gst_types = ["sales","salesreturn","claimservice"])
 
 
 #Ikea Session
