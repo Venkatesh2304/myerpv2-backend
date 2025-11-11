@@ -4,12 +4,12 @@ import pandas as pd
 from custom.classes import Einvoice, Gst, IkeaDownloader
 from app.company_models import Company, UserSession
 
-# User.objects.filter(username='devaki').delete()
+User.objects.filter(username='murugan').delete()
 # UserSession.objects.filter(user='devaki').delete()
 # UserSession.objects.filter(user='devaki_hul').delete()
 
-user = User.objects.create_user(username='murugan', password='1').save()
-company = Company.objects.create(name="murugan_hul",user = user,gst_types = ["sales","salesreturn","claimservice"]).save()
+user = User.objects.create_user(username='murugan', password='1')
+company = Company.objects.create(name="murugan_hul",user = user,gst_types = ["sales","salesreturn","claimservice"])
 
 
 #Ikea Session
