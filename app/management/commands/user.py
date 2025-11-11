@@ -4,42 +4,40 @@ import pandas as pd
 from custom.classes import Einvoice, Gst, IkeaDownloader
 from app.company_models import Company, UserSession
 
-
 # User.objects.filter(username='devaki').delete()
 # UserSession.objects.filter(user='devaki').delete()
 # UserSession.objects.filter(user='devaki_hul').delete()
 
 # user = User.objects.create_user(username='devaki', password='1')
 # company = Company.objects.create(name="devaki_hul",user = user,gst_types = ["sales","salesreturn","claimservice","damage"])
-# company = Company.objects.create(name="devaki_rural",user_id = 'devaki',gst_types = ["sales","salesreturn","claimservice","damage"])
 
 
 #Ikea Session
 UserSession(
-    user="devaki_rural",
+    user="murugan_hul",
     key="ikea",
-    username="IIT",
-    password="Abc@123456",
+    username="SA",
+    password="Pillaiyar#@123",
     config={
-        "dbName": "41B862",
-        "home": "https://leveredge57.hulcd.com",
-        "bill_prefix" : "CB",
+        "dbName": "411474",
+        "home": "https://leveredge25.hulcd.com",
+        "bill_prefix" : "",
         "auto_delivery_process" : True
     },
 ).save(force_insert=False)
-# i = IkeaDownloader("devaki_rural")
 
+# i = IkeaDownloader("devaki_rural")
 # print(i.get("/rsunify/app/billing/getUserId").text)
 
 
 # #Gst Session
 UserSession(
-    user="devaki",
+    user="murugan",
     key="gst",
-    username="DEVAKI9999",
-    password="Ven@2026",
+    username="angalamman.64_8",
+    password="Murugan@$456",
     config={
-        "gstin" : "33AAPFD1365C1ZR"
+        "gstin" : "33ACMPD8352Q1Z3"
     }
 ).save()
 # g = Gst("devaki")
@@ -52,22 +50,25 @@ UserSession(
 #     status = g.login(captcha_input)
 #     print("Login status : ",status)
 # print("Gst Logged in successfully")
+
 UserSession(
-    user="devaki",
+    user="murugan",
     key="einvoice",
-    username="DEVAKI9999",
-    password="Ven@2345",
+    username="unify@2018",
+    password="Rs411474&#58",
     config={
         "seller_json": {
             "SellerDtls": {
-                "Gstin": "33AAPFD1365C1ZR",
-                "LglNm": "DEVAKI ENTERPRISES",
-                "Addr1": "F/4 , INDUSTRISAL ESTATE , ARIYAMANGALAM",
-                "Loc": "TRICHY",
-                "Pin": 620010,
-                "Stcd": "33",
+                #This needs to be changed
+                # "Gstin": "33AAPFD1365C1ZR",
+                # "LglNm": "DEVAKI ENTERPRISES",
+                # "Addr1": "F/4 , INDUSTRISAL ESTATE , ARIYAMANGALAM",
+                # "Loc": "TRICHY",
+                # "Pin": 620010,
+                # "Stcd": "33",
             }
         }
     },
 ).save()
+
 exit(0)

@@ -90,6 +90,18 @@ def diff_dataframes(
         diff_df[col] = diff_df[col1].fillna(col2)
     return filter_cols(only_left), filter_cols(only_right), filter_cols(diff_df)
 
+def download_gst(user:models.User,period:str,gst:Gst) -> str:
+    username = user.username
+    b2b = pd.DataFrame(gst.getinvs(period,"b2b"))
+    b2cs = pd.DataFrame(gst.getinvs(period,"b2cs"))
+    cdnr = pd.DataFrame(gst.getinvs(period,"cdnr"))    
+    writer = pd.ExcelWriter(f"static/{username}/gst_report_{period}.xlsx", engine='xlsxwriter')
+    addtable(writer = writer , sheet = "B2B" , name = ["B2B"]  ,  data = [ b2b ] )  
+    addtable(writer = writer , sheet = "B2CS" , name = ["B2CS"] ,  data = [b2cs] )
+    addtable(writer = writer , sheet = "CDNR" , name = ["CDNR"] ,  data = [cdnr] )
+    writer.close()
+    return b2b,b2cs,cdnr 
+
 def generate(user:models.User,period:str,gst:Gst) -> dict[str,pd.DataFrame]:
     os.makedirs(f"static/{user.username}", exist_ok=True)
     gstin = gst.config["gstin"]

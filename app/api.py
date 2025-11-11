@@ -378,6 +378,39 @@ def gst_json(request):
     period = request.data.get("period")
     return FileResponse(open(f"static/{request.user.get_username()}/{period}.json","rb"),as_attachment=True,filename=f"gst_{period}.json")
 
+# @api_view(["POST"])
+# def download_gst(request) : 
+#     period = request.POST.get("period")
+
+@api_view(["POST"])
+def download_gst_return(request) :
+    username = request.user.get_username()
+    period = request.POST.get("period")
+    gst_instance = Gst(username)
+    b2b,b2cs,cdnr = gst.download_gst(request.user,period,gst_instance)
+    return FileResponse(open(f"static/{request.user.get_username()}/gst_{period}.xlsx","rb"),as_attachment=True,filename=f"gst_{period}.xlsx")
+
+@api_view(["POST"])
+def upload_gst_return(request):
+    period = request.POST.get("period")
+    username = request.user.get_username()
+    gst_instance = Gst(username)
+    status = gst_instance.upload(period,f"static/{username}/{period}.json")
+    if status["status"] == "ER" :  ## Full error json not uploaded
+       return Response({ "success" : False , "error": status["er_msg"]})
+    b2b,b2c,cdnr = gst.download_gst(request.user,period,gst_instance)
+    return Response({ "success" : True , "error" : ""})
+    # filed_inums = list(cdnr["nt_num"] if "nt_num" in cdnr.columns else []) + list(b2b["inum"] if "inum" in b2b.columns else [] )
+    # inums  = models.Sales.user_objects.for_user(request.user).filter(gst_period = period ,ctin__isnull=False).values_list("inum",flat=True)
+    # missing = set(inums) - set(filed_inums)
+    # if len(missing) == 0 : return None
+    # ref_id = status["ref_id"]
+    # if status["status"] == "PE" : 
+    #    gst_instance.get_error(period,ref_id,f"static/{username}/error_{period}.zip")
+    #    messages.warning(request,mark_safe("The Below invoices are not filed in gst due to error : <a style='margin-left: 10px' href='/static/{username}/error_{period}.zip' target='_blank'> Error zip </a>"))
+    # else : 
+    #    messages.warning(request,"The Below invoices are not filed in gst , But JSON Uploaded Successfully")
+    # return redirect(f"/app/gstmodel/?inum__in={','.join(missing)}")
 
 @api_view(["GET","POST"])
 def usersession_update(request):

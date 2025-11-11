@@ -12,6 +12,8 @@ urlpatterns = [
     path("gst/generate", api.generate_gst_return, name="generate-gst-return"),
     path("gst/summary", api.gst_summary, name="gst-summary"),
     path("gst/json", api.gst_json, name="gst-json"),
+    path("gst/upload", api.upload_gst_return, name="upload-gst-return"),
+    path("gst/download", api.download_gst_return, name="download-gst-return"),
     path("custom/captcha", api.get_captcha, name="captcha"),
     path("custom/login", api.captcha_login, name="login"),  # captcha-login (kept as-is)
     # Auth (session) endpoints

@@ -97,6 +97,13 @@ echo "==> Setting up cron job :($JOB_TAG)"
 echo "==> Applying Django migrations"
 python manage.py migrate --noinput
 
+export DJANGO_SUPERUSER_PASSWORD=1
+python3 manage.py createsuperuser \
+  --noinput \
+  --username admin \
+  --email "venkateshks2304@gmail.com" \
+  || echo "Superuser already exists or creation failed, continuing..."
+
 if [ "$IS_NEW_DB" == "1" ]; then
   echo "Dumping initial data into $DB_NAME..."
   psql -h localhost -U postgres -d "$DB_NAME" -f "dump.sql"
