@@ -8,7 +8,7 @@ from app.company_models import Company, UserSession
 # UserSession.objects.filter(user='devaki').delete()
 # UserSession.objects.filter(user='devaki_hul').delete()
 
-# user = User.objects.create_user(username='devaki', password='1')
+user = User.objects.create_user(username='murugan', password='1')
 # company = Company.objects.create(name="devaki_hul",user = user,gst_types = ["sales","salesreturn","claimservice","damage"])
 
 
