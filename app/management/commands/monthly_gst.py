@@ -17,7 +17,7 @@ GST_PERIOD_FILTER = {
 
 usernames_or_companies = sys.argv[2:]
 companies = Company.objects.filter(Q(user_id__in = usernames_or_companies) | Q(name__in = usernames_or_companies)).distinct()
-
+print("Companies :",list(companies.values_list("name",flat=True)))
 today = datetime.date.today()
 prev_month = today - relativedelta(months=1)
 fromd = prev_month.replace(day=1)
