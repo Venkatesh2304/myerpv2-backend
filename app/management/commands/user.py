@@ -17,7 +17,7 @@ UserSession(
     user="murugan_hul",
     key="ikea",
     username="SA",
-    password="Pillaiyar#@123",
+    password="Pillaiyar&*453",
     config={
         "dbName": "411474",
         "home": "https://leveredge25.hulcd.com",
