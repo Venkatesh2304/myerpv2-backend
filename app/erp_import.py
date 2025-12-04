@@ -306,7 +306,8 @@ class MarketReturnImport(DateImport):
         )
 
         market_returns = models.DmgShtReport.objects.filter(
-            return_from="market", company=company
+            return_from="market", company=company,
+            date__gte=args.fromd, date__lte=args.tod
         ).annotate(
             rt=Subquery(
                 stock_rt_subquery,
