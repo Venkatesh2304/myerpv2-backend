@@ -2,6 +2,7 @@ import multiprocessing
 
 # Network
 bind = "0.0.0.0:5000"
+timeout = 120
 
 # Workers
 workers = 5
