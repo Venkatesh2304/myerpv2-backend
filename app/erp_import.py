@@ -140,11 +140,12 @@ class SalesImport(DateImport):
             inventory_qs.filter(type="salesreturn").order_by("inv_amt")
         )
 
+        sales_inventory_objs_by_cn: defaultdict[str, list[models.IkeaGSTR1Report]] = defaultdict(list)
         for obj in salesreturn_inventory_objs:
             obj.inum = obj.credit_note_no
             obj.txval = -obj.txval
             inums = date_original_inum_to_cn[(obj.date, obj.original_invoice_no)]
-            print("Sales Return : ",obj.inum)
+            sales_inventory_objs_by_cn[obj.credit_note_no].append(obj)
             if obj.inum not in inums:
                 inums.append(obj.credit_note_no)
 
@@ -162,6 +163,23 @@ class SalesImport(DateImport):
             inum = inums.pop(0)
             print("Assigned inum for Sales Return " , obj.inum , " : ",inum)
             obj.inum = inum
+        
+        #To handle multiple credit notes for same original invoice on same date
+        for (date,org_inv_num),credit_note_nums in date_original_inum_to_cn.items() :
+            for credit_note_num in credit_note_nums :
+                objs = sales_inventory_objs_by_cn[credit_note_num]
+                amt = sum([obj.txval + obj.cgst + obj.sgst for obj in objs])
+                print("Sales Return Credit Note :",credit_note_num," Amt :",amt)
+                salesreturn_objs.append(
+                    SalesRegisterReport(
+                    type="salesreturn",
+                    inum=credit_note_num,
+                    date=date,
+                    party_id=objs[0].party_id,
+                    amt=-amt,
+                    ctin=objs[0].ctin,
+                    )
+                )
 
         # ClaimService
         claimservice_inventory_objs = inventory_qs.filter(type="claimservice")
