@@ -177,7 +177,7 @@ class SalesImport(DateImport):
                     inum=credit_note_num,
                     date=date,
                     party_id=objs[0].party_id,
-                    amt=-amt,
+                    amt=amt,
                     ctin=objs[0].ctin,
                     )
                 )
