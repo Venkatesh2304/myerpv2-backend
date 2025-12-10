@@ -958,8 +958,12 @@ class Einvoice(Session) :
           logger.info("Table HTML fetched")
           if "<td>2154</td>" in table_html :
               return None
-          irn_gen_by_me_excel_bytesio = self.get('/MisRpt/ExcelGenerratedIrnDetails?noofRec=1&Actn=GEN').content
+          res = self.get('/MisRpt/ExcelGenerratedIrnDetails?noofRec=1&Actn=GEN')
+          irn_gen_by_me_excel_bytesio = res.content
           logger.info("Excel data fetched")
+          logger.info("Response Type : " + str(type(res.text)) + " Response Code : " + str(res.status_code) )
+          logger.info("Content Length : " + str(len(irn_gen_by_me_excel_bytesio)))
+          logger.info("Content: ",res.text)
           df = pd.read_excel(BytesIO(irn_gen_by_me_excel_bytesio))
           logger.info(f"Filed Einvoice Dataframe : {df.shape}")
           logger.info(f"Filed Einvoice Dataframe : {df}")
