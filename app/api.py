@@ -28,6 +28,8 @@ from custom.pdf.split import (LastPageFindMethods,
 from multiprocessing.pool import ThreadPool
 from zipfile import ZipFile, ZIP_DEFLATED
 from io import BytesIO
+import logging
+logger = logging.getLogger("myerpv2")
 
 T = TypeVar("T", bound=Session.Session)
 P = ParamSpec("P")
@@ -116,16 +118,20 @@ def load_irns(request,gst = True,einvoice = True):
             for inv in models.GSTR1Portal.objects.filter(user=request.user, period=period)
         }
     if einvoice : 
+        logger.info("Loading IRNs from Einvoice for period %s", period)
         # Update using einvoice (last 3 days)
         einvoice_client = Einvoice(username)
+        logger.info("Einvoice Client Initiated")
         for days_ago in range(3) : 
             date = datetime.date.today() - datetime.timedelta(days=days_ago)
+            logger.info("Einvoice fetch for date %s", date)
             einv_data = einvoice_client.get_filed_einvs(date = date)
+            logger.info("Einvoice data fetched for date %s", date)
             if einv_data is None : 
                 continue
             for _,row in einv_data.iterrows() : 
                 irn_mapping[row["Doc No"]] = row["IRN"]
-
+    logger.info("IRN MAPPING COUNT: %d", len(irn_mapping))
     invs = list(models.Sales.user_objects.for_user(request.user).filter(inum__in=irn_mapping.keys(), gst_period=period))
     for inv in invs : 
         inv.irn = irn_mapping.get(inv.inum)

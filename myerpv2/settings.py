@@ -149,6 +149,11 @@ LOGGING = {
             "filename": "sql.log",  # path to your log file
             "formatter": "verbose",  # optional
         },
+        "myerp_file": {
+            "class": "logging.FileHandler",
+            "filename": "myerpv2.log",
+            "formatter": "verbose",
+        },
     },
     "formatters": {
         "verbose": {
@@ -161,6 +166,11 @@ LOGGING = {
             "handlers": ["sql_file"],  # log to file
             "level": "DEBUG",  # log all queries
             "propagate": False,  # prevent duplicate logging
+        },
+        "myerpv2": {
+            "handlers": ["myerp_file"],
+            "level": "INFO",
+            "propagate": False,
         },
     },
 }

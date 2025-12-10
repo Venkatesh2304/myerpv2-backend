@@ -27,6 +27,9 @@ from app.einvoice import DecimalEncoder
 from django.db.models.functions import Coalesce, Round
 
 from custom.classes import Gst
+import logging
+
+logger = logging.getLogger("myerpv2")
 
 def addtable(writer, sheet, name, data, style="default"):
     def style(name, df):
