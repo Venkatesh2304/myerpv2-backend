@@ -2,6 +2,7 @@ from collections import defaultdict
 import copy
 import datetime
 from io import BytesIO
+import logging
 import warnings
 import dateutil.relativedelta as relativedelta
 import json
@@ -946,15 +947,23 @@ class Einvoice(Session) :
       
       def get_filed_einvs(self,date) -> pd.DataFrame : 
           """This functions works on today - 2 to today (Only 3 past days data available)"""
+          logger = logging.getLogger("myerpv2")
+          logger.info("Einvoice : Get filed einvoice")
           form = extractForm( self.get("/MisRpt").text )
+          logger.info("Form extracted : " + str(form))
           form["submit"] = "Date"
           form["irp"] = "NIC1"
           form["ToDate"] = date.strftime("%d/%m/%Y")
           table_html = self.post("/MisRpt/MisRptAction",data=form).text
+          logger.info("Table HTML fetched")
           if "<td>2154</td>" in table_html :
               return None
           irn_gen_by_me_excel_bytesio = self.get('/MisRpt/ExcelGenerratedIrnDetails?noofRec=1&Actn=GEN').content
-          return pd.read_excel(BytesIO(irn_gen_by_me_excel_bytesio))
+          logger.info("Excel data fetched")
+          df = pd.read_excel(BytesIO(irn_gen_by_me_excel_bytesio))
+          logger.info(f"Filed Einvoice Dataframe : {df.shape}")
+          logger.info(f"Filed Einvoice Dataframe : {df}")
+          return df
           
       #Unverified
       def getinvs(self) : 
