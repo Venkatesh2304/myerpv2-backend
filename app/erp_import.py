@@ -144,6 +144,7 @@ class SalesImport(DateImport):
             obj.inum = obj.credit_note_no
             obj.txval = -obj.txval
             inums = date_original_inum_to_cn[(obj.date, obj.original_invoice_no)]
+            print("Sales Return : ",obj.inum)
             if obj.inum not in inums:
                 inums.append(obj.credit_note_no)
 
@@ -428,9 +429,9 @@ class PartyImport(SimpleImport):
 class GstFilingImport:
     imports: list[Type[BaseImport]] = [
         SalesImport,
-        PartyImport,
-        StockImport,
-        MarketReturnImport,
+        # PartyImport,
+        # StockImport,
+        # MarketReturnImport,
     ]
 
     @classmethod
