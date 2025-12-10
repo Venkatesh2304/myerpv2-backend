@@ -158,7 +158,9 @@ class SalesImport(DateImport):
                     obj.date,
                     "in ikea gstr1",
                 )
+            print("Matching inums for Sales Return " , obj.inum , " : ",inums)
             inum = inums.pop(0)
+            print("Assigned inum for Sales Return " , obj.inum , " : ",inum)
             obj.inum = inum
 
         # ClaimService
