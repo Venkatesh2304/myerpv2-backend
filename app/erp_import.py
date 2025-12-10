@@ -166,6 +166,7 @@ class SalesImport(DateImport):
         
         #To handle multiple credit notes for same original invoice on same date
         for (date,org_inv_num),credit_note_nums in date_original_inum_to_cn.items() :
+            print(org_inv_num, " Credit Notes : ",credit_note_nums)
             for credit_note_num in credit_note_nums :
                 objs = sales_inventory_objs_by_cn[credit_note_num]
                 amt = sum([obj.txval + obj.cgst + obj.sgst for obj in objs])
