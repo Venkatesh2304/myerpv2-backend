@@ -229,8 +229,11 @@ def file_einvoice(request):
             inum=row["Invoice No"]
         ).update(irn=irn[0])
 
+    error_codes = []
     # Handle wrong gstin or cancelled gstin and move the sales invoices to ctin null
-    wrong_gstin = failed[(failed["Error Code"] >= 3074) & (failed["Error Code"] <= 3079)]
+    error_codes += list(range(3074, 3080))
+    error_codes.append(2278) #IRN already generated and then cancelled.
+    wrong_gstin = failed[failed["Error Code"].isin(error_codes)]
     for _, row in wrong_gstin.iterrows():
         inv:models.Sales = models.Sales.user_objects.for_user(request.user).get(
             inum=row["Invoice No"]
