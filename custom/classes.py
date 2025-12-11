@@ -964,7 +964,11 @@ class Einvoice(Session) :
         #   logger.info("Response Type : " + res.headers.items() + " Response Code : " + str(res.status_code) )
           logger.info("Content Length : " + str(len(irn_gen_by_me_excel_bytesio)))
           with open("a.xlsx","wb+") as f : f.write(irn_gen_by_me_excel_bytesio)
-          df = pd.read_excel(BytesIO(irn_gen_by_me_excel_bytesio))
+          try :
+            df = pd.read_excel(BytesIO(irn_gen_by_me_excel_bytesio))
+          except Exception as e :
+            logger.error("Error reading Einvoice Excel : " + str(e))
+            raise e
           logger.info(f"Filed Einvoice Dataframe : {df.shape}")
           df.to_excel("b.xlsx",index=False)
           return df
