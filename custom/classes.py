@@ -90,9 +90,13 @@ class BaseIkea(Session) :
        
       def is_logged_in(self) :
          try : 
-           self.get("/rsunify/app/billing/getUserId",timeout=15)
-           self.logger.info("Login Check : Passed")
-           return True 
+            res_html = self.get("/rsunify/app/billing/getUserId",timeout=15).text
+            check = "Something went wrong, please try again later" in res_html
+            if check : 
+                self.logger.error("Login Check : Failed")
+                return False
+            self.logger.info("Login Check : Passed")
+            return True
          except StatusCodeError as e :
            self.logger.error("Login Check : Failed")
            return False 
