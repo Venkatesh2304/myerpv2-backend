@@ -449,10 +449,10 @@ class PartyImport(SimpleImport):
 
 class GstFilingImport:
     imports: list[Type[BaseImport]] = [
-        # SalesImport,
+        SalesImport,
         PartyImport,
         StockImport,
-        MarketReturnImport,
+        # MarketReturnImport,
     ]
 
     @classmethod
